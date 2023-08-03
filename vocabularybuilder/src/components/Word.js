@@ -6,7 +6,8 @@ const Word = ({ wordData }) => {
   return (
     <div className='word'>
       <h3>{wordData.word}</h3>
-      <h4>{wordData.result?.definition || 'No definition found'}</h4>
+      <h4>{wordData.result?.partOfSpeech}</h4>
+      <p>{wordData.result?.definition || 'No definition found'}</p>
     </div>
   )
 }

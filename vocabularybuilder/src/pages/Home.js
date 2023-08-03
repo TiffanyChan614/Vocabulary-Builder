@@ -106,7 +106,7 @@ const Home = () => {
         />
         <div className='user-input'>{searchValue}</div>
       </div>
-      <div>{matchedWordsElement}</div>
+      <div className='matched-words'>{matchedWordsElement}</div>
       <div className='word-data'>{wordDataElement}</div>
     </div>
   )
