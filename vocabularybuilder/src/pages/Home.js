@@ -1,21 +1,41 @@
 import { useState, useEffect } from 'react'
+import Word from '../components/Word'
+import { getWord } from '../services/wordAPI'
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState('')
   const [matchedWords, setMatchedWords] = useState([])
 
   useEffect(() => {
-    if (searchValue === '') {
-      return
+    async function fetchData() {
+      if (searchValue === '') {
+        return
+      }
+      const data = await getWord(searchValue)
+      setMatchedWords(data)
     }
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${searchValue}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        setMatchedWords(data)
-      })
-      .catch((err) => console.error(err))
+    const newTimeoutId = setTimeout(() => {
+      fetchData()
+    }, 500)
+    return () => {
+      clearTimeout(newTimeoutId)
+    }
   }, [searchValue])
+
+  useEffect(() => {
+    console.log('matchedWords', matchedWords)
+  }, [matchedWords])
+
+  const matchedWordsElement = matchedWords?.results?.map((result, i) => (
+    <Word
+      key={matchedWords.word + i}
+      wordData={{
+        word: matchedWords.word,
+        pronounciation: matchedWords.pronunciation.all,
+        result: result,
+      }}
+    />
+  ))
 
   return (
     <div>
@@ -30,6 +50,13 @@ const Home = () => {
           onChange={(e) => setSearchValue(e.target.value)}
         />
         <div className='user-input'>{searchValue}</div>
+      </div>
+      <div className='matched-words'>
+        {matchedWords === null ? (
+          <div>Word not found</div>
+        ) : (
+          matchedWordsElement
+        )}
       </div>
     </div>
   )
