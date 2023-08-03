@@ -1,46 +1,101 @@
 import { useState, useEffect } from 'react'
 import Word from '../components/Word'
-import { getWord } from '../services/wordAPI'
+import { getWordData, getMatchedWords } from '../services/wordAPI'
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState('')
   const [matchedWords, setMatchedWords] = useState([])
+  const [wordData, setWordData] = useState([])
+  const [chosenWord, setChosenWord] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true)
       if (searchValue === '') {
         return
       }
-      const data = await getWord(searchValue)
-      setMatchedWords(data)
+      const returnedWords = await getMatchedWords(searchValue)
+      setMatchedWords(returnedWords.results.data)
+      setIsLoading(false)
     }
     const newTimeoutId = setTimeout(() => {
       fetchData()
     }, 500)
+    setWordData([])
     return () => {
       clearTimeout(newTimeoutId)
     }
   }, [searchValue])
 
   useEffect(() => {
-    console.log('matchedWords', matchedWords)
-  }, [matchedWords])
+    console.log('chosen word', chosenWord)
+    async function fetchData() {
+      setIsLoading(true)
+      if (chosenWord === '') {
+        return
+      }
+      const returnedWordData = await getWordData(chosenWord)
+      setWordData(returnedWordData)
+      setIsLoading(false)
+    }
+    fetchData()
+  }, [chosenWord])
 
-  const matchedWordsElement = matchedWords?.results?.map((result, i) => (
-    <Word
-      key={matchedWords.word + i}
-      wordData={{
-        word: matchedWords.word,
-        pronounciation: matchedWords.pronunciation.all,
-        result: result,
-      }}
-    />
-  ))
+  useEffect(() => {
+    console.log('wordData', wordData)
+  }, [wordData])
+
+  let wordDataElement
+  if (wordData?.results) {
+    wordDataElement = wordData?.results?.map((result, i) => (
+      <Word
+        key={wordData.word + i}
+        wordData={{
+          word: wordData.word,
+          pronounciation: wordData.pronunciation?.all || null,
+          result: result,
+        }}
+      />
+    ))
+  } else {
+    wordDataElement = (
+      <Word
+        key={wordData?.word || 'no word'}
+        wordData={{
+          word: wordData?.word || '',
+          pronounciation: null,
+          result: null,
+        }}
+      />
+    )
+  }
+
+  let matchedWordsElement
+
+  if (isLoading && searchValue !== '') {
+    matchedWordsElement = <div>Loading...</div>
+  } else if (searchValue === '') {
+    matchedWordsElement = null
+  } else if (matchedWords.length > 0) {
+    matchedWordsElement = matchedWords?.map((word, i) => (
+      <div
+        className='matched-word'
+        key={word + i}
+        onClick={() => {
+          setChosenWord(word)
+        }}>
+        {word}
+      </div>
+    ))
+  } else {
+    matchedWordsElement = <div>Word not found</div>
+  }
 
   return (
     <div>
       <h1>Vocabulary Builder</h1>
-      <p>Welcome to vocabulary builder!</p>
+      <p>Welcome to Vocabulary Builder!</p>
       <div className='search-field'>
         <label htmlFor='search'>Don't know the meaning of a word?</label>
         <input
@@ -51,13 +106,8 @@ const Home = () => {
         />
         <div className='user-input'>{searchValue}</div>
       </div>
-      <div className='matched-words'>
-        {matchedWords === null ? (
-          <div>Word not found</div>
-        ) : (
-          matchedWordsElement
-        )}
-      </div>
+      <div>{matchedWordsElement}</div>
+      <div className='word-data'>{wordDataElement}</div>
     </div>
   )
 }

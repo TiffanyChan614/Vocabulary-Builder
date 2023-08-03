@@ -1,9 +1,12 @@
 const Word = ({ wordData }) => {
-  console.log('wordData', wordData)
+  console.log(wordData)
+  if (wordData.word === '') {
+    return null
+  }
   return (
     <div className='word'>
       <h3>{wordData.word}</h3>
-      <h4>{wordData.result.definition}</h4>
+      <h4>{wordData.result?.definition || 'No definition found'}</h4>
     </div>
   )
 }
