@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import Word from '../components/Word'
 import { getWordData, getMatchedWords } from '../services/wordAPI'
+import { Link, Outlet } from 'react-router-dom'
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState('')
   const [matchedWords, setMatchedWords] = useState([])
-  const [wordData, setWordData] = useState([])
-  const [chosenWord, setChosenWord] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -22,54 +21,10 @@ const Search = () => {
     const newTimeoutId = setTimeout(() => {
       fetchData()
     }, 500)
-    setWordData([])
     return () => {
       clearTimeout(newTimeoutId)
     }
   }, [searchValue])
-
-  useEffect(() => {
-    console.log('chosen word', chosenWord)
-    async function fetchData() {
-      setIsLoading(true)
-      if (chosenWord === '') {
-        return
-      }
-      const returnedWordData = await getWordData(chosenWord)
-      setWordData(returnedWordData)
-      setIsLoading(false)
-    }
-    fetchData()
-  }, [chosenWord])
-
-  useEffect(() => {
-    console.log('wordData', wordData)
-  }, [wordData])
-
-  let wordDataElement
-  if (wordData?.results) {
-    wordDataElement = wordData?.results?.map((result, i) => (
-      <Word
-        key={wordData.word + i}
-        wordData={{
-          word: wordData.word,
-          pronounciation: wordData.pronunciation?.all || null,
-          result: result,
-        }}
-      />
-    ))
-  } else {
-    wordDataElement = (
-      <Word
-        key={wordData?.word || 'no word'}
-        wordData={{
-          word: wordData?.word || '',
-          pronounciation: null,
-          result: null,
-        }}
-      />
-    )
-  }
 
   let matchedWordsElement
 
@@ -79,14 +34,12 @@ const Search = () => {
     matchedWordsElement = null
   } else if (matchedWords.length > 0) {
     matchedWordsElement = matchedWords?.map((word, i) => (
-      <div
+      <Link
+        to={`${word}`}
         className='matched-word'
-        key={word + i}
-        onClick={() => {
-          setChosenWord(word)
-        }}>
+        key={word + i}>
         {word}
-      </div>
+      </Link>
     ))
   } else {
     matchedWordsElement = <div>Word not found</div>
@@ -105,7 +58,7 @@ const Search = () => {
         <div className='search--user-input'>{searchValue}</div>
       </div>
       <div className='search--matched-words'>{matchedWordsElement}</div>
-      <div className='search--word-data'>{wordDataElement}</div>
+      <Outlet />
     </div>
   )
 }

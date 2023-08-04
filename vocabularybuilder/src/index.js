@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Search from './pages/Search'
 import Journal from './pages/Journal'
 import Layout from './components/Layout'
+import WordMeanings from './pages/WordMeanings'
 
 const App = () => {
   return (
@@ -21,8 +22,12 @@ const App = () => {
           />
           <Route
             path='search'
-            element={<Search />}
-          />
+            element={<Search />}>
+            <Route
+              path=':word'
+              element={<WordMeanings />}
+            />
+          </Route>
           <Route
             path='journal'
             element={<Journal />}
