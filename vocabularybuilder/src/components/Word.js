@@ -1,5 +1,5 @@
 const Word = ({ wordData }) => {
-  console.log(wordData)
+  // console.log(wordData)
   if (wordData.word === '') {
     return null
   }

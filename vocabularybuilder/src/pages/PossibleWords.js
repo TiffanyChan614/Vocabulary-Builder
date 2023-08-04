@@ -1,48 +1,63 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useMemo, useRef } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { getMatchedWords } from '../services/wordAPI'
 import { SearchContext } from '../pages/Search'
+
+const cache = {}
+
 const PossibleWords = () => {
   const { searchValue, setSearchValue } = useContext(SearchContext)
   const [matchedWords, setMatchedWords] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const isFirstRender = useRef(true)
+
+  console.log('isFirstRender', isFirstRender.current)
 
   useEffect(() => {
     async function fetchData() {
-      setIsLoading(true)
       if (searchValue === '') {
         return
       }
-      const returnedWords = await getMatchedWords(searchValue)
-      setMatchedWords(returnedWords.results.data)
-      setIsLoading(false)
+      if (cache[searchValue]) {
+        setMatchedWords(cache[searchValue])
+      } else {
+        setIsLoading(true)
+        const returnedWords = await getMatchedWords(searchValue)
+        cache[searchValue] = returnedWords.results.data
+        setMatchedWords(returnedWords.results.data)
+        setIsLoading(false)
+      }
     }
     const newTimeoutId = setTimeout(() => {
       fetchData()
-    }, 500)
+    }, 200)
     return () => {
       clearTimeout(newTimeoutId)
     }
   }, [searchValue])
 
-  let matchedWordsElement
+  const matchedWordsElement = useMemo(() => {
+    if (isLoading && searchValue !== '') {
+      return <div>Loading...</div>
+    } else if (searchValue === '') {
+      return null
+    } else if (matchedWords.length > 0) {
+      return matchedWords?.map((word, i) => (
+        <Link
+          to={`${word}`}
+          className='matched-word'
+          key={word + i}>
+          {word}
+        </Link>
+      ))
+    } else if (!isFirstRender.current) {
+      return <div>Word not found</div>
+    }
+  }, [isLoading, searchValue, matchedWords])
 
-  if (isLoading && searchValue !== '') {
-    matchedWordsElement = <div>Loading...</div>
-  } else if (searchValue === '') {
-    matchedWordsElement = null
-  } else if (matchedWords.length > 0) {
-    matchedWordsElement = matchedWords?.map((word, i) => (
-      <Link
-        to={`${word}`}
-        className='matched-word'
-        key={word + i}>
-        {word}
-      </Link>
-    ))
-  } else {
-    matchedWordsElement = <div>Word not found</div>
-  }
+  useEffect(() => {
+    isFirstRender.current = false
+  }, [])
 
   return (
     <div>

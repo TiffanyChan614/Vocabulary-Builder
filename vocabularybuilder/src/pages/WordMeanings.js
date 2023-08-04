@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import Word from '../components/Word'
 import { getWordData } from '../services/wordAPI'
 
@@ -40,7 +40,12 @@ const WordMeanings = () => {
     )
   }
 
-  return <div className='search--word-meanings'>{wordDataElement}</div>
+  return (
+    <div className='search--word-meanings'>
+      <Link to='..'>Back</Link>
+      {wordDataElement}
+    </div>
+  )
 }
 
 export default WordMeanings
