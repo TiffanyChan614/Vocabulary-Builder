@@ -11,8 +11,6 @@ const PossibleWords = () => {
   const [isLoading, setIsLoading] = useState(false)
   const isFirstRender = useRef(true)
 
-  console.log('isFirstRender', isFirstRender.current)
-
   useEffect(() => {
     async function fetchData() {
       if (searchValue === '') {
