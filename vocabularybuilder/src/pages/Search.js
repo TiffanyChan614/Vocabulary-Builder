@@ -1,10 +1,16 @@
 import { useState, createContext } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 export const SearchContext = createContext()
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState('')
+  const navigate = useNavigate()
+
+  const handleInputChange = (e) => {
+    setSearchValue(e.target.value)
+    navigate('.')
+  }
 
   return (
     <SearchContext.Provider value={{ searchValue, setSearchValue }}>
@@ -15,7 +21,7 @@ const Search = () => {
             id='search'
             value={searchValue}
             placeholder='Search for a word'
-            onChange={(e) => setSearchValue(e.target.value)}
+            onChange={handleInputChange}
           />
           <div className='search--user-input'>{searchValue}</div>
         </div>
