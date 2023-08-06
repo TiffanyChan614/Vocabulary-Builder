@@ -41,3 +41,7 @@ main {
 .word {
   border: 1px solid #000;
 }
+
+form {
+  border: 1px solid blue;
+}
