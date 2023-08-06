@@ -5,18 +5,23 @@ import { getWordData } from '../services/wordAPI'
 
 const WordMeanings = () => {
   const { word } = useParams()
-  const [wordData, setWordData] = useState([])
+  const [wordData, setWordData] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true)
       const returnedWordData = await getWordData(word)
       setWordData(returnedWordData)
+      setIsLoading(false)
     }
     fetchData()
   }, [word])
 
   let wordDataElement
-  if (wordData?.results) {
+  if (isLoading || !wordData) {
+    wordDataElement = <div>Loading...</div>
+  } else if (wordData?.results && wordData.results.length > 0) {
     wordDataElement = wordData?.results?.map((result, i) => (
       <Word
         key={wordData.word + i}
