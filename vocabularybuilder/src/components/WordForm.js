@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import TextArea from './TextArea'
+import WordFormImages from './WordFormImages'
 
 const WordForm = ({ wordData }) => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const WordForm = ({ wordData }) => {
     synonyms: wordData.result?.synonyms || [],
     antonyms: wordData.result?.antonyms || [],
     examples: wordData.result?.examples || [],
+    images: [],
   })
 
   console.log('formData', formData)
@@ -54,7 +56,6 @@ const WordForm = ({ wordData }) => {
   }
 
   function handleAdd(e) {
-    console.log('clicked')
     e.stopPropagation()
     const name = e.target.name
     setFormData((prevFormData) => {
@@ -71,6 +72,7 @@ const WordForm = ({ wordData }) => {
         <h1>{wordData.word}</h1>
         {wordData.pronunciation && <h4>{`[${wordData.pronunciation}]`}</h4>}
         <h4>{wordData.result?.partOfSpeech}</h4>
+        <div>Definition:</div>
         <textarea
           className='word-form--definition'
           name='definition'
@@ -139,11 +141,11 @@ const WordForm = ({ wordData }) => {
             </button>
           </div>
         )}
-        {formData.examples?.length > 0 && (
+        {wordData.examples?.length > 0 && (
           <div className='word-form--examples'>
             <div className='word-form--details-name'>Examples:</div>
             <div className='word-form--details-content'>
-              {wordData.result?.examples?.map((example, i) => (
+              {formData.result?.examples?.map((example, i) => (
                 <div key={example + i}>
                   <TextArea
                     name='examples'
@@ -170,6 +172,11 @@ const WordForm = ({ wordData }) => {
             </button>
           </div>
         )}
+        <WordFormImages
+          formData={formData}
+          setFormData={setFormData}
+          handleDelete={handleDelete}
+        />
         <button type='button'>Cancel</button>
         <button>Add</button>
       </form>

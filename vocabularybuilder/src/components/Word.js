@@ -93,13 +93,6 @@ const Word = ({ wordData }) => {
                   </div>
                 </>
               )}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setShowForm(true)
-                }}>
-                Add to journal
-              </button>
             </div>
           )}
         </div>
