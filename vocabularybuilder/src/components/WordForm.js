@@ -53,22 +53,34 @@ const WordForm = ({ wordData }) => {
     })
   }
 
+  function handleAdd(e) {
+    console.log('clicked')
+    e.stopPropagation()
+    const name = e.target.name
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [name]: [...prevFormData[name], ''],
+      }
+    })
+  }
+
   return (
-    <div className='word--form-wrapper'>
-      <form className='word--form'>
+    <div className='word-form-wrapper'>
+      <form className='word-form'>
         <h1>{wordData.word}</h1>
         {wordData.pronunciation && <h4>{`[${wordData.pronunciation}]`}</h4>}
         <h4>{wordData.result?.partOfSpeech}</h4>
         <textarea
-          className='word--definition'
+          className='word-form--definition'
           name='definition'
           value={formData.definition}
           onChange={handleChange}
         />
         {wordData.result?.synonyms?.length > 0 && (
-          <>
-            <div className='word--details-name'>Synonyms:</div>
-            <div className='word--details-content'>
+          <div className='word-form--synonyms'>
+            <div className='word-form--details-name'>Synonyms:</div>
+            <div className='word-form--details-content'>
               {formData.synonyms?.map((synonym, i) => (
                 <div key={synonym + i}>
                   <TextArea
@@ -88,12 +100,18 @@ const WordForm = ({ wordData }) => {
                 </div>
               ))}
             </div>
-          </>
+            <button
+              name='synonyms'
+              type='button'
+              onClick={handleAdd}>
+              Add
+            </button>
+          </div>
         )}
         {wordData.result?.antonyms?.length > 0 && (
-          <>
-            <div className='word--details-name'>Antonyms:</div>
-            <div className='word--details-content'>
+          <div className='word-form--antonyms'>
+            <div className='word-form--details-name'>Antonyms:</div>
+            <div className='word-form--details-content'>
               {formData.antonyms?.map((antonym, i) => (
                 <div key={antonym + i}>
                   <TextArea
@@ -113,12 +131,18 @@ const WordForm = ({ wordData }) => {
                 </div>
               ))}
             </div>
-          </>
+            <button
+              name='antonyms'
+              type='button'
+              onClick={handleAdd}>
+              Add
+            </button>
+          </div>
         )}
         {formData.examples?.length > 0 && (
-          <>
-            <div className='word--details-name'>Examples:</div>
-            <div className='word--details-content'>
+          <div className='word-form--examples'>
+            <div className='word-form--details-name'>Examples:</div>
+            <div className='word-form--details-content'>
               {wordData.result?.examples?.map((example, i) => (
                 <div key={example + i}>
                   <TextArea
@@ -138,7 +162,13 @@ const WordForm = ({ wordData }) => {
                 </div>
               ))}
             </div>
-          </>
+            <button
+              name='examples'
+              type='button'
+              onClick={handleAdd}>
+              Add
+            </button>
+          </div>
         )}
         <button type='button'>Cancel</button>
         <button>Add</button>
