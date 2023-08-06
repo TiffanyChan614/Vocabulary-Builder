@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import TextArea from './TextArea'
 import WordFormImages from './WordFormImages'
 
-const WordForm = ({ wordData }) => {
+const WordForm = ({ wordData, setShowForm }) => {
   const [formData, setFormData] = useState({
     word: wordData.word,
     pronunciation: wordData.pronunciation?.all,
@@ -177,7 +177,11 @@ const WordForm = ({ wordData }) => {
           setFormData={setFormData}
           handleDelete={handleDelete}
         />
-        <button type='button'>Cancel</button>
+        <button
+          type='button'
+          onClick={() => setShowForm(false)}>
+          Cancel
+        </button>
         <button>Add</button>
       </form>
     </div>

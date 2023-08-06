@@ -96,7 +96,12 @@ const Word = ({ wordData }) => {
             </div>
           )}
         </div>
-        {showForm && <WordForm wordData={wordData} />}
+        {showForm && (
+          <WordForm
+            wordData={wordData}
+            setShowForm={setShowForm}
+          />
+        )}
       </>
     )
   }
