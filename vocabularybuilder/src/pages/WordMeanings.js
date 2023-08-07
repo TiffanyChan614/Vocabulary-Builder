@@ -26,10 +26,15 @@ const WordMeanings = () => {
       <Word
         key={wordData.word + i}
         wordData={{
-          word: wordData.word,
+          word: wordData?.word || 'no word',
           pronunciation: wordData.pronunciation?.all,
-          result: result,
+          partOfSpeech: result?.partOfSpeech || null,
+          definition: result?.definition || null,
+          synonyms: result?.synonyms || null,
+          antonyms: result?.antonyms || null,
+          examples: result?.examples || null,
         }}
+        page='search'
       />
     ))
   } else {
@@ -39,7 +44,11 @@ const WordMeanings = () => {
         wordData={{
           word: wordData?.word || 'no word',
           pronunciation: null,
-          result: null,
+          partOfSpeech: null,
+          definition: null,
+          synonyms: null,
+          antonyms: null,
+          examples: null,
         }}
       />
     )
