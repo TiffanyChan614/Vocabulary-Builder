@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getImage } from '../services/pexelAPI'
+import ImageDropZone from './ImageDropZone'
 
 const WordFormImages = ({ formData, setFormData, handleDelete }) => {
   const [images, setImages] = useState([])
@@ -27,7 +28,12 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
     console.log('image index', images[e.target.dataset.index])
     setFormData((prevFormData) => {
       const newArr = [...prevFormData[name]]
-      newArr.push(images[e.target.dataset.index])
+      const imageObject = {
+        src: images[e.target.dataset.index].src.medium,
+        alt: images[e.target.dataset.index].alt,
+        id: images[e.target.dataset.index].id,
+      }
+      newArr.push(imageObject)
       return {
         ...prevFormData,
         [name]: newArr,
@@ -45,9 +51,9 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
       <div className='word-form--details-name'>Images:</div>
       <div className='word-form--details-content'>
         {formData.images?.map((image, index) => (
-          <div key={image.src.medium + index}>
+          <div key={image.src + index}>
             <img
-              src={image.src.medium}
+              src={image.src}
               alt={image.alt}
             />
             <button
@@ -60,6 +66,11 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
             </button>
           </div>
         ))}
+        <ImageDropZone
+          formData={formData}
+          setFormData={setFormData}
+          setShowMessage={setShowMessage}
+        />
       </div>
       <div className='word-form--image-search'>
         <input
