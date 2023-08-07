@@ -66,9 +66,25 @@ const WordForm = ({ wordData, setShowForm }) => {
     })
   }
 
+  function handleSubmit(e) {
+    e.preventDefault()
+    let journalData
+    try {
+      journalData = JSON.parse(localStorage.getItem('journal')) || []
+    } catch {
+      journalData = []
+    }
+    journalData.push(formData)
+    console.log('journalData', journalData)
+    localStorage.setItem('journal', JSON.stringify(journalData))
+    setShowForm(false)
+  }
+
   return (
     <div className='word-form-wrapper'>
-      <form className='word-form'>
+      <form
+        className='word-form'
+        onSubmit={handleSubmit}>
         <h1>{wordData.word}</h1>
         {wordData.pronunciation && <h4>{`[${wordData.pronunciation}]`}</h4>}
         <h4>{wordData.result?.partOfSpeech}</h4>
@@ -182,7 +198,7 @@ const WordForm = ({ wordData, setShowForm }) => {
           onClick={() => setShowForm(false)}>
           Cancel
         </button>
-        <button>Add</button>
+        <button type='submit'>Add</button>
       </form>
     </div>
   )
