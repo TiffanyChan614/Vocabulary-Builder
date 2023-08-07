@@ -35,6 +35,7 @@ const Word = ({ wordData, page }) => {
       synonyms,
       antonyms,
       examples,
+      images,
     } = wordData
     return (
       <>
@@ -67,27 +68,27 @@ const Word = ({ wordData, page }) => {
           {showDetails && (
             <div className='word--details'>
               {synonyms?.length > 0 && (
-                <>
+                <div className='word--details-field'>
                   <div className='word--details-name'>Synonyms:</div>
                   <div className='word--details-content'>
                     {synonyms?.map((synonym, i) => (
                       <div key={synonym + i}>{synonym}</div>
                     ))}
                   </div>
-                </>
+                </div>
               )}
               {antonyms?.length > 0 && (
-                <>
+                <div className='word--details-field'>
                   <div className='word--details-name'>Antonyms:</div>
                   <div className='word--details-content'>
                     {antonyms?.map((antonym, i) => (
                       <div key={antonym + i}>{antonym}</div>
                     ))}
                   </div>
-                </>
+                </div>
               )}
               {examples?.length > 0 && (
-                <>
+                <div className='word--details-field'>
                   <div className='word--details-name'>Examples:</div>
                   <div className='word--details-content'>
                     <ol className='word-details--example-list'>
@@ -111,7 +112,21 @@ const Word = ({ wordData, page }) => {
                       })}
                     </ol>
                   </div>
-                </>
+                </div>
+              )}
+              {images.length > 0 && (
+                <div className='word--details-field'>
+                  <div className='word--details-name'>Images:</div>
+                  <div className='word--details-content'>
+                    {images.map((image, i) => (
+                      <img
+                        key={image + i}
+                        src={image.src}
+                        alt={image.alt}
+                      />
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
           )}

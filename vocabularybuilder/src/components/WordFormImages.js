@@ -3,7 +3,7 @@ import { getImage } from '../services/pexelAPI'
 import ImageDropZone from './ImageDropZone'
 
 const WordFormImages = ({ formData, setFormData, handleDelete }) => {
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState(formData.images)
   const [searchValue, setSearchValue] = useState(formData.word)
   const [showImageResults, setShowImageResults] = useState(false)
   const [showMessage, setShowMessage] = useState(false)

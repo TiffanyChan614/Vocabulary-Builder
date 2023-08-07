@@ -33,6 +33,7 @@ const WordMeanings = () => {
           synonyms: result?.synonyms || null,
           antonyms: result?.antonyms || null,
           examples: result?.examples || null,
+          images: [],
         }}
         page='search'
       />
@@ -49,6 +50,7 @@ const WordMeanings = () => {
           synonyms: null,
           antonyms: null,
           examples: null,
+          images: [],
         }}
       />
     )

@@ -6,17 +6,17 @@ const WordForm = ({ wordData, setShowForm }) => {
   const [formData, setFormData] = useState({
     word: wordData.word,
     pronunciation: wordData.pronunciation?.all,
-    partOfSpeech: wordData.result?.partOfSpeech,
+    partOfSpeech: wordData.partOfSpeech,
     definition:
-      wordData.result?.definition[0].toUpperCase() +
-        wordData.result?.definition.slice(1) || 'No definition found',
-    synonyms: wordData.result?.synonyms || [],
-    antonyms: wordData.result?.antonyms || [],
-    examples: wordData.result?.examples || [],
-    images: [],
+      wordData.definition[0].toUpperCase() + wordData.definition.slice(1) ||
+      'No definition found',
+    synonyms: wordData.synonyms || [],
+    antonyms: wordData.antonyms || [],
+    examples: wordData.examples || [],
+    images: wordData.images || [],
   })
 
-  console.log('formData', formData)
+  console.log('formData', formData.word)
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -80,26 +80,37 @@ const WordForm = ({ wordData, setShowForm }) => {
     setShowForm(false)
   }
 
+  const {
+    word,
+    pronunciation,
+    partOfSpeech,
+    definition,
+    synonyms,
+    antonyms,
+    examples,
+    images,
+  } = formData
+
   return (
     <div className='word-form-wrapper'>
       <form
         className='word-form'
         onSubmit={handleSubmit}>
-        <h1>{wordData.word}</h1>
-        {wordData.pronunciation && <h4>{`[${wordData.pronunciation}]`}</h4>}
-        <h4>{wordData.result?.partOfSpeech}</h4>
+        <h1>{word}</h1>
+        {pronunciation && <h4>{`[${pronunciation}]`}</h4>}
+        <h4>{partOfSpeech}</h4>
         <div>Definition:</div>
         <textarea
           className='word-form--definition'
           name='definition'
-          value={formData.definition}
+          value={definition}
           onChange={handleChange}
         />
-        {wordData.result?.synonyms?.length > 0 && (
+        {synonyms?.length > 0 && (
           <div className='word-form--synonyms'>
             <div className='word-form--details-name'>Synonyms:</div>
             <div className='word-form--details-content'>
-              {formData.synonyms?.map((synonym, i) => (
+              {synonyms?.map((synonym, i) => (
                 <div key={synonym + i}>
                   <TextArea
                     name='synonyms'
@@ -126,11 +137,11 @@ const WordForm = ({ wordData, setShowForm }) => {
             </button>
           </div>
         )}
-        {wordData.result?.antonyms?.length > 0 && (
+        {antonyms?.length > 0 && (
           <div className='word-form--antonyms'>
             <div className='word-form--details-name'>Antonyms:</div>
             <div className='word-form--details-content'>
-              {formData.antonyms?.map((antonym, i) => (
+              {antonyms?.map((antonym, i) => (
                 <div key={antonym + i}>
                   <TextArea
                     name='antonyms'
@@ -157,11 +168,11 @@ const WordForm = ({ wordData, setShowForm }) => {
             </button>
           </div>
         )}
-        {wordData.examples?.length > 0 && (
+        {examples?.length > 0 && (
           <div className='word-form--examples'>
             <div className='word-form--details-name'>Examples:</div>
             <div className='word-form--details-content'>
-              {formData.result?.examples?.map((example, i) => (
+              {examples?.map((example, i) => (
                 <div key={example + i}>
                   <TextArea
                     name='examples'

@@ -20,37 +20,42 @@ const ImageDropZone = ({ formData, setFormData, setShowMessage }) => {
     e.stopPropagation()
   }
 
-  const handleDrop = (e) => {
+  const handleDrop = async (e) => {
     e.preventDefault()
     e.stopPropagation()
     setIsDragging(false)
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+    const files = e.dataTransfer.files
+    if (files && files.length > 0) {
       const currentImagesLength = formData.images.length
-      if (e.dataTransfer.files.length + currentImagesLength > 3) {
+      if (files.length + currentImagesLength > 3) {
         setShowMessage(true)
         setTimeout(() => {
           setShowMessage(false)
         }, 3000)
         return
       }
-      setFormData((prevFormData) => {
-        const newArr = [...prevFormData.images]
-        for (let i = 0; i < e.dataTransfer.files.length; i++) {
-          const file = e.dataTransfer.files[i]
-          const imageObject = {
-            src: URL.createObjectURL(file),
-            alt: file.name,
+      const promises = []
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        const reader = new FileReader()
+        const promise = new Promise((resolve) => {
+          reader.onload = function (e) {
+            const imageObject = {
+              src: e.target.result,
+              alt: file.name,
+            }
+            resolve(imageObject)
           }
-          newArr.push(imageObject)
-        }
-        return {
-          ...prevFormData,
-          images: newArr,
-        }
-      })
+          reader.readAsDataURL(file)
+        })
+        promises.push(promise)
+      }
+      const imageObjects = await Promise.all(promises)
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        images: [...prevFormData.images, ...imageObjects],
+      }))
     }
-    console.log(e.dataTransfer.files)
-    e.dataTransfer.clearData()
   }
 
   return (
