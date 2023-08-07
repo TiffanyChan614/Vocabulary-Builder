@@ -90,17 +90,26 @@ const Word = ({ wordData, page }) => {
                 <>
                   <div className='word--details-name'>Examples:</div>
                   <div className='word--details-content'>
-                    {examples?.map((example, i) => (
-                      <div key={example + i}>
-                        <p>
-                          {example[0].toUpperCase() + example.slice(1) + '.'}
-                        </p>
-                        <button
-                          onClick={(e) => speak(e, example, 'samantha', 0.8)}>
-                          Play
-                        </button>
-                      </div>
-                    ))}
+                    <ol className='word-details--example-list'>
+                      {examples?.map((example, i) => {
+                        const formattedExample =
+                          example[0].toUpperCase() + example.slice(1) + '.'
+                        const lines = formattedExample.split('/')
+                        return (
+                          <li key={example + i}>
+                            {lines.map((line, i) => (
+                              <p key={i}>{line}</p>
+                            ))}
+                            <button
+                              onClick={(e) =>
+                                speak(e, example, 'samantha', 0.8)
+                              }>
+                              Play
+                            </button>
+                          </li>
+                        )
+                      })}
+                    </ol>
                   </div>
                 </>
               )}

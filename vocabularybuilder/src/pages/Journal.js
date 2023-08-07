@@ -16,7 +16,12 @@ const Journal = () => {
   return (
     <div className='journal'>
       {words.length > 0 ? (
-        words.map((word) => <Word wordData={word} />)
+        words.map((word) => (
+          <Word
+            wordData={word}
+            page='journal'
+          />
+        ))
       ) : (
         <>
           <p>No words in journal</p>
