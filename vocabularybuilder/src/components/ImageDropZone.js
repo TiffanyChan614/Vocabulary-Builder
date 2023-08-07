@@ -38,7 +38,7 @@ const ImageDropZone = ({ formData, setFormData, setShowMessage }) => {
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
         const reader = new FileReader()
-        const promise = new Promise((resolve) => {
+        const promise = new Promise((resolve, reject) => {
           reader.onload = function (e) {
             const imageObject = {
               src: e.target.result,
@@ -46,15 +46,22 @@ const ImageDropZone = ({ formData, setFormData, setShowMessage }) => {
             }
             resolve(imageObject)
           }
+          reader.onerror = function (err) {
+            reject(err)
+          }
           reader.readAsDataURL(file)
         })
         promises.push(promise)
       }
-      const imageObjects = await Promise.all(promises)
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        images: [...prevFormData.images, ...imageObjects],
-      }))
+      try {
+        const imageObjects = await Promise.all(promises)
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          images: [...prevFormData.images, ...imageObjects],
+        }))
+      } catch (err) {
+        console.err(err)
+      }
     }
   }
 
