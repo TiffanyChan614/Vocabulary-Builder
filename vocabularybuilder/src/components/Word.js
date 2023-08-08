@@ -39,9 +39,7 @@ const Word = ({ wordData, page }) => {
     } = wordData
     return (
       <>
-        <div
-          className='word'
-          onClick={() => setShowDetails((prevShow) => !prevShow)}>
+        <div className='word'>
           <div className='word--header'>
             <h3>{word}</h3>
             {pronunciation && <h4>{`[${pronunciation}]`}</h4>}
@@ -60,6 +58,9 @@ const Word = ({ wordData, page }) => {
                 Add to journal
               </button>
             )}
+            <button onClick={() => setShowDetails((prevShow) => !prevShow)}>
+              Show more
+            </button>
           </div>
           <div className='word--definition'>
             {definition[0].toUpperCase() + definition.slice(1) ||
