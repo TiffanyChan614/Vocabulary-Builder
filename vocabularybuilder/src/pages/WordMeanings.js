@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, NavLink } from 'react-router-dom'
 import Word from '../components/Word'
 import { getWordData } from '../services/wordAPI'
 
@@ -58,7 +58,7 @@ const WordMeanings = () => {
 
   return (
     <div className='search--word-meanings'>
-      <Link to='..'>Back</Link>
+      <NavLink to='..'>Back</NavLink>
       {wordDataElement}
     </div>
   )

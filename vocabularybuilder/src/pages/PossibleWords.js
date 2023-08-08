@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useMemo, useRef } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import { getMatchedWords } from '../services/wordAPI'
 import { SearchContext } from '../pages/Search'
 
@@ -41,12 +41,12 @@ const PossibleWords = () => {
       return null
     } else if (matchedWords.length > 0) {
       return matchedWords?.map((word, i) => (
-        <Link
+        <NavLink
           to={`${word}`}
           className='matched-word'
           key={word + i}>
           {word}
-        </Link>
+        </NavLink>
       ))
     } else if (!isFirstRender.current) {
       return <div>Word not found</div>
