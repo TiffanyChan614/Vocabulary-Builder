@@ -18,7 +18,7 @@ const WordForm = ({ wordData, setShowForm }) => {
 
   console.log('formData', formData.word)
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target
     console.log('name', name)
     console.log('value', value)
@@ -40,7 +40,7 @@ const WordForm = ({ wordData, setShowForm }) => {
     })
   }
 
-  function handleDelete(e) {
+  const handleDelete = (e) => {
     e.stopPropagation()
     const name = e.target.name
     const index = parseInt(e.target.dataset.index)
@@ -55,7 +55,7 @@ const WordForm = ({ wordData, setShowForm }) => {
     })
   }
 
-  function handleAdd(e) {
+  const handleAdd = (e) => {
     e.stopPropagation()
     const name = e.target.name
     setFormData((prevFormData) => {
@@ -66,7 +66,7 @@ const WordForm = ({ wordData, setShowForm }) => {
     })
   }
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault()
     let journalData
     try {
