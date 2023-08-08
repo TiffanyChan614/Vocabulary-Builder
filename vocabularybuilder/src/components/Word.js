@@ -58,9 +58,14 @@ const Word = ({ wordData, page }) => {
                 Add to journal
               </button>
             )}
-            <button onClick={() => setShowDetails((prevShow) => !prevShow)}>
-              Show more
-            </button>
+            {(synonyms?.length > 0 ||
+              antonyms?.length > 0 ||
+              examples?.length > 0 ||
+              images?.length > 0) && (
+              <button onClick={() => setShowDetails((prevShow) => !prevShow)}>
+                Show more
+              </button>
+            )}
           </div>
           <div className='word--definition'>
             {definition[0].toUpperCase() + definition.slice(1) ||

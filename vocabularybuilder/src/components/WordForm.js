@@ -88,7 +88,6 @@ const WordForm = ({ wordData, setShowForm }) => {
     synonyms,
     antonyms,
     examples,
-    images,
   } = formData
 
   return (
