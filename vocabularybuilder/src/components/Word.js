@@ -63,7 +63,7 @@ const Word = ({ wordData, page }) => {
               examples?.length > 0 ||
               images?.length > 0) && (
               <button onClick={() => setShowDetails((prevShow) => !prevShow)}>
-                Show more
+                {showDetails ? 'Hide' : 'Show more'}
               </button>
             )}
           </div>
