@@ -115,11 +115,10 @@ const WordForm = ({ wordData, setShowForm }) => {
         {pronunciation && <h4>{`[${pronunciation}]`}</h4>}
         <h4>{partOfSpeech}</h4>
         <div>Definition:</div>
-        <textarea
-          className='word-form--definition'
+        <TextArea
           name='definition'
           value={definition}
-          onChange={handleChange}
+          onBlur={(e) => handleChange(e)}
         />
         <div className='word-form--synonyms'>
           <div className='word-form--details-name'>Synonyms:</div>
@@ -129,7 +128,7 @@ const WordForm = ({ wordData, setShowForm }) => {
                 <TextArea
                   name='synonyms'
                   value={synonym}
-                  onChange={(e) => handleChange(e, index)}
+                  onBlur={(e) => handleChange(e, index)}
                 />
                 <button
                   type='button'
@@ -156,7 +155,7 @@ const WordForm = ({ wordData, setShowForm }) => {
                 <TextArea
                   name='antonyms'
                   value={antonym}
-                  onChange={(e) => handleChange(e, index)}
+                  onBlur={(e) => handleChange(e, index)}
                 />
                 <button
                   type='button'
@@ -183,7 +182,7 @@ const WordForm = ({ wordData, setShowForm }) => {
                 <TextArea
                   name='examples'
                   value={example}
-                  onChange={(e) => handleChange(e, index)}
+                  onBlur={(e) => handleChange(e, index)}
                 />
                 <button
                   type='button'

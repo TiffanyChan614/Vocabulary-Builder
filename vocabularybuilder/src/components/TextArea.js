@@ -1,11 +1,10 @@
 import { useState } from 'react'
 
-const TextArea = ({ name, index, value, onChange }) => {
+const TextArea = ({ name, index, value, onBlur }) => {
   const [text, setText] = useState(value)
 
   const handleChange = (e) => {
     setText(e.target.value)
-    onChange(e, name, index, e.target.value)
   }
 
   return (
@@ -15,6 +14,7 @@ const TextArea = ({ name, index, value, onChange }) => {
         name={name}
         value={text}
         onChange={handleChange}
+        onBlur={(e) => onBlur(e, index)}
       />
     </>
   )
