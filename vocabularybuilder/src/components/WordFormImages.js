@@ -15,7 +15,7 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
     setImages(newImages)
   }
 
-  const handleAdd = (e) => {
+  const handleAdd = (e, index) => {
     e.stopPropagation()
     if (formData.images.length >= 3) {
       setShowMessage(true)
@@ -25,13 +25,12 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
       return
     }
     const name = e.target.name
-    console.log('image index', images[e.target.dataset.index])
     setFormData((prevFormData) => {
       const newArr = [...prevFormData[name]]
       const imageObject = {
-        src: images[e.target.dataset.index].src.medium,
-        alt: images[e.target.dataset.index].alt,
-        id: images[e.target.dataset.index].id,
+        src: images[index].src.medium,
+        alt: images[index].alt,
+        id: images[index].id,
       }
       newArr.push(imageObject)
       return {
@@ -60,7 +59,7 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
               type='button'
               className='delete'
               name='images'
-              onClick={() => handleDelete(index)}>
+              onClick={(e) => handleDelete(e, index)}>
               Delete
             </button>
           </div>
@@ -91,7 +90,7 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
       </div>
       <div className='word-form--images-results'>
         {showImageResults &&
-          images?.map((image, i) => (
+          images?.map((image, index) => (
             <div className='result-images'>
               <img
                 key={image.id}
@@ -101,7 +100,7 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
               <button
                 type='button'
                 name='images'
-                onClick={handleAdd}>
+                onClick={(e) => handleAdd(e, index)}>
                 Add
               </button>
             </div>
