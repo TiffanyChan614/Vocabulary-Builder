@@ -60,8 +60,7 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
               type='button'
               className='delete'
               name='images'
-              data-index={index}
-              onClick={handleDelete}>
+              onClick={() => handleDelete(index)}>
               Delete
             </button>
           </div>
@@ -102,7 +101,6 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
               <button
                 type='button'
                 name='images'
-                data-index={i}
                 onClick={handleAdd}>
                 Add
               </button>

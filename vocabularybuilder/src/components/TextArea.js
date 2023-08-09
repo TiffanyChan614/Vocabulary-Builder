@@ -13,7 +13,6 @@ const TextArea = ({ name, index, value, onChange }) => {
       <textarea
         key={name + index}
         name={name}
-        data-index={index}
         value={text}
         onChange={handleChange}
       />

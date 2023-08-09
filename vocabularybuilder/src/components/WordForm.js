@@ -16,16 +16,18 @@ const WordForm = ({ wordData, setShowForm }) => {
     images: wordData.images || [],
   })
 
-  console.log('formData', formData.word)
+  console.log('formData', formData)
 
-  const handleChange = (e) => {
+  const handleChange = (e, index) => {
+    console.log('in handleChange')
     const { name, value } = e.target
     console.log('name', name)
     console.log('value', value)
+    console.log('index', index)
     setFormData((prevFormData) => {
       if (Array.isArray(prevFormData[name])) {
-        const index = parseInt(e.target.dataset.index)
         const newArr = [...prevFormData[name]]
+        console.log('newArr', newArr)
         newArr[index] = value
         return {
           ...prevFormData,
@@ -40,10 +42,9 @@ const WordForm = ({ wordData, setShowForm }) => {
     })
   }
 
-  const handleDelete = (e) => {
+  const handleDelete = (e, index) => {
     e.stopPropagation()
     const name = e.target.name
-    const index = parseInt(e.target.dataset.index)
     console.log('name', name, 'index', index)
     setFormData((prevFormData) => {
       const newArr = [...prevFormData[name]]
@@ -74,7 +75,22 @@ const WordForm = ({ wordData, setShowForm }) => {
     } catch {
       journalData = []
     }
-    journalData.push(formData)
+    const filteredFormData = Object.keys(formData).reduce((acc, key) => {
+      if (Array.isArray(formData[key]) && formData[key].length > 0) {
+        formData[key] = formData[key].filter((item) => item !== '')
+      } else if (
+        !Array.isArray(formData[key]) &&
+        formData[key] === '' &&
+        key === 'definition'
+      ) {
+        acc[key] = 'No definition found'
+      } else {
+        acc[key] = formData[key]
+      }
+      return acc
+    }, {})
+
+    journalData.push(filteredFormData)
     console.log('journalData', journalData)
     localStorage.setItem('journal', JSON.stringify(journalData))
     setShowForm(false)
@@ -109,20 +125,18 @@ const WordForm = ({ wordData, setShowForm }) => {
           <div className='word-form--synonyms'>
             <div className='word-form--details-name'>Synonyms:</div>
             <div className='word-form--details-content'>
-              {synonyms?.map((synonym, i) => (
-                <div key={synonym + i}>
+              {synonyms?.map((synonym, index) => (
+                <div key={synonym + index}>
                   <TextArea
                     name='synonyms'
-                    data-index={i}
                     value={synonym}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e, index)}
                   />
                   <button
                     type='button'
                     className='delete'
                     name='synonyms'
-                    data-index={i}
-                    onClick={handleDelete}>
+                    onClick={(e) => handleDelete(e, index)}>
                     Delete
                   </button>
                 </div>
@@ -140,20 +154,18 @@ const WordForm = ({ wordData, setShowForm }) => {
           <div className='word-form--antonyms'>
             <div className='word-form--details-name'>Antonyms:</div>
             <div className='word-form--details-content'>
-              {antonyms?.map((antonym, i) => (
-                <div key={antonym + i}>
+              {antonyms?.map((antonym, index) => (
+                <div key={antonym + index}>
                   <TextArea
                     name='antonyms'
-                    data-index={i}
                     value={antonym}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e, index)}
                   />
                   <button
                     type='button'
                     className='delete'
                     name='antonyms'
-                    data-index={i}
-                    onClick={handleDelete}>
+                    onClick={(e) => handleDelete(e, index)}>
                     Delete
                   </button>
                 </div>
@@ -171,20 +183,18 @@ const WordForm = ({ wordData, setShowForm }) => {
           <div className='word-form--examples'>
             <div className='word-form--details-name'>Examples:</div>
             <div className='word-form--details-content'>
-              {examples?.map((example, i) => (
-                <div key={example + i}>
+              {examples?.map((example, index) => (
+                <div key={example + index}>
                   <TextArea
                     name='examples'
-                    data-index={i}
                     value={example}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e, index)}
                   />
                   <button
                     type='button'
                     className='delete'
                     name='examples'
-                    data-index={i}
-                    onChange={handleDelete}>
+                    onClick={(e) => handleDelete(e, index)}>
                     Delete
                   </button>
                 </div>
