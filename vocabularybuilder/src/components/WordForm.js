@@ -121,93 +121,87 @@ const WordForm = ({ wordData, setShowForm }) => {
           value={definition}
           onChange={handleChange}
         />
-        {synonyms?.length > 0 && (
-          <div className='word-form--synonyms'>
-            <div className='word-form--details-name'>Synonyms:</div>
-            <div className='word-form--details-content'>
-              {synonyms?.map((synonym, index) => (
-                <div key={synonym + index}>
-                  <TextArea
-                    name='synonyms'
-                    value={synonym}
-                    onChange={(e) => handleChange(e, index)}
-                  />
-                  <button
-                    type='button'
-                    className='delete'
-                    name='synonyms'
-                    onClick={(e) => handleDelete(e, index)}>
-                    Delete
-                  </button>
-                </div>
-              ))}
-            </div>
-            <button
-              name='synonyms'
-              type='button'
-              onClick={handleAdd}>
-              Add
-            </button>
+        <div className='word-form--synonyms'>
+          <div className='word-form--details-name'>Synonyms:</div>
+          <div className='word-form--details-content'>
+            {synonyms?.map((synonym, index) => (
+              <div key={synonym + index}>
+                <TextArea
+                  name='synonyms'
+                  value={synonym}
+                  onChange={(e) => handleChange(e, index)}
+                />
+                <button
+                  type='button'
+                  className='delete'
+                  name='synonyms'
+                  onClick={(e) => handleDelete(e, index)}>
+                  Delete
+                </button>
+              </div>
+            ))}
           </div>
-        )}
-        {antonyms?.length > 0 && (
-          <div className='word-form--antonyms'>
-            <div className='word-form--details-name'>Antonyms:</div>
-            <div className='word-form--details-content'>
-              {antonyms?.map((antonym, index) => (
-                <div key={antonym + index}>
-                  <TextArea
-                    name='antonyms'
-                    value={antonym}
-                    onChange={(e) => handleChange(e, index)}
-                  />
-                  <button
-                    type='button'
-                    className='delete'
-                    name='antonyms'
-                    onClick={(e) => handleDelete(e, index)}>
-                    Delete
-                  </button>
-                </div>
-              ))}
-            </div>
-            <button
-              name='antonyms'
-              type='button'
-              onClick={handleAdd}>
-              Add
-            </button>
+          <button
+            name='synonyms'
+            type='button'
+            onClick={handleAdd}>
+            Add
+          </button>
+        </div>
+        <div className='word-form--antonyms'>
+          <div className='word-form--details-name'>Antonyms:</div>
+          <div className='word-form--details-content'>
+            {antonyms?.map((antonym, index) => (
+              <div key={antonym + index}>
+                <TextArea
+                  name='antonyms'
+                  value={antonym}
+                  onChange={(e) => handleChange(e, index)}
+                />
+                <button
+                  type='button'
+                  className='delete'
+                  name='antonyms'
+                  onClick={(e) => handleDelete(e, index)}>
+                  Delete
+                </button>
+              </div>
+            ))}
           </div>
-        )}
-        {examples?.length > 0 && (
-          <div className='word-form--examples'>
-            <div className='word-form--details-name'>Examples:</div>
-            <div className='word-form--details-content'>
-              {examples?.map((example, index) => (
-                <div key={example + index}>
-                  <TextArea
-                    name='examples'
-                    value={example}
-                    onChange={(e) => handleChange(e, index)}
-                  />
-                  <button
-                    type='button'
-                    className='delete'
-                    name='examples'
-                    onClick={(e) => handleDelete(e, index)}>
-                    Delete
-                  </button>
-                </div>
-              ))}
-            </div>
-            <button
-              name='examples'
-              type='button'
-              onClick={handleAdd}>
-              Add
-            </button>
+          <button
+            name='antonyms'
+            type='button'
+            onClick={handleAdd}>
+            Add
+          </button>
+        </div>
+        <div className='word-form--examples'>
+          <div className='word-form--details-name'>Examples:</div>
+          <div className='word-form--details-content'>
+            {examples?.map((example, index) => (
+              <div key={example + index}>
+                <TextArea
+                  name='examples'
+                  value={example}
+                  onChange={(e) => handleChange(e, index)}
+                />
+                <button
+                  type='button'
+                  className='delete'
+                  name='examples'
+                  onClick={(e) => handleDelete(e, index)}>
+                  Delete
+                </button>
+              </div>
+            ))}
           </div>
-        )}
+          <button
+            name='examples'
+            type='button'
+            onClick={handleAdd}>
+            Add
+          </button>
+        </div>
         <WordFormImages
           formData={formData}
           setFormData={setFormData}
