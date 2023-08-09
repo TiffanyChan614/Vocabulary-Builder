@@ -77,7 +77,7 @@ const WordForm = ({ wordData, setShowForm }) => {
     }
     const filteredFormData = Object.keys(formData).reduce((acc, key) => {
       if (Array.isArray(formData[key]) && formData[key].length > 0) {
-        formData[key] = formData[key].filter((item) => item !== '')
+        acc[key] = formData[key].filter((item) => item !== '')
       } else if (
         !Array.isArray(formData[key]) &&
         formData[key] === '' &&
