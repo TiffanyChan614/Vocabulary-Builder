@@ -20,8 +20,8 @@ const PossibleWords = () => {
         setMatchedWords(cache[searchValue])
       } else {
         setIsLoading(true)
-        const returnedWords = await getMatchedWords(searchValue)
-        cache[searchValue] = returnedWords.results.data
+        const returnedWords = await getMatchedWords(searchValue.toLowerCase())
+        cache[searchValue.toLowerCase()] = returnedWords.results.data
         setMatchedWords(returnedWords.results.data)
         setIsLoading(false)
       }
