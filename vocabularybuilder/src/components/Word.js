@@ -8,7 +8,7 @@ const Word = ({ wordData, page, handleDelete }) => {
 
   console.log('showForm')
 
-  function speak(e, text, voiceName, rate) {
+  const speak = (e, text, voiceName, rate) => {
     e.stopPropagation()
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(text)
@@ -21,6 +21,16 @@ const Word = ({ wordData, page, handleDelete }) => {
       speechSynthesis.speak(utterance)
     } else {
       console.err('Speech synthesis not supported')
+    }
+  }
+
+  const transformSentence = (sentence) => {
+    let returnedSentence = sentence
+    if (returnedSentence && returnedSentence.length > 0) {
+      if (returnedSentence[returnedSentence.length - 1] !== '.') {
+        returnedSentence += '.'
+      }
+      return returnedSentence[0].toUpperCase() + returnedSentence.slice(1)
     }
   }
 
@@ -68,8 +78,7 @@ const Word = ({ wordData, page, handleDelete }) => {
             )}
           </div>
           <div className='word--definition'>
-            {definition[0].toUpperCase() + definition.slice(1) ||
-              'No definition found'}
+            {transformSentence(definition) || 'No definition found'}
           </div>
           {showDetails && (
             <div className='word--details'>
@@ -99,8 +108,7 @@ const Word = ({ wordData, page, handleDelete }) => {
                   <div className='word--details-content'>
                     <ol className='word-details--example-list'>
                       {examples?.map((example, i) => {
-                        const formattedExample =
-                          example[0].toUpperCase() + example.slice(1) + '.'
+                        const formattedExample = transformSentence(example)
                         const lines = formattedExample.split('/')
                         return (
                           <li key={example + i}>
