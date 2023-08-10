@@ -4,30 +4,54 @@ import Word from '../components/Word'
 
 const Journal = () => {
   const [words, setWords] = useState([])
+  const [searchValue, setSearchValue] = useState('')
+  const [filteredWords, setFilteredWords] = useState([])
 
   useEffect(() => {
     try {
       setWords(JSON.parse(localStorage.getItem('journal')))
+      setFilteredWords(JSON.parse(localStorage.getItem('journal')))
     } catch {
       setWords([])
     }
   }, [])
 
+  useEffect(() => {
+    if (searchValue !== '') {
+      setFilteredWords((prevWords) => {
+        return prevWords.filter((word) =>
+          word.word.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      })
+    } else {
+      setFilteredWords(words)
+    }
+  }, [searchValue, words])
+
   return (
     <div className='journal'>
-      {words.length > 0 ? (
-        words.map((word) => (
-          <Word
-            wordData={word}
-            page='journal'
-          />
-        ))
-      ) : (
-        <>
-          <p>No words in journal</p>
-          <NavLink to='../search'>Learn some new words!</NavLink>
-        </>
-      )}
+      <div className='journal--search'>
+        <input
+          type='text'
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+      </div>
+      <div className='journal--words'>
+        {filteredWords.length > 0 ? (
+          filteredWords.map((word) => (
+            <Word
+              wordData={word}
+              page='journal'
+            />
+          ))
+        ) : (
+          <>
+            <p>No words in journal</p>
+            <NavLink to='../search'>Learn some new words!</NavLink>
+          </>
+        )}
+      </div>
     </div>
   )
 }
