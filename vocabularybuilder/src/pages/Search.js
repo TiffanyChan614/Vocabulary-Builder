@@ -1,5 +1,6 @@
 import { useState, createContext } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
+import SearchField from '../components/SearchField'
 
 export const SearchContext = createContext()
 
@@ -15,16 +16,12 @@ const Search = () => {
   return (
     <SearchContext.Provider value={{ searchValue, setSearchValue }}>
       <div>
-        <div className='search--search-field'>
-          <input
-            type='text'
-            id='search'
-            value={searchValue}
-            placeholder='Search for a word'
-            onChange={handleInputChange}
-          />
-          <div className='search--user-input'>{searchValue}</div>
-        </div>
+        <SearchField
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          placeholder='Search for a word'
+          handleInputChange={handleInputChange}
+        />
         <Outlet />
       </div>
     </SearchContext.Provider>

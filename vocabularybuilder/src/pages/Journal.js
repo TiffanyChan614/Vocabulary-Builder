@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import Word from '../components/Word'
+import SearchField from '../components/SearchField'
 
 const Journal = () => {
   const [words, setWords] = useState([])
@@ -38,10 +39,11 @@ const Journal = () => {
   return (
     <div className='journal'>
       <div className='journal--search'>
-        <input
-          type='text'
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+        <SearchField
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          placeholder='Search journal'
+          handleInputChange={(e) => setSearchValue(e.target.value)}
         />
       </div>
       <div className='journal--words'>
