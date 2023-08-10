@@ -59,7 +59,7 @@ const Journal = () => {
         ) : (
           <>
             <p>No words in journal</p>
-            <NavLink to='../search'>Learn some new words!</NavLink>
+            <NavLink to='../search'>Search for some new words!</NavLink>
           </>
         )}
       </div>

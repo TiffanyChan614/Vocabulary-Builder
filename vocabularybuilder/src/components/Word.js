@@ -85,19 +85,19 @@ const Word = ({ wordData, page, handleDelete, setWords }) => {
           </div>
           {showDetails && (
             <div className='word--details'>
-              {synonyms?.length > 0 && (
+              {synonyms && synonyms?.length > 0 && (
                 <WordDetails
                   fieldName='Synonyms'
                   fieldData={synonyms}
                 />
               )}
-              {antonyms?.length > 0 && (
+              {antonyms && antonyms?.length > 0 && (
                 <WordDetails
                   fieldName='Antonyms'
                   fieldData={antonyms}
                 />
               )}
-              {examples.length > 0 && (
+              {examples && examples.length > 0 && (
                 <WordDetails
                   fieldName='Examples'
                   fieldData={examples}
@@ -105,7 +105,7 @@ const Word = ({ wordData, page, handleDelete, setWords }) => {
                   speak={speak}
                 />
               )}
-              {images.length > 0 && (
+              {images && images.length > 0 && (
                 <WordDetails
                   fieldName='Images'
                   fieldData={images}

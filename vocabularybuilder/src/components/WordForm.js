@@ -17,6 +17,9 @@ const WordForm = ({ wordData, setShowForm, page, setWords }) => {
     antonyms: wordData.antonyms || [],
     examples: wordData.examples || [],
     images: wordData.images || [],
+    lastUpdated: new Date().toLocaleDateString(),
+    created:
+      page === 'search' ? new Date().toLocaleDateString() : wordData.created,
   })
 
   console.log('formData', formData)
@@ -76,7 +79,7 @@ const WordForm = ({ wordData, setShowForm, page, setWords }) => {
     e.preventDefault()
 
     const filteredFormData = Object.keys(formData).reduce((acc, key) => {
-      if (Array.isArray(formData[key]) && formData[key].length > 0) {
+      if (Array.isArray(formData[key]) && formData[key]?.length > 0) {
         acc[key] = formData[key].filter((item) => item !== '')
       } else if (
         !Array.isArray(formData[key]) &&

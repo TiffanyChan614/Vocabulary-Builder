@@ -1,4 +1,6 @@
 const WordDetail = ({ fieldName, fieldData, transformSentence, speak }) => {
+  if (!fieldData) return null
+
   let fieldContent
 
   if (fieldName === 'Examples') {
@@ -38,7 +40,7 @@ const WordDetail = ({ fieldName, fieldData, transformSentence, speak }) => {
     fieldContent = (
       <div className='word--details-content'>
         {fieldData?.map((data, i) => (
-          <div key={i}>{i === fieldData.length - 1 ? data : data + ', '}</div>
+          <div key={i}>{i === fieldData?.length - 1 ? data : data + ', '}</div>
         ))}
       </div>
     )

@@ -9,6 +9,7 @@ const WordMeanings = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   console.log('word inside WordMeanings', word)
+  console.log('wordData', wordData)
 
   useEffect(() => {
     async function fetchData() {
