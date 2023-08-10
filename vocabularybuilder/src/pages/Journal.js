@@ -51,6 +51,7 @@ const Journal = () => {
               wordData={word}
               page='journal'
               handleDelete={handleDelete}
+              setWords={setWords}
             />
           ))
         ) : (

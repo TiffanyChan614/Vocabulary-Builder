@@ -3,9 +3,9 @@ import TextArea from './TextArea'
 import WordFormImages from './WordFormImages'
 import { v4 as uuidv4 } from 'uuid'
 
-const WordForm = ({ wordData, setShowForm }) => {
+const WordForm = ({ wordData, setShowForm, page, setWords }) => {
   const [formData, setFormData] = useState({
-    id: uuidv4(),
+    id: wordData.id || uuidv4(),
     word: wordData.word,
     pronunciation: wordData.pronunciation?.all,
     partOfSpeech: wordData.partOfSpeech,
@@ -71,12 +71,7 @@ const WordForm = ({ wordData, setShowForm }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    let journalData
-    try {
-      journalData = JSON.parse(localStorage.getItem('journal')) || []
-    } catch {
-      journalData = []
-    }
+
     const filteredFormData = Object.keys(formData).reduce((acc, key) => {
       if (Array.isArray(formData[key]) && formData[key].length > 0) {
         acc[key] = formData[key].filter((item) => item !== '')
@@ -92,9 +87,29 @@ const WordForm = ({ wordData, setShowForm }) => {
       return acc
     }, {})
 
-    journalData.push(filteredFormData)
-    console.log('journalData', journalData)
-    localStorage.setItem('journal', JSON.stringify(journalData))
+    let journalData
+    try {
+      journalData = JSON.parse(localStorage.getItem('journal')) || []
+    } catch {
+      journalData = []
+    }
+
+    if (page === 'search') {
+      journalData.push(filteredFormData)
+      console.log('journalData', journalData)
+      localStorage.setItem('journal', JSON.stringify(journalData))
+    } else if (page === 'journal') {
+      const updatedJournalData = journalData.map((word) => {
+        if (word.id === filteredFormData.id) {
+          return filteredFormData
+        }
+        return word
+      })
+      console.log('updatedJournalData', updatedJournalData)
+      localStorage.setItem('journal', JSON.stringify(updatedJournalData))
+      setWords(updatedJournalData)
+    }
+
     setShowForm(false)
   }
 
