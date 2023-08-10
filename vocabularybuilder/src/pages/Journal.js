@@ -28,6 +28,13 @@ const Journal = () => {
     }
   }, [searchValue, words])
 
+  const handleDelete = (id) => {
+    const newWords = words.filter((word) => word.id !== id)
+    setWords(newWords)
+    setFilteredWords(newWords)
+    localStorage.setItem('journal', JSON.stringify(newWords))
+  }
+
   return (
     <div className='journal'>
       <div className='journal--search'>
@@ -38,11 +45,12 @@ const Journal = () => {
         />
       </div>
       <div className='journal--words'>
-        {filteredWords.length > 0 ? (
+        {filteredWords?.length > 0 ? (
           filteredWords.map((word) => (
             <Word
               wordData={word}
               page='journal'
+              handleDelete={handleDelete}
             />
           ))
         ) : (

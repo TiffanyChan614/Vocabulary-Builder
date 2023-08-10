@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import TextArea from './TextArea'
 import WordFormImages from './WordFormImages'
+import { v4 as uuidv4 } from 'uuid'
 
 const WordForm = ({ wordData, setShowForm }) => {
   const [formData, setFormData] = useState({
+    id: uuidv4(),
     word: wordData.word,
     pronunciation: wordData.pronunciation?.all,
     partOfSpeech: wordData.partOfSpeech,

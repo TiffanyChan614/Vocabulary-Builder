@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import WordForm from './WordForm'
 
-const Word = ({ wordData, page }) => {
+const Word = ({ wordData, page, handleDelete }) => {
   console.log('word', wordData)
   const [showDetails, setShowDetails] = useState(false)
   const [showForm, setShowForm] = useState(false)
@@ -135,6 +135,13 @@ const Word = ({ wordData, page }) => {
                 </div>
               )}
             </div>
+          )}
+          {page === 'journal' && wordData.id !== 'undefined' && (
+            <button
+              type='button'
+              onClick={() => handleDelete(wordData.id)}>
+              Delete
+            </button>
           )}
         </div>
         {showForm && (
