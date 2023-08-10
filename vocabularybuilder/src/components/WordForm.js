@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import TextArea from './TextArea'
 import WordFormImages from './WordFormImages'
 import { v4 as uuidv4 } from 'uuid'
@@ -19,6 +20,8 @@ const WordForm = ({ wordData, setShowForm, page, setWords }) => {
   })
 
   console.log('formData', formData)
+
+  const navigate = useNavigate()
 
   const handleChange = (e, index) => {
     console.log('in handleChange')
@@ -98,6 +101,7 @@ const WordForm = ({ wordData, setShowForm, page, setWords }) => {
       journalData.push(filteredFormData)
       console.log('journalData', journalData)
       localStorage.setItem('journal', JSON.stringify(journalData))
+      navigate('../../journal')
     } else if (page === 'journal') {
       const updatedJournalData = journalData.map((word) => {
         if (word.id === filteredFormData.id) {

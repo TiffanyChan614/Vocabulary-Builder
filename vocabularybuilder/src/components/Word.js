@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import WordForm from './WordForm'
+import WordDetails from './WordDetails'
 
 const Word = ({ wordData, page, handleDelete, setWords }) => {
   console.log('word', wordData)
@@ -59,6 +60,16 @@ const Word = ({ wordData, page, handleDelete, setWords }) => {
               onClick={(e) => speak(e, word, 'samantha')}>
               Play
             </button>
+
+            {(synonyms?.length > 0 ||
+              antonyms?.length > 0 ||
+              examples?.length > 0 ||
+              images?.length > 0) && (
+              <button onClick={() => setShowDetails((prevShow) => !prevShow)}>
+                {showDetails ? 'Hide' : 'Show more'}
+              </button>
+            )}
+
             {page === 'search' && (
               <button
                 onClick={(e) => {
@@ -68,14 +79,6 @@ const Word = ({ wordData, page, handleDelete, setWords }) => {
                 Add to journal
               </button>
             )}
-            {(synonyms?.length > 0 ||
-              antonyms?.length > 0 ||
-              examples?.length > 0 ||
-              images?.length > 0) && (
-              <button onClick={() => setShowDetails((prevShow) => !prevShow)}>
-                {showDetails ? 'Hide' : 'Show more'}
-              </button>
-            )}
           </div>
           <div className='word--definition'>
             {transformSentence(definition) || 'No definition found'}
@@ -83,67 +86,34 @@ const Word = ({ wordData, page, handleDelete, setWords }) => {
           {showDetails && (
             <div className='word--details'>
               {synonyms?.length > 0 && (
-                <div className='word--details-field'>
-                  <div className='word--details-name'>Synonyms:</div>
-                  <div className='word--details-content'>
-                    {synonyms?.map((synonym, i) => (
-                      <div key={synonym + i}>{synonym}</div>
-                    ))}
-                  </div>
-                </div>
+                <WordDetails
+                  fieldName='Synonyms'
+                  fieldData={synonyms}
+                />
               )}
               {antonyms?.length > 0 && (
-                <div className='word--details-field'>
-                  <div className='word--details-name'>Antonyms:</div>
-                  <div className='word--details-content'>
-                    {antonyms?.map((antonym, i) => (
-                      <div key={antonym + i}>{antonym}</div>
-                    ))}
-                  </div>
-                </div>
+                <WordDetails
+                  fieldName='Antonyms'
+                  fieldData={antonyms}
+                />
               )}
-              {examples?.length > 0 && (
-                <div className='word--details-field'>
-                  <div className='word--details-name'>Examples:</div>
-                  <div className='word--details-content'>
-                    <ol className='word-details--example-list'>
-                      {examples?.map((example, i) => {
-                        const formattedExample = transformSentence(example)
-                        const lines = formattedExample.split('/')
-                        return (
-                          <li key={example + i}>
-                            {lines.map((line, i) => (
-                              <p key={i}>{line}</p>
-                            ))}
-                            <button
-                              onClick={(e) =>
-                                speak(e, example, 'samantha', 0.8)
-                              }>
-                              Play
-                            </button>
-                          </li>
-                        )
-                      })}
-                    </ol>
-                  </div>
-                </div>
+              {examples.length > 0 && (
+                <WordDetails
+                  fieldName='Examples'
+                  fieldData={examples}
+                  transformSentence={transformSentence}
+                  speak={speak}
+                />
               )}
               {images.length > 0 && (
-                <div className='word--details-field'>
-                  <div className='word--details-name'>Images:</div>
-                  <div className='word--details-content'>
-                    {images.map((image, i) => (
-                      <img
-                        key={image + i}
-                        src={image.src}
-                        alt={image.alt}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <WordDetails
+                  fieldName='Images'
+                  fieldData={images}
+                />
               )}
             </div>
           )}
+
           {page === 'journal' && wordData.id !== 'undefined' && (
             <button
               type='button'
