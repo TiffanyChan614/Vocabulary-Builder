@@ -114,8 +114,9 @@ const WordForm = ({ wordData, setShowForm }) => {
         <h1>{word}</h1>
         {pronunciation && <h4>{`[${pronunciation}]`}</h4>}
         <h4>{partOfSpeech}</h4>
-        <div>Definition:</div>
+        <label htmlFor='definition'>Definition:</label>
         <TextArea
+          id='definition'
           name='definition'
           value={definition}
           onBlur={(e) => handleChange(e)}
@@ -126,6 +127,7 @@ const WordForm = ({ wordData, setShowForm }) => {
             {synonyms?.map((synonym, index) => (
               <div key={synonym + index}>
                 <TextArea
+                  id={`synonym-${index}`}
                   name='synonyms'
                   value={synonym}
                   onBlur={(e) => handleChange(e, index)}
@@ -153,6 +155,7 @@ const WordForm = ({ wordData, setShowForm }) => {
             {antonyms?.map((antonym, index) => (
               <div key={antonym + index}>
                 <TextArea
+                  id={`antonym-${index}`}
                   name='antonyms'
                   value={antonym}
                   onBlur={(e) => handleChange(e, index)}
@@ -180,6 +183,7 @@ const WordForm = ({ wordData, setShowForm }) => {
             {examples?.map((example, index) => (
               <div key={example + index}>
                 <TextArea
+                  id={`example-${index}`}
                   name='examples'
                   value={example}
                   onBlur={(e) => handleChange(e, index)}
