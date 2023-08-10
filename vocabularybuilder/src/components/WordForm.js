@@ -17,9 +17,8 @@ const WordForm = ({ wordData, setShowForm, page, setWords }) => {
     antonyms: wordData.antonyms || [],
     examples: wordData.examples || [],
     images: wordData.images || [],
-    lastUpdated: new Date().toLocaleDateString(),
-    created:
-      page === 'search' ? new Date().toLocaleDateString() : wordData.created,
+    lastUpdated: new Date(),
+    created: page === 'search' ? new Date() : wordData.created,
   })
 
   console.log('formData', formData)

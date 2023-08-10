@@ -7,6 +7,17 @@ const Journal = () => {
   const [words, setWords] = useState([])
   const [searchValue, setSearchValue] = useState('')
   const [filteredWords, setFilteredWords] = useState([])
+  const [sortValue, setSortValue] = useState('updated')
+
+  const sortOptions = {
+    updated: (a, b) =>
+      new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime(),
+    created: (a, b) =>
+      new Date(b.created).getTime() - new Date(a.created).getTime(),
+    alphabetical: (a, b) => a.word.localeCompare(b.word),
+    length: (a, b) => a.word.length - b.word.length,
+    partOfSpeech: (a, b) => a.partOfSpeech.localeCompare(b.partOfSpeech),
+  }
 
   useEffect(() => {
     try {
@@ -20,14 +31,17 @@ const Journal = () => {
   useEffect(() => {
     if (searchValue !== '') {
       setFilteredWords((prevWords) => {
-        return prevWords.filter((word) =>
+        const newWords = prevWords.filter((word) =>
           word.word.toLowerCase().includes(searchValue.toLowerCase())
         )
+        return [...newWords].sort(sortOptions[sortValue])
       })
     } else {
-      setFilteredWords(words)
+      setFilteredWords((prevWords) =>
+        [...prevWords].sort(sortOptions[sortValue])
+      )
     }
-  }, [searchValue, words])
+  }, [searchValue, words, sortValue])
 
   const handleDelete = (id) => {
     const newWords = words.filter((word) => word.id !== id)
@@ -45,6 +59,22 @@ const Journal = () => {
           placeholder='Search journal'
           handleInputChange={(e) => setSearchValue(e.target.value)}
         />
+      </div>
+      <div className='journal--control'>
+        <select
+          className='journal--sort'
+          onChange={(e) => setSortValue(e.target.value)}>
+          <option disabled>Sort by</option>
+          <option
+            value='updated'
+            defaultValue>
+            Recently updated
+          </option>
+          <option value='alphabetical'>Alphabetical</option>
+          <option value='length'>Length</option>
+          <option value='partOfSpeech'>Part of speech</option>
+          <option value='created'>Recently created</option>
+        </select>
       </div>
       <div className='journal--words'>
         {filteredWords?.length > 0 ? (
