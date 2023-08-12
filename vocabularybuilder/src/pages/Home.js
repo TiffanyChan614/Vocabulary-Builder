@@ -1,22 +1,21 @@
 import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { getRandomWord, getWordData } from '../services/wordAPI'
+import { getRandomWord } from '../services/wordAPI'
 
 const Home = () => {
   const [word, setWord] = useState(null)
 
   const fetchRandomWord = async () => {
-    let { word } = await getRandomWord()
-    let wordData = await getWordData(word)
-    while (
-      !wordData ||
-      wordData.results === undefined ||
-      wordData.results.length === 0
-    ) {
+    let word = await getRandomWord()
+    while (true) {
+      console.log('fetching random word')
       word = await getRandomWord()
-      wordData = await getWordData(word)
+      console.log('new word', word)
+
+      if (word && word.results && word.results.length > 0) {
+        return word.word
+      }
     }
-    return word
   }
 
   useEffect(() => {
