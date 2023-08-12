@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useSearchParams, Link } from 'react-router-dom'
 import Word from '../components/Word'
 import SearchField from '../components/SearchField'
 
@@ -8,6 +8,7 @@ const Journal = () => {
   const [searchValue, setSearchValue] = useState('')
   const [filteredWords, setFilteredWords] = useState([])
   const [sortValue, setSortValue] = useState('updated')
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const sortOptions = {
     updated: (a, b) =>
@@ -50,6 +51,26 @@ const Journal = () => {
     localStorage.setItem('journal', JSON.stringify(newWords))
   }
 
+  const partOfSpeechFilter = searchParams.get('partOfSpeech')
+  let displayedWords
+  if (partOfSpeechFilter) {
+    if (partOfSpeechFilter === 'other') {
+      displayedWords = filteredWords?.filter(
+        (word) =>
+          word.partOfSpeech !== 'noun' &&
+          word.partOfSpeech !== 'verb' &&
+          word.partOfSpeech !== 'adjective' &&
+          word.partOfSpeech !== 'adverb'
+      )
+    } else {
+      displayedWords = filteredWords?.filter(
+        (word) => word.partOfSpeech === partOfSpeechFilter
+      )
+    }
+  } else {
+    displayedWords = filteredWords
+  }
+
   return (
     <div className='journal'>
       <div className='journal--search'>
@@ -61,6 +82,15 @@ const Journal = () => {
         />
       </div>
       <div className='journal--control'>
+        <nav>
+          <Link to='?partOfSpeech=noun'>Nouns</Link>
+          <Link to='?partOfSpeech=verb'>Verbs</Link>
+          <Link to='?partOfSpeech=adjective'>Adjectives</Link>
+          <Link to='?partOfSpeech=adverb'>Adverbs</Link>
+          <Link to='?partOfSpeech=other'>Other</Link>
+          <Link to='?'>Clear</Link>
+        </nav>
+
         <select
           className='journal--sort'
           onChange={(e) => setSortValue(e.target.value)}>
@@ -77,8 +107,8 @@ const Journal = () => {
         </select>
       </div>
       <div className='journal--words'>
-        {filteredWords?.length > 0 ? (
-          filteredWords.map((word) => (
+        {displayedWords?.length > 0 ? (
+          displayedWords.map((word) => (
             <Word
               wordData={word}
               page='journal'

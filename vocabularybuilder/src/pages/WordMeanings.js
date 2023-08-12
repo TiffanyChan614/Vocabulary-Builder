@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, NavLink } from 'react-router-dom'
+import { useParams, NavLink, Link, useSearchParams } from 'react-router-dom'
 import Word from '../components/Word'
 import { getWordData } from '../services/wordAPI'
 
@@ -7,6 +7,29 @@ const WordMeanings = () => {
   const { word } = useParams()
   const [wordData, setWordData] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const partOfSpeechFilter = searchParams.get('partOfSpeech')
+
+  let displayedMeanings
+
+  if (partOfSpeechFilter) {
+    if (partOfSpeechFilter === 'other') {
+      displayedMeanings = wordData?.results?.filter(
+        (result) =>
+          result.partOfSpeech !== 'noun' &&
+          result.partOfSpeech !== 'verb' &&
+          result.partOfSpeech !== 'adjective' &&
+          result.partOfSpeech !== 'adverb'
+      )
+    } else {
+      displayedMeanings = wordData?.results?.filter(
+        (result) => result.partOfSpeech === partOfSpeechFilter
+      )
+    }
+  } else {
+    displayedMeanings = wordData?.results
+  }
 
   console.log('word inside WordMeanings', word)
   console.log('wordData', wordData)
@@ -24,8 +47,8 @@ const WordMeanings = () => {
   let wordDataElement
   if (isLoading || !wordData) {
     wordDataElement = <div>Loading...</div>
-  } else if (wordData?.results && wordData.results.length > 0) {
-    wordDataElement = wordData?.results?.map((result, i) => (
+  } else if (displayedMeanings && displayedMeanings.length > 0) {
+    wordDataElement = displayedMeanings.map((result, i) => (
       <Word
         key={wordData.word + i}
         wordData={{
@@ -61,7 +84,15 @@ const WordMeanings = () => {
 
   return (
     <div className='search--word-meanings'>
-      <NavLink to='..'>Back</NavLink>
+      <nav>
+        <NavLink to='..'>Back</NavLink>
+        <Link to='?partOfSpeech=noun'>Nouns</Link>
+        <Link to='?partOfSpeech=verb'>Verbs</Link>
+        <Link to='?partOfSpeech=adjective'>Adjectives</Link>
+        <Link to='?partOfSpeech=adverb'>Adverbs</Link>
+        <Link to='?partOfSpeech=other'>Other</Link>
+        <Link to='.'>Clear</Link>
+      </nav>
       {wordDataElement}
     </div>
   )
