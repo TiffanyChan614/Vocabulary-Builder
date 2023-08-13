@@ -1,3 +1,5 @@
+import { AiFillSound } from 'react-icons/ai'
+
 const WordDetail = ({ fieldName, fieldData, transformSentence, speak }) => {
   if (!fieldData) return null
 
@@ -6,22 +8,26 @@ const WordDetail = ({ fieldName, fieldData, transformSentence, speak }) => {
   if (fieldName === 'Examples') {
     fieldContent = (
       <div className='word--details-content'>
-        <ol className='word-details--example-list'>
+        <ul className='word-details--example-list flex- flex-col gap-2'>
           {fieldData?.map((example, i) => {
             const formattedExample = transformSentence(example)
             const lines = formattedExample.split('/')
             return (
-              <li key={example + i}>
-                {lines.map((line, i) => (
-                  <p key={i}>{line}</p>
-                ))}
+              <li
+                key={example + i}
+                className='flex flex-row gap-3'>
+                <div className='lines'>
+                  {lines.map((line, i) => (
+                    <p key={i}>{line}</p>
+                  ))}
+                </div>
                 <button onClick={(e) => speak(e, example, 'samantha', 0.8)}>
-                  Play
+                  <AiFillSound size={15} />
                 </button>
               </li>
             )
           })}
-        </ol>
+        </ul>
       </div>
     )
   } else if (fieldName === 'Images') {
@@ -37,17 +43,17 @@ const WordDetail = ({ fieldName, fieldData, transformSentence, speak }) => {
       </div>
     )
   } else {
+    const content = fieldData?.map((data, i) =>
+      i === fieldData?.length - 1 ? data : data + ', '
+    )
+
     fieldContent = (
-      <div className='word--details-content'>
-        {fieldData?.map((data, i) => (
-          <div key={i}>{i === fieldData?.length - 1 ? data : data + ', '}</div>
-        ))}
-      </div>
+      <div className='word--details-content flex gap-2'>{content}</div>
     )
   }
   return (
     <div className='word--details'>
-      <div className='word--details-name'>{fieldName}</div>
+      <div className='word--details-name font-bold'>{fieldName}</div>
       {fieldContent}
     </div>
   )
