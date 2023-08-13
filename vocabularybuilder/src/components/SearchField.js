@@ -1,3 +1,5 @@
+import { MdClear } from 'react-icons/md'
+
 const SearchField = ({
   searchValue,
   setSearchValue,
@@ -5,10 +7,10 @@ const SearchField = ({
   handleInputChange,
 }) => {
   return (
-    <div className='search--search-field'>
+    <div className='search--search-field border-2 rounded-full py-1 pr-2 pl-3 flex justify-between'>
       <input
         type='text'
-        className='search'
+        className='search outline-none w-full'
         value={searchValue}
         placeholder={placeholder || ''}
         onChange={handleInputChange}
@@ -16,7 +18,10 @@ const SearchField = ({
       <button
         type='button'
         onClick={() => setSearchValue('')}>
-        Clear
+        <MdClear
+          size={18}
+          color='gray'
+        />
       </button>
     </div>
   )

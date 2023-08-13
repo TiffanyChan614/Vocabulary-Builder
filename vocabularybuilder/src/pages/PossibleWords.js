@@ -11,6 +11,9 @@ const PossibleWords = () => {
   const [isLoading, setIsLoading] = useState(false)
   const isFirstRender = useRef(true)
 
+  const wordStyleClassName =
+    'border-2 border-gray-100 p-3 rounded-xl text-lg font-medium text-indigo-900 hover:border-indigo-100 hover:bg-indigo-100 hover:text-indigo-900 select-none'
+
   useEffect(() => {
     async function fetchData() {
       if (searchValue === '') {
@@ -45,7 +48,7 @@ const PossibleWords = () => {
           to={`${word}`}
           className='matched-word'
           key={word + i}>
-          {word}
+          <div className={wordStyleClassName}>{word}</div>
         </NavLink>
       ))
     } else if (!isFirstRender.current) {
@@ -59,7 +62,9 @@ const PossibleWords = () => {
 
   return (
     <div>
-      <div className='search--matched-words'>{matchedWordsElement}</div>
+      <div className='search--matched-words flex flex-col gap-4'>
+        {matchedWordsElement}
+      </div>
       <Outlet />
     </div>
   )

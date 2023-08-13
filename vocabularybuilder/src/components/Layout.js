@@ -4,9 +4,9 @@ import Header from './Header'
 
 const Layout = () => {
   return (
-    <div className='site-wrapper flex flex-col'>
+    <div className='site-wrapper flex flex-col w-screen h-screen'>
       <Header />
-      <main className='flex flex-column text-gray-700 text-left px-6 py-3 self-center'>
+      <main className='flex flex-column text-gray-700 text-left px-6 py-5 self-center w-screen justify-center'>
         <Outlet />
       </main>
     </div>

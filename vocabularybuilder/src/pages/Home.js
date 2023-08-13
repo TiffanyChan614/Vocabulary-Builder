@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { getRandomWord } from '../services/wordAPI'
 
 const Home = () => {
   const [word, setWord] = useState(null)
   const divClassName =
-    'border-2 rounded-lg border-indigo-100 py-4 px-6 w-full mx-auto text-center'
+    'border-2 rounded-xl border-indigo-100 py-5 px-6 w-full mx-auto text-center md:px-10'
 
   const fetchRandomWord = async () => {
     let word = await getRandomWord()
@@ -40,12 +40,12 @@ const Home = () => {
   console.log('word', word)
 
   return (
-    <div className='flex flex-col gap-3 items-center'>
+    <div className='flex flex-col gap-3 w-full items-center max-w-screen-md'>
       <h1 className='text-3xl font-bold md:text-4xl'>Vocabulary Builder</h1>
       <p className='text-lg font-bold md:text-xl'>
         Welcome to Vocabulary Builder!
       </p>
-      <div className={`home--word-of-the-day ${divClassName}`}>
+      <div className={`home--word-of-the-day ${divClassName} mt-3`}>
         <h3 className='text-lg font-bold'>Word of the day</h3>
         <p className='text-xl font-bold text-indigo-800 my-4'>{word}</p>
         <Link

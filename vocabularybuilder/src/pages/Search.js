@@ -15,7 +15,7 @@ const Search = () => {
 
   return (
     <SearchContext.Provider value={{ searchValue, setSearchValue }}>
-      <div>
+      <div className='flex flex-col gap-5 w-full max-w-screen-md'>
         <SearchField
           searchValue={searchValue}
           setSearchValue={setSearchValue}
