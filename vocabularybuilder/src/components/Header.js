@@ -5,11 +5,12 @@ import { BiBookBookmark } from 'react-icons/bi'
 import { useState, useEffect } from 'react'
 
 const Header = () => {
-  const activeTextClassName = 'font-bold text-gray-800 underline'
-  const textLinkClassName = 'hover:underline'
+  const activeTextClassName = 'font-bold text-gray-800 underline select-none'
+  const textLinkClassName = 'hover:underline select-none'
   const iconLinkClassName =
-    'hover:border-b-2 hover:pb-1 border-gray-700 text-gray-700'
-  const activeIconClassName = 'border-b-2 border-gray-800 text-gray-800 pb-1'
+    'hover:border-b-2 hover:pb-1 border-gray-700 text-gray-700 select-none'
+  const activeIconClassName =
+    'border-b-2 border-gray-800 text-gray-800 pb-1 select-none'
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const Header = () => {
   return (
     <div className='header-wrapper px-3 py-2'>
       <header>
-        <nav className='flex flex-row items-center px-3 py-3 border-b-2 gap-4 font-medium text-gray-700 sm:gap-6'>
+        <nav className='flex flex-row items-center px-3 py-3 border-b-2 border-indigo-100 gap-4 font-medium text-gray-700 sm:gap-6'>
           {navigationItems.map((item) => (
             <NavLink
               key={item.link}
