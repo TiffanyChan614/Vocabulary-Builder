@@ -7,6 +7,8 @@ import { SearchContext } from '../pages/Search'
 import { JournalContext } from '../pages/Journal'
 import WordFormField from './WordFormField'
 
+//TODO: not updaing, no display changes shown -> not render update problem
+
 const WordForm = ({ formWord, page, updateWord = null }) => {
   const context = page === 'search' ? SearchContext : JournalContext
   const { setShowForm } = useContext(context)
@@ -92,7 +94,7 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
       } else if (key === 'definition' && formData[key] !== '') {
         acc[key] = formData[key]
       } else if (Array.isArray(formData[key])) {
-        acc[key] = [] // Set to an empty array if it's an array property
+        acc[key] = []
       } else {
         acc[key] = 'No definition found'
       }

@@ -132,7 +132,7 @@ const Journal = () => {
         <WordForm
           formWord={formWord}
           page='journal'
-          updateWords={(newWords) => setWords(newWords)}
+          updateWord={(newWords) => setWords(newWords)}
         />
       )}
     </JournalContext.Provider>
