@@ -1,6 +1,9 @@
 import { AiFillSound, AiOutlinePlus } from 'react-icons/ai'
 import { FiMoreHorizontal } from 'react-icons/fi'
-const WordHeader = ({ wordData, page, speak, setShowDetails, setShowForm }) => {
+import { useContext } from 'react'
+import { SearchContext } from '../pages/Search'
+
+const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
   const {
     word,
     pronunciation,
@@ -10,6 +13,8 @@ const WordHeader = ({ wordData, page, speak, setShowDetails, setShowForm }) => {
     examples,
     images,
   } = wordData
+
+  const { setShowForm, setFormWord } = useContext(SearchContext)
   return (
     <div className='word--header flex justify-between'>
       <div className='flex gap-5 items-center'>
@@ -45,6 +50,7 @@ const WordHeader = ({ wordData, page, speak, setShowDetails, setShowForm }) => {
             onClick={(e) => {
               e.stopPropagation()
               setShowForm(true)
+              setFormWord(wordData)
             }}>
             <AiOutlinePlus size={20} />
           </button>

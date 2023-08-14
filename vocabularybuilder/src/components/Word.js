@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import WordForm from './WordForm'
+import { useState, useContext } from 'react'
 import WordDetails from './WordDetails'
 import WordHeader from './WordHeader'
+import { SearchContext } from '../pages/Search'
 
 const Word = ({ wordData, page, handleDelete, setWords }) => {
   console.log('word', wordData)
   const [showDetails, setShowDetails] = useState(false)
-  const [showForm, setShowForm] = useState(false)
+  const { setShowForm } = useContext(SearchContext)
 
   console.log('showForm')
 
@@ -41,73 +41,62 @@ const Word = ({ wordData, page, handleDelete, setWords }) => {
   } else {
     const { definition, synonyms, antonyms, examples, images } = wordData
     return (
-      <>
-        <div className='word flex flex-col p-3 rounded-xl border-2 border-indigo-100 gap-3'>
-          <WordHeader
-            wordData={wordData}
-            page={page}
-            speak={speak}
-            setShowDetails={setShowDetails}
-            setShowForm={setShowForm}
-          />
-          <div className='word--definition'>
-            {transformSentence(definition) || 'No definition found'}
-          </div>
-          {showDetails && (
-            <div className='word--details flex flex-col gap-3'>
-              {synonyms && synonyms?.length > 0 && (
-                <WordDetails
-                  fieldName='Synonyms'
-                  fieldData={synonyms}
-                />
-              )}
-              {antonyms && antonyms?.length > 0 && (
-                <WordDetails
-                  fieldName='Antonyms'
-                  fieldData={antonyms}
-                />
-              )}
-              {examples && examples.length > 0 && (
-                <WordDetails
-                  fieldName='Examples'
-                  fieldData={examples}
-                  transformSentence={transformSentence}
-                  speak={speak}
-                />
-              )}
-              {images && images.length > 0 && (
-                <WordDetails
-                  fieldName='Images'
-                  fieldData={images}
-                />
-              )}
-            </div>
-          )}
-
-          {page === 'journal' && wordData.id !== 'undefined' && (
-            <button
-              type='button'
-              onClick={() => handleDelete(wordData.id)}>
-              Delete
-            </button>
-          )}
-          {page === 'journal' && wordData.id !== 'undefined' && (
-            <button
-              type='button'
-              onClick={() => setShowForm(true)}>
-              Edit
-            </button>
-          )}
+      <div className='word flex flex-col p-3 rounded-xl border-2 border-indigo-100 gap-3'>
+        <WordHeader
+          wordData={wordData}
+          page={page}
+          speak={speak}
+          setShowDetails={setShowDetails}
+        />
+        <div className='word--definition'>
+          {transformSentence(definition) || 'No definition found'}
         </div>
-        {showForm && (
-          <WordForm
-            wordData={wordData}
-            setShowForm={setShowForm}
-            page={page}
-            setWords={setWords}
-          />
+        {showDetails && (
+          <div className='word--details flex flex-col gap-3'>
+            {synonyms && synonyms?.length > 0 && (
+              <WordDetails
+                fieldName='Synonyms'
+                fieldData={synonyms}
+              />
+            )}
+            {antonyms && antonyms?.length > 0 && (
+              <WordDetails
+                fieldName='Antonyms'
+                fieldData={antonyms}
+              />
+            )}
+            {examples && examples.length > 0 && (
+              <WordDetails
+                fieldName='Examples'
+                fieldData={examples}
+                transformSentence={transformSentence}
+                speak={speak}
+              />
+            )}
+            {images && images.length > 0 && (
+              <WordDetails
+                fieldName='Images'
+                fieldData={images}
+              />
+            )}
+          </div>
         )}
-      </>
+
+        {page === 'journal' && wordData.id !== 'undefined' && (
+          <button
+            type='button'
+            onClick={() => handleDelete(wordData.id)}>
+            Delete
+          </button>
+        )}
+        {page === 'journal' && wordData.id !== 'undefined' && (
+          <button
+            type='button'
+            onClick={() => setShowForm(true)}>
+            Edit
+          </button>
+        )}
+      </div>
     )
   }
 }
