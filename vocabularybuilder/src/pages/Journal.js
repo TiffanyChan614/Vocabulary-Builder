@@ -81,7 +81,7 @@ const Journal = () => {
   return (
     <JournalContext.Provider
       value={{ setShowForm, setFormWord, handleDelete, setWords }}>
-      <div className='journal border-2 flex flex-col gap-4'>
+      <div className='journal flex flex-col gap-4'>
         <div className='journal--search'>
           <SearchField
             searchValue={searchValue}
@@ -90,13 +90,13 @@ const Journal = () => {
             handleInputChange={(e) => setSearchValue(e.target.value)}
           />
         </div>
-        <div className='journal--control'>
+        <div className='journal--control flex flex-col gap-3 md:flex-row md:justify-between'>
           <nav>
             <Filter partOfSpeechFilter={partOfSpeechFilter} />
           </nav>
 
           <select
-            className='journal--sort'
+            className='journal--sort border-indigo-100 border-2 rounded-xl py-1 px-3 text-sm font-semibold'
             onChange={(e) => setSortValue(e.target.value)}>
             <option disabled>Sort by</option>
             <option
@@ -110,7 +110,7 @@ const Journal = () => {
             <option value='created'>Recently created</option>
           </select>
         </div>
-        <div className='journal--words'>
+        <div className='journal--words flex flex-col gap-3'>
           {displayedWords?.length > 0 ? (
             displayedWords.map((word) => (
               <Word
