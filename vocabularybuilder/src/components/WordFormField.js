@@ -16,10 +16,8 @@ const WordFormField = ({
       </div>
       <div className='word-form--details-content flex flex-col gap-2'>
         {fieldData?.map((data, i) => (
-          <div>
-            <div
-              key={data + i}
-              className='flex flex-row gap-2 items-center'>
+          <div key={data + i}>
+            <div className='flex flex-row gap-2 items-center'>
               <TextArea
                 id={`${fieldName}-${i}`}
                 name={fieldName}
@@ -31,7 +29,9 @@ const WordFormField = ({
                 className='delete'
                 name={fieldName}
                 onClick={(e) => handleDelete(e, i)}>
-                <MdOutlineDeleteOutline size={20} />
+                <div className='pointer-events-none'>
+                  <MdOutlineDeleteOutline size={20} />
+                </div>
               </button>
             </div>
           </div>
@@ -42,10 +42,12 @@ const WordFormField = ({
         type='button'
         onClick={handleAdd}
         className='flex items-center hover:bg-indigo-100 rounded p-2'>
-        <AiOutlinePlus size={20} />
-        <span className='ml-2'>
+        <div className='pointer-events-none'>
+          <AiOutlinePlus size={20} />
+        </div>
+        <div className='ml-2 pointer-events-none'>
           Add {fieldName[0].toUpperCase() + fieldName.slice(1)}
-        </span>
+        </div>
       </button>
     </div>
   )

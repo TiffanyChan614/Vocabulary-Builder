@@ -54,6 +54,7 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
 
   const handleDelete = (e, index) => {
     e.stopPropagation()
+    console.log('e.target', e.target)
     const name = e.target.name
     console.log('name', name, 'index', index)
     setFormData((prevFormData) => {
@@ -67,8 +68,10 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
   }
 
   const handleAdd = (e) => {
+    console.log('e.target', e.target)
     e.stopPropagation()
     const name = e.target.name
+    console.log('handleAdd name', name)
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
