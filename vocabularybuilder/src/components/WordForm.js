@@ -5,6 +5,7 @@ import WordFormImages from './WordFormImages'
 import { v4 as uuidv4 } from 'uuid'
 import { SearchContext } from '../pages/Search'
 import { JournalContext } from '../pages/Journal'
+import WordFormField from './WordFormField'
 
 const WordForm = ({ formWord, page, updateWord = null }) => {
   const context = page === 'search' ? SearchContext : JournalContext
@@ -105,12 +106,13 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
     e.preventDefault()
 
     const filteredFormData = getFilteredFormData()
+    console.log('filteredFormData', filteredFormData)
 
     const journalData = getJournalData()
+    console.log('journalData', journalData)
 
     if (page === 'search') {
       journalData.push(filteredFormData)
-      console.log('journalData', journalData)
       localStorage.setItem('journal', JSON.stringify(journalData))
       navigate('../../journal')
     } else if (page === 'journal' && updateWord) {
@@ -120,7 +122,6 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
         }
         return word
       })
-      console.log('updatedJournalData', updatedJournalData)
       localStorage.setItem('journal', JSON.stringify(updatedJournalData))
       updateWord(updatedJournalData)
     }
@@ -138,6 +139,21 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
     examples,
   } = formData
 
+  const fieldList = [
+    {
+      name: 'synonyms',
+      data: synonyms,
+    },
+    {
+      name: 'antonyms',
+      data: antonyms,
+    },
+    {
+      name: 'examples',
+      data: examples,
+    },
+  ]
+
   return (
     <div className='word-form-wrapper'>
       <form
@@ -153,90 +169,16 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
           value={definition}
           onBlur={(e) => handleChange(e)}
         />
-        <div className='word-form--synonyms'>
-          <div className='word-form--details-name'>Synonyms:</div>
-          <div className='word-form--details-content'>
-            {synonyms?.map((synonym, index) => (
-              <div key={synonym + index}>
-                <TextArea
-                  id={`synonym-${index}`}
-                  name='synonyms'
-                  value={synonym}
-                  onBlur={(e) => handleChange(e, index)}
-                />
-                <button
-                  type='button'
-                  className='delete'
-                  name='synonyms'
-                  onClick={(e) => handleDelete(e, index)}>
-                  Delete
-                </button>
-              </div>
-            ))}
-          </div>
-          <button
-            name='synonyms'
-            type='button'
-            onClick={handleAdd}>
-            Add
-          </button>
-        </div>
-        <div className='word-form--antonyms'>
-          <div className='word-form--details-name'>Antonyms:</div>
-          <div className='word-form--details-content'>
-            {antonyms?.map((antonym, index) => (
-              <div key={antonym + index}>
-                <TextArea
-                  id={`antonym-${index}`}
-                  name='antonyms'
-                  value={antonym}
-                  onBlur={(e) => handleChange(e, index)}
-                />
-                <button
-                  type='button'
-                  className='delete'
-                  name='antonyms'
-                  onClick={(e) => handleDelete(e, index)}>
-                  Delete
-                </button>
-              </div>
-            ))}
-          </div>
-          <button
-            name='antonyms'
-            type='button'
-            onClick={handleAdd}>
-            Add
-          </button>
-        </div>
-        <div className='word-form--examples'>
-          <div className='word-form--details-name'>Examples:</div>
-          <div className='word-form--details-content'>
-            {examples?.map((example, index) => (
-              <div key={example + index}>
-                <TextArea
-                  id={`example-${index}`}
-                  name='examples'
-                  value={example}
-                  onBlur={(e) => handleChange(e, index)}
-                />
-                <button
-                  type='button'
-                  className='delete'
-                  name='examples'
-                  onClick={(e) => handleDelete(e, index)}>
-                  Delete
-                </button>
-              </div>
-            ))}
-          </div>
-          <button
-            name='examples'
-            type='button'
-            onClick={handleAdd}>
-            Add
-          </button>
-        </div>
+        {fieldList.map((field) => (
+          <WordFormField
+            key={field.name}
+            fieldName={field.name}
+            fieldData={field.data}
+            handleChange={handleChange}
+            handleDelete={handleDelete}
+            handleAdd={handleAdd}
+          />
+        ))}
         <WordFormImages
           formData={formData}
           setFormData={setFormData}
