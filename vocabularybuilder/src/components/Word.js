@@ -1,12 +1,10 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import WordDetails from './WordDetails'
 import WordHeader from './WordHeader'
-import { SearchContext } from '../pages/Search'
 
-const Word = ({ wordData, page, handleDelete, setWords }) => {
+const Word = ({ wordData, page }) => {
   console.log('word', wordData)
   const [showDetails, setShowDetails] = useState(false)
-  const { setShowForm } = useContext(SearchContext)
 
   console.log('showForm')
 
@@ -80,21 +78,6 @@ const Word = ({ wordData, page, handleDelete, setWords }) => {
               />
             )}
           </div>
-        )}
-
-        {page === 'journal' && wordData.id !== 'undefined' && (
-          <button
-            type='button'
-            onClick={() => handleDelete(wordData.id)}>
-            Delete
-          </button>
-        )}
-        {page === 'journal' && wordData.id !== 'undefined' && (
-          <button
-            type='button'
-            onClick={() => setShowForm(true)}>
-            Edit
-          </button>
         )}
       </div>
     )

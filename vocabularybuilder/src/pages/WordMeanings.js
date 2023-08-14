@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import Word from '../components/Word'
 import { getWordData } from '../services/wordAPI'
 import Filter from '../components/Filter'
@@ -11,12 +11,6 @@ const WordMeanings = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const partOfSpeechFilter = searchParams.get('partOfSpeech')
-
-  const filterStyleClassName =
-    'text-sm text-gray-700 font-semibold border-2 border-gray-200 hover:bg-indigo-100 hover:border-indigo-100 hover:text-indigo-800 py-1 px-3 rounded-full'
-
-  const filterActiveStyleClassName =
-    'text-sm text-indigo-800 font-bold bg-indigo-100 border-2 border-indigo-100 py-1 px-3 rounded-full'
 
   let displayedMeanings
 

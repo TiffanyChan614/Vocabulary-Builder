@@ -1,7 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import { NavLink, useSearchParams, Link } from 'react-router-dom'
 import Word from '../components/Word'
 import SearchField from '../components/SearchField'
+import Filter from '../components/Filter'
+import WordForm from '../components/WordForm'
+
+export const JournalContext = createContext()
 
 const Journal = () => {
   const [words, setWords] = useState([])
@@ -9,6 +13,8 @@ const Journal = () => {
   const [filteredWords, setFilteredWords] = useState([])
   const [sortValue, setSortValue] = useState('updated')
   const [searchParams, setSearchParams] = useSearchParams()
+  const [showForm, setShowForm] = useState(false)
+  const [formWord, setFormWord] = useState('')
 
   const sortOptions = {
     updated: (a, b) =>
@@ -72,58 +78,61 @@ const Journal = () => {
   }
 
   return (
-    <div className='journal'>
-      <div className='journal--search'>
-        <SearchField
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-          placeholder='Search journal'
-          handleInputChange={(e) => setSearchValue(e.target.value)}
-        />
-      </div>
-      <div className='journal--control'>
-        <nav>
-          <Link to='?partOfSpeech=noun'>Nouns</Link>
-          <Link to='?partOfSpeech=verb'>Verbs</Link>
-          <Link to='?partOfSpeech=adjective'>Adjectives</Link>
-          <Link to='?partOfSpeech=adverb'>Adverbs</Link>
-          <Link to='?partOfSpeech=other'>Other</Link>
-          <Link to='?'>Clear</Link>
-        </nav>
+    <JournalContext.Provider value={{ setShowForm, setFormWord, handleDelete }}>
+      <div className='journal'>
+        <div className='journal--search'>
+          <SearchField
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            placeholder='Search journal'
+            handleInputChange={(e) => setSearchValue(e.target.value)}
+          />
+        </div>
+        <div className='journal--control'>
+          <nav>
+            <Filter partOfSpeechFilter={partOfSpeechFilter} />
+          </nav>
 
-        <select
-          className='journal--sort'
-          onChange={(e) => setSortValue(e.target.value)}>
-          <option disabled>Sort by</option>
-          <option
-            value='updated'
-            defaultValue>
-            Recently updated
-          </option>
-          <option value='alphabetical'>Alphabetical</option>
-          <option value='length'>Length</option>
-          <option value='partOfSpeech'>Part of speech</option>
-          <option value='created'>Recently created</option>
-        </select>
+          <select
+            className='journal--sort'
+            onChange={(e) => setSortValue(e.target.value)}>
+            <option disabled>Sort by</option>
+            <option
+              value='updated'
+              defaultValue>
+              Recently updated
+            </option>
+            <option value='alphabetical'>Alphabetical</option>
+            <option value='length'>Length</option>
+            <option value='partOfSpeech'>Part of speech</option>
+            <option value='created'>Recently created</option>
+          </select>
+        </div>
+        <div className='journal--words'>
+          {displayedWords?.length > 0 ? (
+            displayedWords.map((word) => (
+              <Word
+                wordData={word}
+                page='journal'
+              />
+            ))
+          ) : (
+            <>
+              <p>No words in journal</p>
+              <NavLink to='../search'>Search for some new words!</NavLink>
+            </>
+          )}
+        </div>
       </div>
-      <div className='journal--words'>
-        {displayedWords?.length > 0 ? (
-          displayedWords.map((word) => (
-            <Word
-              wordData={word}
-              page='journal'
-              handleDelete={handleDelete}
-              setWords={setWords}
-            />
-          ))
-        ) : (
-          <>
-            <p>No words in journal</p>
-            <NavLink to='../search'>Search for some new words!</NavLink>
-          </>
-        )}
-      </div>
-    </div>
+      {showForm && (
+        <WordForm
+          wordData={formWord}
+          setShowForm={setShowForm}
+          page='journal'
+          setWords={setWords}
+        />
+      )}
+    </JournalContext.Provider>
   )
 }
 

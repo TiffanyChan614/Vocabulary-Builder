@@ -2,6 +2,7 @@ import { AiFillSound, AiOutlinePlus } from 'react-icons/ai'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import { useContext } from 'react'
 import { SearchContext } from '../pages/Search'
+import { JournalContext } from '../pages/Journal'
 
 const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
   const {
@@ -14,7 +15,9 @@ const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
     images,
   } = wordData
 
-  const { setShowForm, setFormWord } = useContext(SearchContext)
+  const context = page === 'search' ? SearchContext : JournalContext
+  const { setShowForm, setFormWord } = useContext(context)
+
   return (
     <div className='word--header flex justify-between'>
       <div className='flex gap-5 items-center'>
@@ -53,6 +56,26 @@ const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
               setFormWord(wordData)
             }}>
             <AiOutlinePlus size={20} />
+          </button>
+        )}
+
+        {page === 'journal' && wordData.id !== 'undefined' && (
+          <button
+            type='button'
+            onClick={(e) => {
+              e.stopPropagation()
+              setShowForm(true)
+              setFormWord(wordData)
+            }}>
+            Edit
+          </button>
+        )}
+
+        {page === 'journal' && wordData.id !== 'undefined' && (
+          <button
+            type='button'
+            onClick={() => context.handleDelete(wordData.id)}>
+            Delete
           </button>
         )}
       </div>
