@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import { SearchContext } from '../pages/Search'
 import { JournalContext } from '../pages/Journal'
 
-const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
+const WordHeader = ({ wordData, page, speak, setShowDetails, deleteWord }) => {
   const {
     word,
     pronunciation,
@@ -64,10 +64,8 @@ const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
             type='button'
             onClick={(e) => {
               e.stopPropagation()
-              console.log('==========================')
-              console.log('edit wordData', wordData)
-              setFormWord(wordData)
               setShowForm(true)
+              setFormWord(wordData)
             }}>
             Edit
           </button>
@@ -76,7 +74,7 @@ const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
         {page === 'journal' && typeof wordData?.id !== 'undefined' && (
           <button
             type='button'
-            onClick={() => context.handleDelete(wordData.id)}>
+            onClick={() => deleteWord(wordData.id)}>
             Delete
           </button>
         )}

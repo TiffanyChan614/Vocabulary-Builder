@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
-import { NavLink, useSearchParams, Link } from 'react-router-dom'
+import { NavLink, useSearchParams } from 'react-router-dom'
 import Word from '../components/Word'
 import SearchField from '../components/SearchField'
 import Filter from '../components/Filter'
@@ -36,17 +36,18 @@ const Journal = () => {
   }, [])
 
   useEffect(() => {
+    console.log('display changes')
     if (searchValue !== '') {
-      setFilteredWords((prevWords) => {
-        const newWords = prevWords.filter((word) =>
+      const newWords = words
+        .filter((word) =>
           word.word.toLowerCase().includes(searchValue.toLowerCase())
         )
-        return [...newWords].sort(sortOptions[sortValue])
-      })
+        .sort(sortOptions[sortValue])
+      setFilteredWords(newWords)
     } else {
-      setFilteredWords((prevWords) =>
-        [...prevWords].sort(sortOptions[sortValue])
-      )
+      console.log('no search')
+      const newWords = [...words].sort(sortOptions[sortValue])
+      setFilteredWords(newWords)
     }
   }, [searchValue, words, sortValue])
 
@@ -78,7 +79,8 @@ const Journal = () => {
   }
 
   return (
-    <JournalContext.Provider value={{ setShowForm, setFormWord, handleDelete }}>
+    <JournalContext.Provider
+      value={{ setShowForm, setFormWord, handleDelete, setWords }}>
       <div className='journal'>
         <div className='journal--search'>
           <SearchField
@@ -112,8 +114,10 @@ const Journal = () => {
           {displayedWords?.length > 0 ? (
             displayedWords.map((word) => (
               <Word
+                key={word.id}
                 wordData={word}
                 page='journal'
+                deleteWord={handleDelete}
               />
             ))
           ) : (
@@ -128,6 +132,7 @@ const Journal = () => {
         <WordForm
           formWord={formWord}
           page='journal'
+          updateWords={(newWords) => setWords(newWords)}
         />
       )}
     </JournalContext.Provider>

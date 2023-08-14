@@ -2,11 +2,11 @@ import { useState } from 'react'
 import WordDetails from './WordDetails'
 import WordHeader from './WordHeader'
 
-const Word = ({ wordData, page }) => {
-  console.log('word', wordData, wordData.id, wordData.pronunciation)
+const Word = ({ wordData, page, deleteWord }) => {
+  // console.log('word', wordData, wordData.id, wordData.pronunciation)
   const [showDetails, setShowDetails] = useState(false)
 
-  console.log('showForm')
+  // console.log('showForm')
 
   const speak = (e, text, voiceName, rate) => {
     e.stopPropagation()
@@ -45,6 +45,7 @@ const Word = ({ wordData, page }) => {
           page={page}
           speak={speak}
           setShowDetails={setShowDetails}
+          deleteWord={deleteWord}
         />
         <div className='word--definition'>
           {transformSentence(definition) || 'No definition found'}

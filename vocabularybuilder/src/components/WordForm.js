@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { SearchContext } from '../pages/Search'
 import { JournalContext } from '../pages/Journal'
 
-const WordForm = ({ formWord, page }) => {
+const WordForm = ({ formWord, page, updateWord = null }) => {
   const context = page === 'search' ? SearchContext : JournalContext
   const { setShowForm } = useContext(context)
 
@@ -33,15 +33,10 @@ const WordForm = ({ formWord, page }) => {
   const navigate = useNavigate()
 
   const handleChange = (e, index) => {
-    console.log('in handleChange')
     const { name, value } = e.target
-    console.log('name', name)
-    console.log('value', value)
-    console.log('index', index)
     setFormData((prevFormData) => {
       if (Array.isArray(prevFormData[name])) {
         const newArr = [...prevFormData[name]]
-        console.log('newArr', newArr)
         newArr[index] = value
         return {
           ...prevFormData,
@@ -81,23 +76,25 @@ const WordForm = ({ formWord, page }) => {
     })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    const filteredFormData = Object.keys(formData).reduce((acc, key) => {
-      if (Array.isArray(formData[key]) && formData[key]?.length > 0) {
+  const getFilteredFormData = () => {
+    return Object.keys(formData).reduce((acc, key) => {
+      if (Array.isArray(formData[key] && formData[key]?.length > 0)) {
         acc[key] = formData[key].filter((item) => item !== '')
       } else if (
-        !Array.isArray(formData[key]) &&
-        formData[key] === '' &&
-        key === 'definition'
+        !Array.isArray(
+          formData[key] && formData[key === '' && key === 'definition']
+        )
       ) {
         acc[key] = 'No definition found'
-      } else {
-        acc[key] = formData[key]
       }
       return acc
     }, {})
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    const filteredFormData = getFilteredFormData()
 
     let journalData
     try {
@@ -111,7 +108,7 @@ const WordForm = ({ formWord, page }) => {
       console.log('journalData', journalData)
       localStorage.setItem('journal', JSON.stringify(journalData))
       navigate('../../journal')
-    } else if (page === 'journal' && context.setWords) {
+    } else if (page === 'journal' && updateWord) {
       const updatedJournalData = journalData.map((word) => {
         if (word.id === filteredFormData.id) {
           return filteredFormData
@@ -120,7 +117,7 @@ const WordForm = ({ formWord, page }) => {
       })
       console.log('updatedJournalData', updatedJournalData)
       localStorage.setItem('journal', JSON.stringify(updatedJournalData))
-      context.setWords(updatedJournalData)
+      updateWord(updatedJournalData)
     }
 
     setShowForm(false)
