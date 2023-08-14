@@ -91,17 +91,22 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
     }, {})
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    const filteredFormData = getFilteredFormData()
-
+  const getJournalData = () => {
     let journalData
     try {
       journalData = JSON.parse(localStorage.getItem('journal')) || []
     } catch {
       journalData = []
     }
+    return journalData
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    const filteredFormData = getFilteredFormData()
+
+    const journalData = getJournalData()
 
     if (page === 'search') {
       journalData.push(filteredFormData)
