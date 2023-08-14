@@ -78,14 +78,22 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
   }
 
   const getFilteredFormData = () => {
+    console.log('formData', formData)
+
     return Object.keys(formData).reduce((acc, key) => {
-      if (Array.isArray(formData[key] && formData[key]?.length > 0)) {
+      if (Array.isArray(formData[key]) && formData[key].length > 0) {
         acc[key] = formData[key].filter((item) => item !== '')
       } else if (
-        !Array.isArray(
-          formData[key] && formData[key === '' && key === 'definition']
-        )
+        !Array.isArray(formData[key]) &&
+        formData[key] !== '' &&
+        key !== 'definition'
       ) {
+        acc[key] = formData[key]
+      } else if (key === 'definition' && formData[key] !== '') {
+        acc[key] = formData[key]
+      } else if (Array.isArray(formData[key])) {
+        acc[key] = [] // Set to an empty array if it's an array property
+      } else {
         acc[key] = 'No definition found'
       }
       return acc
