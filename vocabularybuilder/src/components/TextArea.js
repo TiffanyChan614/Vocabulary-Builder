@@ -10,6 +10,7 @@ const TextArea = ({ id, name, index, value, onBlur }) => {
   return (
     <>
       <textarea
+        className='rounded-lg border-2 border-indigo-100 py-1 px-2 w-full'
         id={id}
         key={name + index}
         name={name}

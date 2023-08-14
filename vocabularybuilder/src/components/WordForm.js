@@ -163,43 +163,66 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
   ]
 
   return (
-    <div className='word-form-wrapper'>
-      <form
-        className='word-form'
-        onSubmit={handleSubmit}>
-        <h1>{word}</h1>
-        {pronunciation && <h4>{`[${pronunciation}]`}</h4>}
-        <h4>{partOfSpeech}</h4>
-        <label htmlFor='definition'>Definition:</label>
-        <TextArea
-          id='definition'
-          name='definition'
-          value={definition}
-          onBlur={(e) => handleChange(e)}
-        />
-        {fieldList.map((field) => (
-          <WordFormField
-            key={field.name}
-            fieldName={field.name}
-            fieldData={field.data}
-            handleChange={handleChange}
-            handleDelete={handleDelete}
-            handleAdd={handleAdd}
-          />
-        ))}
-        <WordFormImages
-          formData={formData}
-          setFormData={setFormData}
-          handleDelete={handleDelete}
-        />
-        <button
-          type='button'
-          onClick={() => setShowForm(false)}>
-          Cancel
-        </button>
-        <button type='submit'>Add</button>
-      </form>
-    </div>
+    <>
+      <div className='word-form-overlay fixed inset-0 bg-black opacity-50 z-50'></div>
+      <div className='word-form-wrapper fixed inset-0 w-screen h-screen flex justify-center items-center z-50'>
+        <div className='word-form bg-white w-5/6 sm:w-2/3 rounded-xl overflow-hidden'>
+          <form onSubmit={handleSubmit}>
+            <header className='word-form--header pt-6 pb-4 px-6 border-b flex items-center'>
+              <h2 className='text-xl font-bold text-indigo-800'>{word}</h2>
+              {pronunciation && (
+                <h3 className='text-lg'>{`[${pronunciation}]`}</h3>
+              )}
+              {partOfSpeech && (
+                <h4 className='text-md font-semibold ml-6'>
+                  {partOfSpeech[0].toUpperCase() + partOfSpeech.slice(1)}
+                </h4>
+              )}
+            </header>
+            <div className='py-4 px-6 flex flex-col gap-3 overflow-y-auto max-h-[60vh]'>
+              <div className='word-form--definition flex flex-col gap-2'>
+                <label
+                  htmlFor='definition'
+                  className='font-bold'>
+                  Definition
+                </label>
+                <TextArea
+                  className='border-2'
+                  id='definition'
+                  name='definition'
+                  value={definition}
+                  onBlur={(e) => handleChange(e)}
+                />
+              </div>
+
+              {fieldList.map((field) => (
+                <WordFormField
+                  key={field.name}
+                  fieldName={field.name}
+                  fieldData={field.data}
+                  handleChange={handleChange}
+                  handleDelete={handleDelete}
+                  handleAdd={handleAdd}
+                />
+              ))}
+              <WordFormImages
+                formData={formData}
+                setFormData={setFormData}
+                handleDelete={handleDelete}
+              />
+            </div>
+            <div className='p-6 border-t flex justify-between'>
+              <button
+                type='button'
+                onClick={() => setShowForm(false)}>
+                Cancel
+              </button>
+              <button type='submit'>Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
   )
 }
 
