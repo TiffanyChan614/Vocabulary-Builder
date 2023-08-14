@@ -7,8 +7,6 @@ import { SearchContext } from '../pages/Search'
 import { JournalContext } from '../pages/Journal'
 import WordFormField from './WordFormField'
 
-//TODO: not updaing, no display changes shown -> not render update problem
-
 const WordForm = ({ formWord, page, updateWord = null }) => {
   const context = page === 'search' ? SearchContext : JournalContext
   const { setShowForm } = useContext(context)

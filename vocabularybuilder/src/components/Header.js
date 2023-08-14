@@ -6,8 +6,8 @@ import { useState, useEffect } from 'react'
 
 const Header = () => {
   const activeTextStyleClassName =
-    'font-bold text-gray-800 underline select-none'
-  const textLinkStyleClassName = 'hover:underline select-none'
+    'font-bold text-gray-800 hover:underline select-none'
+  const textLinkStyleClassName = 'text-gray-700 hover:underline select-none'
   const iconLinkStyleClassName =
     'hover:border-b-2 hover:pb-1 border-gray-700 text-gray-700 select-none'
   const activeIconStyleClassName =

@@ -81,7 +81,7 @@ const Journal = () => {
   return (
     <JournalContext.Provider
       value={{ setShowForm, setFormWord, handleDelete, setWords }}>
-      <div className='journal'>
+      <div className='journal border-2 flex flex-col gap-4'>
         <div className='journal--search'>
           <SearchField
             searchValue={searchValue}
