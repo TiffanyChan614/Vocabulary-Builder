@@ -64,8 +64,10 @@ const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
             type='button'
             onClick={(e) => {
               e.stopPropagation()
-              setShowForm(true)
               setFormWord(wordData)
+              setShowForm(true)
+
+              console.log('wordData', wordData)
             }}>
             Edit
           </button>

@@ -124,14 +124,7 @@ const Journal = () => {
           )}
         </div>
       </div>
-      {showForm && (
-        <WordForm
-          wordData={formWord}
-          setShowForm={setShowForm}
-          page='journal'
-          setWords={setWords}
-        />
-      )}
+      {showForm && <WordForm page='journal' />}
     </JournalContext.Provider>
   )
 }

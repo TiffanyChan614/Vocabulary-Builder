@@ -1,24 +1,29 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TextArea from './TextArea'
 import WordFormImages from './WordFormImages'
 import { v4 as uuidv4 } from 'uuid'
+import { SearchContext } from '../pages/Search'
+import { JournalContext } from '../pages/Journal'
 
-const WordForm = ({ wordData, setShowForm, page, setWords }) => {
+const WordForm = ({ page }) => {
+  const context = page === 'search' ? SearchContext : JournalContext
+  const { setShowForm, formWord } = useContext(context)
+
   const [formData, setFormData] = useState({
-    id: wordData.id || uuidv4(),
-    word: wordData.word,
-    pronunciation: wordData.pronunciation?.all,
-    partOfSpeech: wordData.partOfSpeech,
+    id: formWord.id || uuidv4(),
+    word: formWord.word,
+    pronunciation: formWord.pronunciation?.all,
+    partOfSpeech: formWord.partOfSpeech,
     definition:
-      wordData.definition[0].toUpperCase() + wordData.definition.slice(1) ||
+      formWord.definition[0].toUpperCase() + formWord.definition.slice(1) ||
       'No definition found',
-    synonyms: wordData.synonyms || [],
-    antonyms: wordData.antonyms || [],
-    examples: wordData.examples || [],
-    images: wordData.images || [],
+    synonyms: formWord.synonyms || [],
+    antonyms: formWord.antonyms || [],
+    examples: formWord.examples || [],
+    images: formWord.images || [],
     lastUpdated: new Date(),
-    created: page === 'search' ? new Date() : wordData.created,
+    created: page === 'search' ? new Date() : formWord.created,
   })
 
   console.log('formData', formData)
@@ -104,7 +109,7 @@ const WordForm = ({ wordData, setShowForm, page, setWords }) => {
       console.log('journalData', journalData)
       localStorage.setItem('journal', JSON.stringify(journalData))
       navigate('../../journal')
-    } else if (page === 'journal') {
+    } else if (page === 'journal' && context.setWords) {
       const updatedJournalData = journalData.map((word) => {
         if (word.id === filteredFormData.id) {
           return filteredFormData
@@ -113,7 +118,7 @@ const WordForm = ({ wordData, setShowForm, page, setWords }) => {
       })
       console.log('updatedJournalData', updatedJournalData)
       localStorage.setItem('journal', JSON.stringify(updatedJournalData))
-      setWords(updatedJournalData)
+      context.setWords(updatedJournalData)
     }
 
     setShowForm(false)
