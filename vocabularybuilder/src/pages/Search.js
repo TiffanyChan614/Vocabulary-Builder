@@ -37,7 +37,12 @@ const Search = () => {
         />
         <Outlet />
       </div>
-      {showForm && <WordForm page='search' />}
+      {showForm && (
+        <WordForm
+          formWord={formWord}
+          page='search'
+        />
+      )}
     </SearchContext.Provider>
   )
 }

@@ -59,21 +59,21 @@ const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
           </button>
         )}
 
-        {page === 'journal' && wordData.id !== 'undefined' && (
+        {page === 'journal' && typeof wordData?.id !== 'undefined' && (
           <button
             type='button'
             onClick={(e) => {
               e.stopPropagation()
+              console.log('==========================')
+              console.log('edit wordData', wordData)
               setFormWord(wordData)
               setShowForm(true)
-
-              console.log('wordData', wordData)
             }}>
             Edit
           </button>
         )}
 
-        {page === 'journal' && wordData.id !== 'undefined' && (
+        {page === 'journal' && typeof wordData?.id !== 'undefined' && (
           <button
             type='button'
             onClick={() => context.handleDelete(wordData.id)}>

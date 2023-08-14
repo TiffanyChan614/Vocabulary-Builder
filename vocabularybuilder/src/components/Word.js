@@ -3,7 +3,7 @@ import WordDetails from './WordDetails'
 import WordHeader from './WordHeader'
 
 const Word = ({ wordData, page }) => {
-  console.log('word', wordData)
+  console.log('word', wordData, wordData.id, wordData.pronunciation)
   const [showDetails, setShowDetails] = useState(false)
 
   console.log('showForm')

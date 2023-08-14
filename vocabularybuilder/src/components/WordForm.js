@@ -6,14 +6,16 @@ import { v4 as uuidv4 } from 'uuid'
 import { SearchContext } from '../pages/Search'
 import { JournalContext } from '../pages/Journal'
 
-const WordForm = ({ page }) => {
+const WordForm = ({ formWord, page }) => {
   const context = page === 'search' ? SearchContext : JournalContext
-  const { setShowForm, formWord } = useContext(context)
+  const { setShowForm } = useContext(context)
+
+  console.log('formWord', formWord)
 
   const [formData, setFormData] = useState({
     id: formWord.id || uuidv4(),
     word: formWord.word,
-    pronunciation: formWord.pronunciation?.all,
+    pronunciation: formWord.pronunciation || '',
     partOfSpeech: formWord.partOfSpeech,
     definition:
       formWord.definition[0].toUpperCase() + formWord.definition.slice(1) ||
