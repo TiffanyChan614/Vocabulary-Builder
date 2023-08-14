@@ -1,4 +1,5 @@
-import { AiFillSound, AiOutlinePlus } from 'react-icons/ai'
+import { AiFillSound, AiOutlinePlus, AiOutlineEdit } from 'react-icons/ai'
+import { MdOutlineDeleteOutline } from 'react-icons/md'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import { useContext } from 'react'
 import { SearchContext } from '../pages/Search'
@@ -67,7 +68,7 @@ const WordHeader = ({ wordData, page, speak, setShowDetails, deleteWord }) => {
               setShowForm(true)
               setFormWord(wordData)
             }}>
-            Edit
+            <AiOutlineEdit size={20} />
           </button>
         )}
 
@@ -75,7 +76,7 @@ const WordHeader = ({ wordData, page, speak, setShowDetails, deleteWord }) => {
           <button
             type='button'
             onClick={() => deleteWord(wordData.id)}>
-            Delete
+            <MdOutlineDeleteOutline size={20} />
           </button>
         )}
       </div>
