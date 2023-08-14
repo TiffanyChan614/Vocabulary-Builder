@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link, useSearchParams } from 'react-router-dom'
 import Word from '../components/Word'
 import { getWordData } from '../services/wordAPI'
+import Filter from '../components/Filter'
 
 const WordMeanings = () => {
   const { word } = useParams()
@@ -91,74 +92,7 @@ const WordMeanings = () => {
   return (
     <div className='search--word-meanings flex flex-col gap-5 px-2'>
       <nav className='flex items-center flex-wrap md:justify-between gap-3'>
-        <div className='px-1 flex'>
-          <Link
-            to='..'
-            className='underline text-gray-600 hover:text-indigo-800 text-sm'>
-            Back
-          </Link>
-        </div>
-
-        <div className='flex gap-3 flex-wrap'>
-          <Link to='?partOfSpeech=noun'>
-            <div
-              className={
-                partOfSpeechFilter === 'noun'
-                  ? filterActiveStyleClassName
-                  : filterStyleClassName
-              }>
-              Nouns
-            </div>
-          </Link>
-          <Link to='?partOfSpeech=verb'>
-            <div
-              className={
-                partOfSpeechFilter === 'verb'
-                  ? filterActiveStyleClassName
-                  : filterStyleClassName
-              }>
-              Verbs
-            </div>
-          </Link>
-          <Link to='?partOfSpeech=adjective'>
-            <div
-              className={
-                partOfSpeechFilter === 'adjective'
-                  ? filterActiveStyleClassName
-                  : filterStyleClassName
-              }>
-              Adjectives
-            </div>
-          </Link>
-          <Link to='?partOfSpeech=adverb'>
-            <div
-              className={
-                partOfSpeechFilter === 'adverb'
-                  ? filterActiveStyleClassName
-                  : filterStyleClassName
-              }>
-              Adverbs
-            </div>
-          </Link>
-          <Link to='?partOfSpeech=other'>
-            <div
-              className={
-                partOfSpeechFilter === 'other'
-                  ? filterActiveStyleClassName
-                  : filterStyleClassName
-              }>
-              Other
-            </div>
-          </Link>
-          <Link to='.'>
-            <div
-              className={`${filterStyleClassName} ${
-                partOfSpeechFilter === '' ? filterActiveStyleClassName : ''
-              }`}>
-              Clear Filter
-            </div>
-          </Link>
-        </div>
+        <Filter partOfSpeechFilter={partOfSpeechFilter} />
       </nav>
       {wordDataElement}
     </div>
