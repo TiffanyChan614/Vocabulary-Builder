@@ -32,9 +32,10 @@ const WordDetail = ({ fieldName, fieldData, transformSentence, speak }) => {
     )
   } else if (fieldName === 'Images') {
     fieldContent = (
-      <div className='word--details-content'>
+      <div className='word--details-content flex gap-2 wrap'>
         {fieldData.map((image, i) => (
           <img
+            className='w-20 md:w-40 object-cover rounded-lg'
             key={image + i}
             src={image.src}
             alt={image.alt}
