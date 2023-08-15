@@ -46,42 +46,46 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
   }
 
   return (
-    <div className='word-form--images'>
+    <div className='word-form--images flex flex-col gap-2'>
       <div className='word-form--details-name font-bold'>Images</div>
-      <div className='word-form--image-search'>
-        <input
-          type='text'
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        <button
-          type='button'
-          onClick={handleSearch}>
-          Search for images
-        </button>
-        <button
-          type='button'
-          onClick={handleClose}>
-          Close
-        </button>
-        {showMessage && <div>Only 3 images allowed</div>}
+      <div className='flex flex-col gap-1'>
+        <p>Search for images:</p>
+        <div className='word-form--image-search flex items-center gap-2'>
+          <input
+            className='border-2 border-gray-200 rounded-full w-full px-2 py-1'
+            type='text'
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          <button
+            className='rounded-lg px-2 py-1 hover:bg-indigo-100'
+            type='button'
+            onClick={handleSearch}>
+            Search
+          </button>
+          <button
+            className='rounded-lg px-2 py-1 hover:bg-gray-100'
+            type='button'
+            onClick={handleClose}>
+            Close
+          </button>
+          {showMessage && <div>Only 3 images allowed</div>}
+        </div>
       </div>
-      <ImageDropZone
-        formData={formData}
-        setFormData={setFormData}
-        setShowMessage={setShowMessage}
-      />
-      <div className='word-form--images-results'>
-        <div>Your images:</div>
-        {showImageResults &&
-          images?.map((image, index) => (
-            <div className='result-images'>
+
+      {showImageResults && (
+        <div className='word-form--images-results border-2 rounded-lg flex flex-wrap max-h-[300px] overflow-auto gap-2 md:gap-4 px-2 md:px-6 py-4'>
+          {images?.map((image, index) => (
+            <div
+              className='result-images flex flex-col justify-center'
+              key={image.id}>
               <img
-                key={image.id}
+                className='w-30 h-40 md:w-40 object-cover rounded-t-lg'
                 src={image.src.medium}
                 alt={image.alt}
               />
               <button
+                className='border-b-2 border-x-2 border-indigo-100 rounded-b-lg px-2 py-1 hover:bg-indigo-100'
                 type='button'
                 name='images'
                 onClick={(e) => handleAdd(e, index)}>
@@ -89,23 +93,43 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
               </button>
             </div>
           ))}
+        </div>
+      )}
+      <div>
+        <p className='flex flex-col gap-1'>Or import images here:</p>
+        <ImageDropZone
+          formData={formData}
+          setFormData={setFormData}
+          setShowMessage={setShowMessage}
+        />
       </div>
+
       <div className='word-form--details-content'>
-        {formData.images?.map((image, index) => (
-          <div key={image.src + index}>
-            <img
-              src={image.src}
-              alt={image.alt}
-            />
-            <button
-              type='button'
-              className='delete'
-              name='images'
-              onClick={(e) => handleDelete(e, index)}>
-              Delete
-            </button>
-          </div>
-        ))}
+        <p>Your images:</p>
+        <div className='flex justify-center lg:justify-start gap-2'>
+          {formData.images?.length > 0 ? (
+            formData.images?.map((image, index) => (
+              <div
+                key={image.src + index}
+                className='flex flex-col'>
+                <img
+                  className='rounded-t-lg w-[150px] md:w-[200px] lg:w-[250px] object-cover'
+                  src={image.src}
+                  alt={image.alt}
+                />
+                <button
+                  type='button'
+                  className='delete w-full border-b-2 border-x-2 border-indigo-100 rounded-b-lg px-2 py-1 hover:bg-indigo-100'
+                  name='images'
+                  onClick={(e) => handleDelete(e, index)}>
+                  Delete
+                </button>
+              </div>
+            ))
+          ) : (
+            <p className='text-gray-600'>No images added</p>
+          )}
+        </div>
       </div>
     </div>
   )

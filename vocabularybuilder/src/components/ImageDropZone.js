@@ -66,10 +66,10 @@ const ImageDropZone = ({ formData, setFormData, setShowMessage }) => {
   }
 
   const styleClassName =
-    'border-2 border-dashed border-gray-300 w-full h-[200px] flex items-center justify-center text-gray-600 text-md rounded-lg'
+    'border-2 border-dashed border-gray-300 w-full md:w-[200px] h-[200px] flex items-center justify-center text-gray-600 text-md rounded-lg'
 
   const draggingStyleClassName =
-    'border-2 border-dashed border-indigo-300 w-full h-[200px] flex items-center justify-center text-gray-600 text-md rounded-lg'
+    'border-2 border-dashed border-indigo-300 w-full md:w-[200px] h-[200px] flex items-center justify-center text-gray-600 text-md rounded-lg'
 
   return (
     <div

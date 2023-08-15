@@ -169,7 +169,7 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
     <>
       <div className='word-form-overlay fixed inset-0 bg-black opacity-50 z-50'></div>
       <div className='word-form-wrapper fixed inset-0 w-screen h-screen flex justify-center items-center z-50'>
-        <div className='word-form bg-white w-5/6 sm:w-2/3 rounded-xl overflow-hidden'>
+        <div className='word-form bg-white w-full sm:w-2/3 rounded-xl overflow-hidden'>
           <form onSubmit={handleSubmit}>
             <header className='word-form--header pt-6 pb-4 px-6 border-b flex items-center'>
               <h2 className='text-xl font-bold text-indigo-800'>{word}</h2>
@@ -182,7 +182,7 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
                 </h4>
               )}
             </header>
-            <div className='py-4 px-6 flex flex-col gap-3 overflow-y-auto max-h-[60vh]'>
+            <div className='py-4 px-3 md:px-6 flex flex-col gap-3 overflow-y-auto max-h-[60vh]'>
               <div className='word-form--definition flex flex-col gap-2'>
                 <label
                   htmlFor='definition'
@@ -195,6 +195,7 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
                   name='definition'
                   value={definition}
                   onBlur={(e) => handleChange(e)}
+                  height='h-15'
                 />
               </div>
 
@@ -216,11 +217,16 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
             </div>
             <div className='p-6 border-t flex justify-between'>
               <button
+                className='hover:bg-gray-100 rounded px-2 py-1'
                 type='button'
                 onClick={() => setShowForm(false)}>
                 Cancel
               </button>
-              <button type='submit'>Add</button>
+              <button
+                className='hover:bg-indigo-100 rounded px-2 py-1'
+                type='submit'>
+                Add
+              </button>
             </div>
           </form>
         </div>

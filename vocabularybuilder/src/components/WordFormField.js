@@ -23,6 +23,7 @@ const WordFormField = ({
                 name={fieldName}
                 value={data}
                 onBlur={(e) => handleChange(e, i)}
+                height={fieldName === 'examples' ? 'h-15' : 'h-10'}
               />
               <button
                 type='button'
