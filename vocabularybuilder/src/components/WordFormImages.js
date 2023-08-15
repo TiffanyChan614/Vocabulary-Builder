@@ -47,29 +47,7 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
 
   return (
     <div className='word-form--images'>
-      <div className='word-form--details-name'>Images:</div>
-      <div className='word-form--details-content'>
-        {formData.images?.map((image, index) => (
-          <div key={image.src + index}>
-            <img
-              src={image.src}
-              alt={image.alt}
-            />
-            <button
-              type='button'
-              className='delete'
-              name='images'
-              onClick={(e) => handleDelete(e, index)}>
-              Delete
-            </button>
-          </div>
-        ))}
-        <ImageDropZone
-          formData={formData}
-          setFormData={setFormData}
-          setShowMessage={setShowMessage}
-        />
-      </div>
+      <div className='word-form--details-name font-bold'>Images</div>
       <div className='word-form--image-search'>
         <input
           type='text'
@@ -88,7 +66,13 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
         </button>
         {showMessage && <div>Only 3 images allowed</div>}
       </div>
+      <ImageDropZone
+        formData={formData}
+        setFormData={setFormData}
+        setShowMessage={setShowMessage}
+      />
       <div className='word-form--images-results'>
+        <div>Your images:</div>
         {showImageResults &&
           images?.map((image, index) => (
             <div className='result-images'>
@@ -105,6 +89,23 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
               </button>
             </div>
           ))}
+      </div>
+      <div className='word-form--details-content'>
+        {formData.images?.map((image, index) => (
+          <div key={image.src + index}>
+            <img
+              src={image.src}
+              alt={image.alt}
+            />
+            <button
+              type='button'
+              className='delete'
+              name='images'
+              onClick={(e) => handleDelete(e, index)}>
+              Delete
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   )
