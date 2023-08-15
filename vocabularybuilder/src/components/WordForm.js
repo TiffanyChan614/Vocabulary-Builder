@@ -223,9 +223,9 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
                 Cancel
               </button>
               <button
-                className='hover:bg-indigo-100 rounded px-2 py-1'
+                className='hover:bg-indigo-100 rounded px-2 py-1 font-semibold'
                 type='submit'>
-                Add
+                Confirm
               </button>
             </div>
           </form>

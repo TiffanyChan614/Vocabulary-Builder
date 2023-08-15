@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getImage } from '../services/pexelAPI'
 import ImageDropZone from './ImageDropZone'
 
@@ -45,6 +45,10 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
     setShowImageResults(false)
   }
 
+  useEffect(() => {
+    showMessage && window.alert('Only 3 images allowed')
+  }, [showMessage])
+
   return (
     <div className='word-form--images flex flex-col gap-2'>
       <div className='word-form--details-name font-bold'>Images</div>
@@ -69,10 +73,8 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
             onClick={handleClose}>
             Close
           </button>
-          {showMessage && <div>Only 3 images allowed</div>}
         </div>
       </div>
-
       {showImageResults && (
         <div className='word-form--images-results border-2 rounded-lg flex flex-wrap max-h-[300px] overflow-auto gap-2 md:gap-4 px-2 md:px-6 py-4'>
           {images?.map((image, index) => (
