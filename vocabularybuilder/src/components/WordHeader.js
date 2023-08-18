@@ -1,11 +1,18 @@
 import { AiFillSound, AiOutlinePlus, AiOutlineEdit } from 'react-icons/ai'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 import { FiMoreHorizontal } from 'react-icons/fi'
-import { useContext } from 'react'
-import { SearchContext } from '../pages/Search'
-import { JournalContext } from '../pages/Journal'
+import {
+  updateJournalShowForm,
+  updateJournalFormWord,
+  updateWords,
+} from '../reducers/journalReducer'
+import {
+  updateSearchShowForm,
+  updateSearchFormWord,
+} from '../reducers/searchReducer'
+import { useDispatch, useSelector } from 'react-redux'
 
-const WordHeader = ({ wordData, page, speak, setShowDetails, deleteWord }) => {
+const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
   const {
     word,
     pronunciation,
@@ -16,8 +23,25 @@ const WordHeader = ({ wordData, page, speak, setShowDetails, deleteWord }) => {
     images,
   } = wordData
 
-  const context = page === 'search' ? SearchContext : JournalContext
-  const { setShowForm, setFormWord } = useContext(context)
+  const dispatch = useDispatch()
+  const { words } = useSelector((state) => state.journal)
+
+  const handleDelete = (id) => {
+    const newWords = words.filter((word) => word.id !== id)
+    dispatch(updateWords(newWords))
+    localStorage.setItem('journal', JSON.stringify(newWords))
+  }
+
+  const toggleShowForm = (show) => {
+    if (page === 'search') {
+      dispatch(updateSearchShowForm(show))
+    } else if (page === 'journal') {
+      dispatch(updateJournalShowForm(show))
+    }
+  }
+
+  const updateFormWord =
+    page === 'search' ? updateSearchFormWord : updateJournalFormWord
 
   return (
     <div className='word--header flex justify-between'>
@@ -53,8 +77,8 @@ const WordHeader = ({ wordData, page, speak, setShowDetails, deleteWord }) => {
           <button
             onClick={(e) => {
               e.stopPropagation()
-              setShowForm(true)
-              setFormWord(wordData)
+              toggleShowForm(true)
+              dispatch(updateFormWord(wordData))
             }}>
             <AiOutlinePlus size={20} />
           </button>
@@ -65,8 +89,8 @@ const WordHeader = ({ wordData, page, speak, setShowDetails, deleteWord }) => {
             type='button'
             onClick={(e) => {
               e.stopPropagation()
-              setShowForm(true)
-              setFormWord(wordData)
+              toggleShowForm(true)
+              dispatch(updateFormWord(wordData))
             }}>
             <AiOutlineEdit size={20} />
           </button>
@@ -75,7 +99,7 @@ const WordHeader = ({ wordData, page, speak, setShowDetails, deleteWord }) => {
         {page === 'journal' && typeof wordData?.id !== 'undefined' && (
           <button
             type='button'
-            onClick={() => deleteWord(wordData.id)}>
+            onClick={() => handleDelete(wordData.id)}>
             <MdOutlineDeleteOutline size={20} />
           </button>
         )}

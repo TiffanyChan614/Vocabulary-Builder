@@ -1,49 +1,46 @@
-import { useState, createContext } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useNavigate, Outlet } from 'react-router-dom'
 import SearchField from '../components/SearchField'
 import WordForm from '../components/WordForm'
-
-export const SearchContext = createContext()
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  updateSearchSearchValue,
+  updateSearchCurrentPage,
+} from '../reducers/searchReducer'
 
 const Search = () => {
-  const [searchValue, setSearchValue] = useState('')
-  const [showForm, setShowForm] = useState(false)
-  const [formWord, setFormWord] = useState('')
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const { searchValue, showForm, formWord, currentPage } = useSelector(
+    (state) => state.search
+  )
+
   console.log('formWord', formWord)
+  console.log('searchValue in Search', searchValue)
 
   const handleInputChange = (e) => {
-    setSearchValue(e.target.value)
-    navigate('.')
+    dispatch(updateSearchSearchValue(e.target.value))
+    dispatch(updateSearchCurrentPage('search'))
   }
 
+  useEffect(() => {
+    navigate(`/${currentPage}`)
+  }, [currentPage, navigate])
+
   return (
-    <SearchContext.Provider
-      value={{
-        searchValue,
-        setSearchValue,
-        showForm,
-        setShowForm,
-        formWord,
-        setFormWord,
-      }}>
+    <>
       <div className='flex flex-col gap-5 w-full max-w-screen-md'>
         <SearchField
           searchValue={searchValue}
-          setSearchValue={setSearchValue}
+          setSearchValue={updateSearchSearchValue}
           placeholder='Search for a word'
           handleInputChange={handleInputChange}
         />
         <Outlet />
       </div>
-      {showForm && (
-        <WordForm
-          formWord={formWord}
-          page='search'
-        />
-      )}
-    </SearchContext.Provider>
+      {showForm && <WordForm page='search' />}
+    </>
   )
 }
 

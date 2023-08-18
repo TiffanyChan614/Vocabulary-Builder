@@ -1,17 +1,26 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TextArea from './TextArea'
 import WordFormImages from './WordFormImages'
 import { v4 as uuidv4 } from 'uuid'
-import { SearchContext } from '../pages/Search'
-import { JournalContext } from '../pages/Journal'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateJournalShowForm, updateWords } from '../reducers/journalReducer'
+import { updateSearchShowForm } from '../reducers/searchReducer'
 import WordFormField from './WordFormField'
 
-const WordForm = ({ formWord, page, updateWord = null }) => {
-  const context = page === 'search' ? SearchContext : JournalContext
-  const { setShowForm } = useContext(context)
+const WordForm = ({ page }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  console.log('formWord', formWord)
+  const formWord = useSelector((state) => {
+    if (page === 'search') {
+      return state.search.formWord
+    } else if (page === 'journal') {
+      return state.journal.formWord
+    }
+  })
+
+  const now = new Date().toISOString()
 
   const [formData, setFormData] = useState({
     id: formWord.id || uuidv4(),
@@ -25,13 +34,21 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
     antonyms: formWord.antonyms || [],
     examples: formWord.examples || [],
     images: formWord.images || [],
-    lastUpdated: new Date(),
-    created: page === 'search' ? new Date() : formWord.created,
+    lastUpdated: now,
+    created: page === 'search' ? now : formWord.created,
   })
 
-  console.log('formData', formData)
+  console.log('formWord in WordForm', formWord)
 
-  const navigate = useNavigate()
+  const toggleShowForm = (show) => {
+    if (page === 'search') {
+      dispatch(updateSearchShowForm(show))
+    } else if (page === 'journal') {
+      dispatch(updateJournalShowForm(show))
+    }
+  }
+
+  console.log('formData', formData)
 
   const handleChange = (e, index) => {
     const { name, value } = e.target
@@ -126,7 +143,7 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
       journalData.push(filteredFormData)
       localStorage.setItem('journal', JSON.stringify(journalData))
       navigate('../../journal')
-    } else if (page === 'journal' && updateWord) {
+    } else if (page === 'journal' && updateWords) {
       const updatedJournalData = journalData.map((word) => {
         if (word.id === filteredFormData.id) {
           return filteredFormData
@@ -134,10 +151,11 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
         return word
       })
       localStorage.setItem('journal', JSON.stringify(updatedJournalData))
-      updateWord(updatedJournalData)
+      console.log('updatedJournalData', updatedJournalData)
+      dispatch(updateWords(updatedJournalData))
     }
 
-    setShowForm(false)
+    toggleShowForm(false)
   }
 
   const {
@@ -219,7 +237,7 @@ const WordForm = ({ formWord, page, updateWord = null }) => {
               <button
                 className='hover:bg-gray-100 rounded px-2 py-1'
                 type='button'
-                onClick={() => setShowForm(false)}>
+                onClick={() => toggleShowForm(false)}>
                 Cancel
               </button>
               <button

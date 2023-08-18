@@ -1,20 +1,31 @@
-import { useState, useEffect } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import Word from '../components/Word'
 import { getWordData } from '../services/wordAPI'
 import Filter from '../components/Filter'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  updateWordData,
+  updateIsLoading,
+} from '../reducers/wordMeaningsReducer'
 
 const WordMeanings = () => {
   const { word } = useParams()
-  const [wordData, setWordData] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [searchParams, setSearchParams] = useSearchParams()
-
-  const partOfSpeechFilter = searchParams.get('partOfSpeech')
+  const dispatch = useDispatch()
+  const { wordData, isLoading, partOfSpeechFilter } = useSelector(
+    (state) => state.wordMeanings
+  )
 
   let displayedMeanings
 
-  if (partOfSpeechFilter) {
+  console.log('partOfSpeechFilter', partOfSpeechFilter)
+  console.log('wordData partOfSpeech', wordData?.results?.partOfSpeech)
+  console.log(
+    'partOfSpeechFilter match',
+    wordData?.results?.partOfSpeech === partOfSpeechFilter
+  )
+
+  if (partOfSpeechFilter !== '') {
     if (partOfSpeechFilter === 'other') {
       displayedMeanings = wordData?.results?.filter(
         (result) =>
@@ -24,9 +35,11 @@ const WordMeanings = () => {
           result.partOfSpeech !== 'adverb'
       )
     } else {
+      console.log('there is a specific filter')
       displayedMeanings = wordData?.results?.filter(
         (result) => result.partOfSpeech === partOfSpeechFilter
       )
+      console.log('displayedMeanings', displayedMeanings)
     }
   } else {
     displayedMeanings = wordData?.results
@@ -37,10 +50,10 @@ const WordMeanings = () => {
 
   useEffect(() => {
     async function fetchData() {
-      setIsLoading(true)
+      dispatch(updateIsLoading(true))
       let returnedWordData = await getWordData(word)
-      setWordData(returnedWordData)
-      setIsLoading(false)
+      dispatch(updateWordData(returnedWordData))
+      dispatch(updateIsLoading(false))
     }
     fetchData()
   }, [word])
@@ -65,7 +78,7 @@ const WordMeanings = () => {
         page='search'
       />
     ))
-  } else {
+  } else if (partOfSpeechFilter === '') {
     wordDataElement = (
       <Word
         key={wordData?.word || 'no word'}
@@ -86,7 +99,7 @@ const WordMeanings = () => {
   return (
     <div className='search--word-meanings flex flex-col gap-5 px-2'>
       <nav className='flex items-center flex-wrap md:justify-between gap-3'>
-        <Filter partOfSpeechFilter={partOfSpeechFilter} />
+        <Filter page='search' />
       </nav>
       {wordDataElement}
     </div>

@@ -1,32 +1,40 @@
-import { useState, useEffect, useContext, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { getMatchedWords } from '../services/wordAPI'
-import { SearchContext } from '../pages/Search'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  updateMatchedWords,
+  updateIsLoading,
+} from '../reducers/possibleWordsReducer'
+import { updateSearchCurrentPage } from '../reducers/searchReducer'
 
 const cache = {}
 
 const PossibleWords = () => {
-  const { searchValue, setSearchValue } = useContext(SearchContext)
-  const [matchedWords, setMatchedWords] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch()
+  const { searchValue } = useSelector((state) => state.search)
+  const { matchedWords, isLoading } = useSelector(
+    (state) => state.possibleWords
+  )
   const isFirstRender = useRef(true)
 
   const wordStyleClassName =
     'border-2 border-gray-100 p-3 rounded-xl text-lg font-medium text-indigo-900 hover:border-indigo-100 hover:bg-indigo-100 hover:text-indigo-900 select-none'
 
+  console.log('searchValue in possibleWords', searchValue)
   useEffect(() => {
     async function fetchData() {
       if (searchValue === '') {
         return
       }
       if (cache[searchValue]) {
-        setMatchedWords(cache[searchValue])
+        dispatch(updateMatchedWords(cache[searchValue]))
       } else {
-        setIsLoading(true)
+        dispatch(updateIsLoading(true))
         const returnedWords = await getMatchedWords(searchValue.toLowerCase())
         cache[searchValue.toLowerCase()] = returnedWords.results.data
-        setMatchedWords(returnedWords.results.data)
-        setIsLoading(false)
+        dispatch(updateMatchedWords(returnedWords.results.data))
+        dispatch(updateIsLoading(false))
       }
     }
     const newTimeoutId = setTimeout(() => {
@@ -42,12 +50,13 @@ const PossibleWords = () => {
       return <div>Loading...</div>
     } else if (searchValue === '') {
       return null
-    } else if (matchedWords.length > 0) {
+    } else if (matchedWords?.length > 0) {
       return matchedWords?.map((word, i) => (
         <NavLink
           to={`${word}`}
           className='matched-word'
-          key={word + i}>
+          key={word + i}
+          onClick={() => dispatch(updateSearchCurrentPage(`search/${word}`))}>
           <div className={wordStyleClassName}>{word}</div>
         </NavLink>
       ))

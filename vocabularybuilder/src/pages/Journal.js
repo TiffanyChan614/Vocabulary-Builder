@@ -1,26 +1,24 @@
-import { useState, useEffect, createContext } from 'react'
-import { NavLink, useSearchParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
 import Word from '../components/Word'
 import SearchField from '../components/SearchField'
 import Filter from '../components/Filter'
 import WordForm from '../components/WordForm'
-
-export const JournalContext = createContext()
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  updateWords,
+  updateJournalSearchValue,
+  updateSortValue,
+} from '../reducers/journalReducer'
 
 const Journal = () => {
-  const [words, setWords] = useState([])
-  const [searchValue, setSearchValue] = useState('')
-  const [filteredWords, setFilteredWords] = useState([])
-  const [sortValue, setSortValue] = useState('updated')
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [showForm, setShowForm] = useState(false)
-  const [formWord, setFormWord] = useState('')
+  const dispatch = useDispatch()
+  const { words, searchValue, sortValue, partOfSpeechFilter, showForm } =
+    useSelector((state) => state.journal)
 
   const sortOptions = {
-    updated: (a, b) =>
-      new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime(),
-    created: (a, b) =>
-      new Date(b.created).getTime() - new Date(a.created).getTime(),
+    updated: (a, b) => b.lastUpdated.localeCompare(a.lastUpdated),
+    created: (a, b) => b.created.localeCompare(a.created),
     alphabetical: (a, b) => a.word.localeCompare(b.word),
     length: (a, b) => a.word.length - b.word.length,
     partOfSpeech: (a, b) => a.partOfSpeech.localeCompare(b.partOfSpeech),
@@ -28,82 +26,71 @@ const Journal = () => {
 
   useEffect(() => {
     try {
-      setWords(JSON.parse(localStorage.getItem('journal')))
-      setFilteredWords(JSON.parse(localStorage.getItem('journal')))
+      dispatch(updateWords(JSON.parse(localStorage.getItem('journal'))))
     } catch {
-      setWords([])
+      dispatch(updateWords([]))
     }
   }, [])
 
-  useEffect(() => {
-    console.log('display changes')
+  const getFilteredAndSortedWords = () => {
+    let filteredAndSortedWords = [...words]
     if (searchValue !== '') {
-      const newWords = words
+      filteredAndSortedWords = filteredAndSortedWords
         .filter((word) =>
           word.word.toLowerCase().includes(searchValue.toLowerCase())
         )
         .sort(sortOptions[sortValue])
-      setFilteredWords(newWords)
     } else {
-      console.log('no search')
-      const newWords = [...words].sort(sortOptions[sortValue])
-      setFilteredWords(newWords)
-    }
-  }, [searchValue, words, sortValue])
-
-  const handleDelete = (id) => {
-    const newWords = words.filter((word) => word.id !== id)
-    setWords(newWords)
-    setFilteredWords(newWords)
-    localStorage.setItem('journal', JSON.stringify(newWords))
-  }
-
-  const partOfSpeechFilter = searchParams.get('partOfSpeech')
-  let displayedWords
-  if (partOfSpeechFilter) {
-    if (partOfSpeechFilter === 'other') {
-      displayedWords = filteredWords?.filter(
-        (word) =>
-          word.partOfSpeech !== 'noun' &&
-          word.partOfSpeech !== 'verb' &&
-          word.partOfSpeech !== 'adjective' &&
-          word.partOfSpeech !== 'adverb'
-      )
-    } else {
-      displayedWords = filteredWords?.filter(
-        (word) => word.partOfSpeech === partOfSpeechFilter
+      filteredAndSortedWords = filteredAndSortedWords.sort(
+        sortOptions[sortValue]
       )
     }
-  } else {
-    displayedWords = filteredWords
+
+    if (partOfSpeechFilter) {
+      if (partOfSpeechFilter === 'other') {
+        filteredAndSortedWords = filteredAndSortedWords.filter(
+          (word) =>
+            word.partOfSpeech !== 'noun' &&
+            word.partOfSpeech !== 'verb' &&
+            word.partOfSpeech !== 'adjective' &&
+            word.partOfSpeech !== 'adverb'
+        )
+      } else {
+        filteredAndSortedWords = filteredAndSortedWords.filter(
+          (word) => word.partOfSpeech === partOfSpeechFilter
+        )
+      }
+    }
+
+    return filteredAndSortedWords
   }
+
+  const displayedWords = getFilteredAndSortedWords()
 
   return (
-    <JournalContext.Provider
-      value={{ setShowForm, setFormWord, handleDelete, setWords }}>
+    <>
       <div className='journal flex flex-col gap-4'>
         <div className='journal--search'>
           <SearchField
             searchValue={searchValue}
-            setSearchValue={setSearchValue}
+            setSearchValue={updateJournalSearchValue}
             placeholder='Search journal'
-            handleInputChange={(e) => setSearchValue(e.target.value)}
+            handleInputChange={(e) =>
+              dispatch(updateJournalSearchValue(e.target.value))
+            }
           />
         </div>
         <div className='journal--control flex flex-col gap-3 md:flex-row md:justify-between'>
           <nav>
-            <Filter partOfSpeechFilter={partOfSpeechFilter} />
+            <Filter page='journal' />
           </nav>
 
           <select
             className='journal--sort border-indigo-100 border-2 rounded-xl py-1 px-3 text-sm font-semibold'
-            onChange={(e) => setSortValue(e.target.value)}>
+            onChange={(e) => dispatch(updateSortValue(e.target.value))}
+            value={sortValue}>
             <option disabled>Sort by</option>
-            <option
-              value='updated'
-              defaultValue>
-              Recently updated
-            </option>
+            <option value='updated'>Recently updated</option>
             <option value='alphabetical'>Alphabetical</option>
             <option value='length'>Length</option>
             <option value='partOfSpeech'>Part of speech</option>
@@ -117,7 +104,6 @@ const Journal = () => {
                 key={word.id}
                 wordData={word}
                 page='journal'
-                deleteWord={handleDelete}
               />
             ))
           ) : (
@@ -128,14 +114,8 @@ const Journal = () => {
           )}
         </div>
       </div>
-      {showForm && (
-        <WordForm
-          formWord={formWord}
-          page='journal'
-          updateWord={(newWords) => setWords(newWords)}
-        />
-      )}
-    </JournalContext.Provider>
+      {showForm && <WordForm page='journal' />}
+    </>
   )
 }
 
