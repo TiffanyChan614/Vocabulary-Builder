@@ -6,7 +6,6 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
   const [images, setImages] = useState(formData.images)
   const [searchValue, setSearchValue] = useState(formData.word)
   const [showImageResults, setShowImageResults] = useState(false)
-  const [showMessage, setShowMessage] = useState(false)
 
   const handleSearch = async (e) => {
     e.stopPropagation()
@@ -18,10 +17,7 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
   const handleAdd = (e, index) => {
     e.stopPropagation()
     if (formData.images.length >= 3) {
-      setShowMessage(true)
-      setTimeout(() => {
-        setShowMessage(false)
-      }, 3000)
+      window.alert('Only 3 images allowed')
       return
     }
     const name = e.target.name
@@ -44,10 +40,6 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
     e.stopPropagation()
     setShowImageResults(false)
   }
-
-  useEffect(() => {
-    showMessage && window.alert('Only 3 images allowed')
-  }, [showMessage])
 
   return (
     <div className='word-form--images flex flex-col gap-2'>
@@ -102,7 +94,6 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
         <ImageDropZone
           formData={formData}
           setFormData={setFormData}
-          setShowMessage={setShowMessage}
         />
       </div>
 

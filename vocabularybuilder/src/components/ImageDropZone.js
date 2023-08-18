@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const ImageDropZone = ({ formData, setFormData, setShowMessage }) => {
+const ImageDropZone = ({ formData, setFormData }) => {
   const [isDragging, setIsDragging] = useState(false)
 
   const handleDragEnter = (e) => {
@@ -28,10 +28,7 @@ const ImageDropZone = ({ formData, setFormData, setShowMessage }) => {
     if (files && files.length > 0) {
       const currentImagesLength = formData.images.length
       if (files.length + currentImagesLength > 3) {
-        setShowMessage(true)
-        setTimeout(() => {
-          setShowMessage(false)
-        }, 3000)
+        window.alert('Only 3 images allowed')
         return
       }
       const promises = []
