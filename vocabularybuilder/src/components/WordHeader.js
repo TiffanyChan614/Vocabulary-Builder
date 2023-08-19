@@ -5,14 +5,16 @@ import {
   updateJournalShowForm,
   updateJournalFormWord,
   updateWords,
+  updateJournalShowDetails,
 } from '../reducers/journalReducer'
 import {
   updateSearchShowForm,
   updateSearchFormWord,
 } from '../reducers/searchReducer'
+import { updateMeaningsShowDetails } from '../reducers/wordMeaningsReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
-const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
+const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
   const {
     word,
     pronunciation,
@@ -25,6 +27,10 @@ const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
 
   const dispatch = useDispatch()
   const { words } = useSelector((state) => state.journal)
+  const updateShowDetails =
+    page === 'journal' ? updateJournalShowDetails : updateMeaningsShowDetails
+  const updateFormWord =
+    page === 'search' ? updateSearchFormWord : updateJournalFormWord
 
   const handleDelete = (id) => {
     const newWords = words.filter((word) => word.id !== id)
@@ -40,8 +46,11 @@ const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
     }
   }
 
-  const updateFormWord =
-    page === 'search' ? updateSearchFormWord : updateJournalFormWord
+  const handleClick = (e) => {
+    e.stopPropagation()
+    toggleShowForm(true)
+    dispatch(updateFormWord(wordData))
+  }
 
   return (
     <div className='word--header flex justify-between'>
@@ -68,18 +77,16 @@ const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
           antonyms?.length > 0 ||
           examples?.length > 0 ||
           images?.length > 0) && (
-          <button onClick={() => setShowDetails((prevShow) => !prevShow)}>
+          <button
+            onClick={() =>
+              dispatch(updateShowDetails(wordData?.id, !currentShowDetails))
+            }>
             <FiMoreHorizontal size={20} />
           </button>
         )}
 
         {page === 'search' && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              toggleShowForm(true)
-              dispatch(updateFormWord(wordData))
-            }}>
+          <button onClick={handleClick}>
             <AiOutlinePlus size={20} />
           </button>
         )}
@@ -87,11 +94,7 @@ const WordHeader = ({ wordData, page, speak, setShowDetails }) => {
         {page === 'journal' && typeof wordData?.id !== 'undefined' && (
           <button
             type='button'
-            onClick={(e) => {
-              e.stopPropagation()
-              toggleShowForm(true)
-              dispatch(updateFormWord(wordData))
-            }}>
+            onClick={handleClick}>
             <AiOutlineEdit size={20} />
           </button>
         )}

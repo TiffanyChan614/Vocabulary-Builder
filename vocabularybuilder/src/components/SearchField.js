@@ -2,7 +2,7 @@ import { MdClear } from 'react-icons/md'
 
 const SearchField = ({
   searchValue,
-  setSearchValue,
+  clearSearchValue,
   placeholder,
   handleInputChange,
 }) => {
@@ -17,7 +17,7 @@ const SearchField = ({
       />
       <button
         type='button'
-        onClick={() => setSearchValue('')}>
+        onClick={clearSearchValue}>
         <MdClear
           size={18}
           color='gray'

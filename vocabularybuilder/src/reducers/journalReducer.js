@@ -7,6 +7,7 @@ const initialState = {
   partOfSpeechFilter: null,
   showForm: false,
   formWord: '',
+  showDetails: {},
 }
 
 const journalSlice = createSlice({
@@ -30,6 +31,9 @@ const journalSlice = createSlice({
     },
     setFormWord: (state, action) => {
       state.formWord = action.payload
+    },
+    setShowDetails: (state, action) => {
+      state.showDetails = action.payload
     },
   },
 })
@@ -56,6 +60,13 @@ export const updateJournalShowForm = (showForm) => {
 
 export const updateJournalFormWord = (formWord) => {
   return { type: 'journal/setFormWord', payload: formWord }
+}
+
+export const updateJournalShowDetails = (wordId, showDetails) => {
+  return {
+    type: 'journal/setShowDetails',
+    payload: { ...showDetails, [wordId]: showDetails },
+  }
 }
 
 export const {

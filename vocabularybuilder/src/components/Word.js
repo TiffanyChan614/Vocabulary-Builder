@@ -1,9 +1,14 @@
-import { useState } from 'react'
 import WordDetails from './WordDetails'
 import WordHeader from './WordHeader'
+import { useSelector } from 'react-redux'
 
 const Word = ({ wordData, page }) => {
-  const [showDetails, setShowDetails] = useState(false)
+  const { showDetails } = useSelector((state) =>
+    page === 'journal' ? state.journal : state.wordMeanings
+  )
+
+  const currentShowDetails =
+    Object.keys(showDetails).length > 0 ? [wordData?.id] : false
 
   const speak = (e, text, voiceName, rate) => {
     e.stopPropagation()
@@ -41,12 +46,12 @@ const Word = ({ wordData, page }) => {
           wordData={wordData}
           page={page}
           speak={speak}
-          setShowDetails={setShowDetails}
+          currentShowDetails={currentShowDetails}
         />
         <div className='word--definition'>
           {transformSentence(definition) || 'No definition found'}
         </div>
-        {showDetails && (
+        {currentShowDetails && (
           <div className='word--details flex flex-col gap-3'>
             {synonyms && synonyms?.length > 0 && (
               <WordDetails

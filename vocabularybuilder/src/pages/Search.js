@@ -24,6 +24,11 @@ const Search = () => {
     dispatch(updateSearchCurrentPage('search'))
   }
 
+  const clearSearchValue = () => {
+    dispatch(updateSearchSearchValue(''))
+    dispatch(updateSearchCurrentPage('search'))
+  }
+
   useEffect(() => {
     navigate(`/${currentPage}`)
   }, [currentPage, navigate])
@@ -33,7 +38,7 @@ const Search = () => {
       <div className='flex flex-col gap-5 w-full max-w-screen-md'>
         <SearchField
           searchValue={searchValue}
-          setSearchValue={updateSearchSearchValue}
+          clearSearchValue={clearSearchValue}
           placeholder='Search for a word'
           handleInputChange={handleInputChange}
         />

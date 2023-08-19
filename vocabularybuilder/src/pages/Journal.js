@@ -65,6 +65,10 @@ const Journal = () => {
     return filteredAndSortedWords
   }
 
+  const clearSearchValue = () => {
+    dispatch(updateJournalSearchValue(''))
+  }
+
   const displayedWords = getFilteredAndSortedWords()
 
   return (
@@ -73,7 +77,7 @@ const Journal = () => {
         <div className='journal--search'>
           <SearchField
             searchValue={searchValue}
-            setSearchValue={updateJournalSearchValue}
+            clearSearchValue={clearSearchValue}
             placeholder='Search journal'
             handleInputChange={(e) =>
               dispatch(updateJournalSearchValue(e.target.value))

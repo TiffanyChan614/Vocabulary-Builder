@@ -18,16 +18,9 @@ const WordMeanings = () => {
 
   let displayedMeanings
 
-  console.log('partOfSpeechFilter', partOfSpeechFilter)
-  console.log('wordData partOfSpeech', wordData?.results?.partOfSpeech)
-  console.log(
-    'partOfSpeechFilter match',
-    wordData?.results?.partOfSpeech === partOfSpeechFilter
-  )
-
   if (partOfSpeechFilter !== '') {
     if (partOfSpeechFilter === 'other') {
-      displayedMeanings = wordData?.results?.filter(
+      displayedMeanings = wordData?.filter(
         (result) =>
           result.partOfSpeech !== 'noun' &&
           result.partOfSpeech !== 'verb' &&
@@ -35,14 +28,13 @@ const WordMeanings = () => {
           result.partOfSpeech !== 'adverb'
       )
     } else {
-      console.log('there is a specific filter')
-      displayedMeanings = wordData?.results?.filter(
+      displayedMeanings = wordData?.filter(
         (result) => result.partOfSpeech === partOfSpeechFilter
       )
       console.log('displayedMeanings', displayedMeanings)
     }
   } else {
-    displayedMeanings = wordData?.results
+    displayedMeanings = wordData
   }
 
   console.log('word inside WordMeanings', word)
@@ -52,6 +44,7 @@ const WordMeanings = () => {
     async function fetchData() {
       dispatch(updateIsLoading(true))
       let returnedWordData = await getWordData(word)
+      console.log('returnedWordData', returnedWordData)
       dispatch(updateWordData(returnedWordData))
       dispatch(updateIsLoading(false))
     }
@@ -64,17 +57,8 @@ const WordMeanings = () => {
   } else if (displayedMeanings && displayedMeanings.length > 0) {
     wordDataElement = displayedMeanings.map((result, i) => (
       <Word
-        key={wordData.word + i}
-        wordData={{
-          word: wordData?.word || 'no word',
-          pronunciation: wordData.pronunciation?.all,
-          partOfSpeech: result?.partOfSpeech || null,
-          definition: result?.definition || null,
-          synonyms: result?.synonyms || null,
-          antonyms: result?.antonyms || null,
-          examples: result?.examples || null,
-          images: [],
-        }}
+        key={result.word + i}
+        wordData={result}
         page='search'
       />
     ))
@@ -82,16 +66,7 @@ const WordMeanings = () => {
     wordDataElement = (
       <Word
         key={wordData?.word || 'no word'}
-        wordData={{
-          word: wordData?.word || 'no word',
-          pronunciation: null,
-          partOfSpeech: null,
-          definition: null,
-          synonyms: null,
-          antonyms: null,
-          examples: null,
-          images: [],
-        }}
+        wordData={wordData}
       />
     )
   }
