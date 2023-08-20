@@ -50,6 +50,7 @@ const wordMeaningsSlice = createSlice({
           state.showDetails[result.id] = false
         }
       })
+      console.log('---------------------------------')
       console.log('state.showDetails', state.showDetails)
     },
     setIsLoading: (state, action) => {
@@ -58,9 +59,12 @@ const wordMeaningsSlice = createSlice({
     setPartOfSpeechFilter: (state, action) => {
       state.partOfSpeechFilter = action.payload
     },
-    setShowDetails: (state, action) => {
+    setShowDetailsById: (state, action) => {
       const { wordId, showDetails } = action.payload
       state.showDetails[wordId] = showDetails
+    },
+    setShowDetails: (state, action) => {
+      state.showDetails = action.payload
     },
   },
 })
@@ -80,8 +84,16 @@ export const updateMeaningsPartOfSpeechFilter = (filter) => {
 export const updateMeaningsShowDetails = (wordId, showDetails) => {
   console.log('new showDetails', { ...showDetails, [wordId]: showDetails })
   return {
-    type: 'wordMeanings/setShowDetails',
+    type: 'wordMeanings/setShowDetailsById',
     payload: { wordId, showDetails },
+  }
+}
+
+export const resetMeaningsShowDetails = () => {
+  console.log('clearing showDetails')
+  return {
+    type: 'wordMeanings/setShowDetails',
+    payload: {},
   }
 }
 

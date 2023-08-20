@@ -7,6 +7,10 @@ import {
   updateSearchSearchValue,
   updateSearchCurrentPage,
 } from '../reducers/searchReducer'
+import {
+  resetMeaningsShowDetails,
+  updateMeaningsPartOfSpeechFilter,
+} from '../reducers/wordMeaningsReducer'
 
 const Search = () => {
   const dispatch = useDispatch()
@@ -20,11 +24,15 @@ const Search = () => {
   console.log('searchValue in Search', searchValue)
 
   const handleInputChange = (e) => {
+    dispatch(resetMeaningsShowDetails())
+    dispatch(updateMeaningsPartOfSpeechFilter(''))
     dispatch(updateSearchSearchValue(e.target.value))
     dispatch(updateSearchCurrentPage('search'))
   }
 
   const clearSearchValue = () => {
+    dispatch(resetMeaningsShowDetails())
+    dispatch(updateMeaningsPartOfSpeechFilter(''))
     dispatch(updateSearchSearchValue(''))
     dispatch(updateSearchCurrentPage('search'))
   }

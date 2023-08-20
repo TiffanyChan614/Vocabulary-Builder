@@ -22,6 +22,7 @@ const PossibleWords = () => {
     'border-2 border-gray-100 p-3 rounded-xl text-lg font-medium text-indigo-900 hover:border-indigo-100 hover:bg-indigo-100 hover:text-indigo-900 select-none'
 
   console.log('searchValue in possibleWords', searchValue)
+
   useEffect(() => {
     async function fetchData() {
       if (searchValue === '') {

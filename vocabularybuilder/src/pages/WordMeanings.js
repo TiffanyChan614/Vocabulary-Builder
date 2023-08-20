@@ -18,6 +18,8 @@ const WordMeanings = () => {
     (state) => state.wordMeanings
   )
 
+  console.log('word data in WordMeanings', wordData)
+
   let displayedMeanings
 
   if (partOfSpeechFilter !== '') {
