@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { v4 as uuidv4 } from 'uuid'
 
 const initialState = {
   wordData: [],
@@ -16,21 +15,24 @@ const wordMeaningsSlice = createSlice({
       const wordData = action.payload
       console.log('wordData in wordMeaningsReducer', wordData)
       if (wordData?.results && wordData?.results?.length > 0) {
-        state.wordData = wordData.results.map((result) => ({
-          id: uuidv4(),
-          word: wordData.word || 'no word',
-          definition: result.definition || null,
-          pronunciation: wordData.pronunciation?.all || null,
-          partOfSpeech: result.partOfSpeech || null,
-          synonyms: result.synonyms || null,
-          antonyms: result.antonyms || null,
-          examples: result.examples || null,
-          images: [],
-        }))
+        state.wordData = wordData.results.map((result) => {
+          console.log('result in reducer', result.id)
+          return {
+            id: result.id,
+            word: wordData.word || 'no word',
+            definition: result.definition || null,
+            pronunciation: wordData.pronunciation?.all || null,
+            partOfSpeech: result.partOfSpeech || null,
+            synonyms: result.synonyms || null,
+            antonyms: result.antonyms || null,
+            examples: result.examples || null,
+            images: [],
+          }
+        })
       } else {
         state.wordData = [
           {
-            id: uuidv4(),
+            id: null,
             word: wordData.word || 'no word',
             definition: null,
             pronunciation: null,
@@ -43,10 +45,12 @@ const wordMeaningsSlice = createSlice({
         ]
       }
 
-      state.showDetails = {}
       state.wordData?.forEach((result) => {
-        state.showDetails[result.id] = false
+        if (typeof state.showDetails[result.id] === 'undefined') {
+          state.showDetails[result.id] = false
+        }
       })
+      console.log('state.showDetails', state.showDetails)
     },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload
@@ -55,7 +59,8 @@ const wordMeaningsSlice = createSlice({
       state.partOfSpeechFilter = action.payload
     },
     setShowDetails: (state, action) => {
-      state.showDetails = action.payload
+      const { wordId, showDetails } = action.payload
+      state.showDetails[wordId] = showDetails
     },
   },
 })
@@ -73,9 +78,10 @@ export const updateMeaningsPartOfSpeechFilter = (filter) => {
 }
 
 export const updateMeaningsShowDetails = (wordId, showDetails) => {
+  console.log('new showDetails', { ...showDetails, [wordId]: showDetails })
   return {
     type: 'wordMeanings/setShowDetails',
-    payload: { ...showDetails, [wordId]: showDetails },
+    payload: { wordId, showDetails },
   }
 }
 

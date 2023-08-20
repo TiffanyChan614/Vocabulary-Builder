@@ -16,6 +16,13 @@ const journalSlice = createSlice({
   reducers: {
     setWords: (state, action) => {
       state.words = action.payload
+      state.words?.forEach((word) => {
+        console.log(word.id, state.showDetails[word.id])
+        if (typeof state.showDetails[word.id] === 'undefined') {
+          state.showDetails[word.id] = false
+        }
+      })
+      console.log('after setting words, state.showDetails', state.showDetails)
     },
     setSearchValue: (state, action) => {
       state.searchValue = action.payload
@@ -33,7 +40,14 @@ const journalSlice = createSlice({
       state.formWord = action.payload
     },
     setShowDetails: (state, action) => {
-      state.showDetails = action.payload
+      const { wordId, showDetails } = action.payload
+      state.showDetails[wordId] = showDetails
+      console.log(
+        'after setting showDetails, state.showDetails',
+        wordId,
+        state.showDetails[wordId],
+        state.showDetails
+      )
     },
   },
 })
@@ -65,7 +79,7 @@ export const updateJournalFormWord = (formWord) => {
 export const updateJournalShowDetails = (wordId, showDetails) => {
   return {
     type: 'journal/setShowDetails',
-    payload: { ...showDetails, [wordId]: showDetails },
+    payload: { wordId, showDetails },
   }
 }
 
