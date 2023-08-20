@@ -88,7 +88,7 @@ const Filter = ({ page }) => {
       <Link to='.'>
         <div
           onClick={() => handleFilterClick('')}
-          className={`${filterStyleClassName}`}>
+          className='text-sm text-gray-700 font-semibold border-2 border-white hover:text-indigo-800 hover:underline py-1 px-3'>
           Clear Filter
         </div>
       </Link>
