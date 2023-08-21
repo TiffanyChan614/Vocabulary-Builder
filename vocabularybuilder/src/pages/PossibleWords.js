@@ -40,7 +40,7 @@ const PossibleWords = () => {
     }
     const newTimeoutId = setTimeout(() => {
       fetchData()
-    }, 100)
+    }, 200)
     return () => {
       clearTimeout(newTimeoutId)
     }
