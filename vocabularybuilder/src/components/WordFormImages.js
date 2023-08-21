@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { getImage } from '../services/pexelAPI'
 import ImageDropZone from './ImageDropZone'
 
@@ -6,12 +6,23 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
   const [images, setImages] = useState(formData.images)
   const [searchValue, setSearchValue] = useState(formData.word)
   const [showImageResults, setShowImageResults] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const isFirstRender = useRef(true)
+
+  useEffect(() => {
+    isFirstRender.current = false
+  }, [])
 
   const handleSearch = async (e) => {
     e.stopPropagation()
     setShowImageResults(true)
-    const newImages = await getImage(searchValue, 10)
-    setImages(newImages)
+    if (searchValue !== '') {
+      setIsLoading(true)
+      const newImages = await getImage(searchValue, 10)
+      setIsLoading(false)
+      setImages(newImages)
+    }
   }
 
   const handleAdd = (e, index) => {
@@ -36,10 +47,43 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
     })
   }
 
-  const handleClose = (e) => {
+  const handleShow = (e) => {
     e.stopPropagation()
-    setShowImageResults(false)
+    setShowImageResults((prevShow) => !prevShow)
   }
+
+  const imageElements = (() => {
+    if (isLoading && searchValue !== '') {
+      return <div>Loading...</div>
+    }
+    if (searchValue === '') {
+      return <div>Enter a search term</div>
+    }
+    if (images.length > 0) {
+      return images?.map((image, index) => (
+        <div
+          className='result-images flex flex-col justify-center'
+          key={image.id}>
+          <img
+            className='w-30 h-40 md:w-40 object-cover rounded-t-lg'
+            src={image.src.medium}
+            alt={image.alt}
+          />
+          <button
+            className='border-b-2 border-x-2 border-indigo-100 rounded-b-lg px-2 py-1 hover:bg-indigo-100'
+            type='button'
+            name='images'
+            onClick={(e) => handleAdd(e, index)}>
+            Add
+          </button>
+        </div>
+      ))
+    }
+
+    if (!isFirstRender.current) {
+      return <div>No images found</div>
+    }
+  })()
 
   return (
     <div className='word-form--images flex flex-col gap-2'>
@@ -51,7 +95,10 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
             className='border-2 border-gray-200 rounded-full w-full px-2 py-1'
             type='text'
             value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
+            onChange={(e) => {
+              setSearchValue(e.target.value)
+              setImages([])
+            }}
           />
           <button
             className='rounded-lg px-2 py-1 hover:bg-indigo-100'
@@ -62,31 +109,14 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
           <button
             className='rounded-lg px-2 py-1 hover:bg-gray-100'
             type='button'
-            onClick={handleClose}>
-            Close
+            onClick={handleShow}>
+            {showImageResults ? 'Hide' : 'Expand'}
           </button>
         </div>
       </div>
       {showImageResults && (
         <div className='word-form--images-results border-2 rounded-lg flex flex-wrap max-h-[300px] overflow-auto gap-2 md:gap-4 px-2 md:px-6 py-4'>
-          {images?.map((image, index) => (
-            <div
-              className='result-images flex flex-col justify-center'
-              key={image.id}>
-              <img
-                className='w-30 h-40 md:w-40 object-cover rounded-t-lg'
-                src={image.src.medium}
-                alt={image.alt}
-              />
-              <button
-                className='border-b-2 border-x-2 border-indigo-100 rounded-b-lg px-2 py-1 hover:bg-indigo-100'
-                type='button'
-                name='images'
-                onClick={(e) => handleAdd(e, index)}>
-                Add
-              </button>
-            </div>
-          ))}
+          {imageElements}
         </div>
       )}
       <div>
