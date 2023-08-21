@@ -52,8 +52,8 @@ const WordMeanings = () => {
   // console.log('word inside WordMeanings', word)
   // console.log('wordData', wordData)
 
-  const getWordDataFromCookie = () => {
-    const cachedWordData = Cookies.get(word)
+  const getWordDataFromCookie = (name) => {
+    const cachedWordData = Cookies.get(name)
     if (cachedWordData) {
       try {
         return JSON.parse(cachedWordData)
@@ -65,10 +65,10 @@ const WordMeanings = () => {
     return null
   }
 
-  const setWordDataToCookie = (returnedWordData) => {
+  const setWordDataToCookie = (name, data) => {
     try {
-      const serializedWordData = JSON.stringify(returnedWordData)
-      Cookies.set(word, serializedWordData, { expires: 30 })
+      const serializedWordData = JSON.stringify(data)
+      Cookies.set(name, serializedWordData, { expires: 30 })
     } catch (error) {
       console.error('Error serializing wordData: ', error)
     }
@@ -83,7 +83,7 @@ const WordMeanings = () => {
   useEffect(() => {
     async function fetchData() {
       dispatch(updateIsLoading(true))
-      let returnedWordData = getWordDataFromCookie()
+      let returnedWordData = getWordDataFromCookie(word)
       // console.log('returnedWordData from cookies', returnedWordData)
       if (!returnedWordData) {
         returnedWordData = await getWordData(word)
@@ -97,7 +97,7 @@ const WordMeanings = () => {
       }
       // console.log('returnedWordData', returnedWordData)
       dispatch(updateWordData(returnedWordData))
-      setWordDataToCookie(returnedWordData)
+      setWordDataToCookie(word, returnedWordData)
       dispatch(updateIsLoading(false))
     }
     fetchData()
@@ -105,13 +105,17 @@ const WordMeanings = () => {
 
   const wordDataElement = (() => {
     if (isLoading || !wordData) {
-      return <div>Loading...</div>;
+      return <div>Loading...</div>
     }
 
     if (displayedMeanings && displayedMeanings.length > 0) {
       return displayedMeanings.map((result, i) => (
-        <Word key={result.word + i} wordData={result} page='search' />
-      ));
+        <Word
+          key={result.word + i}
+          wordData={result}
+          page='search'
+        />
+      ))
     }
 
     if (partOfSpeechFilter === '') {
@@ -121,11 +125,11 @@ const WordMeanings = () => {
           wordData={wordData}
           page='search'
         />
-      );
+      )
     }
 
     return null
-  })();
+  })()
 
   return (
     <div className='search--word-meanings flex flex-col gap-5 px-2'>
