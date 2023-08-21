@@ -4,7 +4,12 @@ import TextArea from './TextArea'
 import WordFormImages from './WordFormImages'
 import { v4 as uuidv4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateJournalShowForm, updateWords } from '../reducers/journalReducer'
+import {
+  updateJournalPartOfSpeechFilter,
+  updateJournalShowForm,
+  updateWords,
+  updateSortValue,
+} from '../reducers/journalReducer'
 import { updateSearchShowForm } from '../reducers/searchReducer'
 import WordFormField from './WordFormField'
 
@@ -143,6 +148,8 @@ const WordForm = ({ page }) => {
       journalData.push(filteredFormData)
       localStorage.setItem('journal', JSON.stringify(journalData))
       navigate('../../journal')
+      dispatch(updateJournalPartOfSpeechFilter(''))
+      dispatch(updateSortValue('updated'))
     } else if (page === 'journal' && updateWords) {
       const updatedJournalData = journalData.map((word) => {
         if (word.id === filteredFormData.id) {

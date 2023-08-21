@@ -23,7 +23,8 @@ const Journal = () => {
     showAllDetails,
   } = useSelector((state) => state.journal)
 
-  console.log('showAllDetails', showAllDetails)
+  // console.log('showAllDetails', showAllDetails)
+  // console.log('sortValue', sortValue)
 
   const sortOptions = {
     updated: (a, b) => b.lastUpdated.localeCompare(a.lastUpdated),
