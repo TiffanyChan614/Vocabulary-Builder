@@ -102,24 +102,25 @@ const Journal = () => {
         <div className='journal--control flex flex-col gap-3 md:flex-row md:justify-between'>
           <nav>
             <Filter page='journal' />
+          </nav>
+          <div className='flex justify-between gap-2'>
             <button
               onClick={handleDetailsClick}
-              className='py-1 px-2 border-2 border-indigo-100 rounded-lg text-sm font-semibold hover:bg-indigo-100 hover:text-indigo-800'>
+              className='py-1 px-3 border-2 border-indigo-100 rounded-lg text-sm font-semibold hover:bg-indigo-100 hover:text-indigo-800'>
               {showAllDetails ? 'Hide all details' : 'Show all details'}
             </button>
-          </nav>
-
-          <select
-            className='journal--sort border-indigo-100 border-2 rounded-xl py-1 px-3 text-sm font-semibold'
-            onChange={(e) => dispatch(updateSortValue(e.target.value))}
-            value={sortValue}>
-            <option disabled>Sort by</option>
-            <option value='updated'>Recently updated</option>
-            <option value='alphabetical'>Alphabetical</option>
-            <option value='length'>Length</option>
-            <option value='partOfSpeech'>Part of speech</option>
-            <option value='created'>Recently created</option>
-          </select>
+            <select
+              className='journal--sort border-indigo-100 border-2 rounded-lg py-1 px-3 text-sm font-semibold'
+              onChange={(e) => dispatch(updateSortValue(e.target.value))}
+              value={sortValue}>
+              <option disabled>Sort by</option>
+              <option value='updated'>Recently updated</option>
+              <option value='alphabetical'>Alphabetical</option>
+              <option value='length'>Length</option>
+              <option value='partOfSpeech'>Part of speech</option>
+              <option value='created'>Recently created</option>
+            </select>
+          </div>
         </div>
         <div className='journal--words flex flex-col gap-3'>
           {displayedWords?.length > 0 ? (

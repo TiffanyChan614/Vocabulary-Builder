@@ -130,7 +130,7 @@ const WordMeanings = () => {
         <Filter page='search' />
         <button
           onClick={handleDetailsClick}
-          className='py-1 px-2 border-2 border-indigo-100 rounded-lg text-sm font-semibold hover:bg-indigo-100 hover:text-indigo-800'>
+          className='py-1 px-3 border-2 border-indigo-100 rounded-lg text-sm font-semibold hover:bg-indigo-100 hover:text-indigo-800'>
           {showAllDetails ? 'Hide all details' : 'Show all details'}
         </button>
       </nav>
