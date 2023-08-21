@@ -56,7 +56,7 @@ const ImageDropZone = ({ formData, setFormData, setMessage }) => {
           ...prevFormData,
           images: [...prevFormData.images, ...imageObjects],
         }))
-        setMessage('Images added!')
+        setMessage('Image added!')
       } catch (err) {
         console.err(err)
       }

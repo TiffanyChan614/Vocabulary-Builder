@@ -13,14 +13,11 @@ const WordFormImages = ({
   const [showImageResults, setShowImageResults] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  const isFirstRender = useRef(true)
-
-  useEffect(() => {
-    isFirstRender.current = false
-  }, [])
+  const isSearchClicked = useRef(false)
 
   const handleSearch = async (e) => {
     e.stopPropagation()
+    isSearchClicked.current = true
     setShowImageResults(true)
     if (searchValue !== '') {
       setIsLoading(true)
@@ -50,12 +47,19 @@ const WordFormImages = ({
         [name]: newArr,
       }
     })
-    setMessage('Images added!')
+    setMessage('Image added!')
   }
 
   const handleShow = (e) => {
     e.stopPropagation()
     setShowImageResults((prevShow) => !prevShow)
+  }
+
+  const handleChange = (e) => {
+    e.stopPropagation()
+    isSearchClicked.current = false
+    setSearchValue(e.target.value)
+    setImages([])
   }
 
   const imageElements = (() => {
@@ -86,8 +90,10 @@ const WordFormImages = ({
       ))
     }
 
-    if (!isFirstRender.current) {
+    if (isSearchClicked.current) {
       return <div>No images found</div>
+    } else {
+      return <div>Please click search</div>
     }
   })()
 
@@ -101,10 +107,7 @@ const WordFormImages = ({
             className='border-2 border-gray-200 rounded-full w-full px-2 py-1'
             type='text'
             value={searchValue}
-            onChange={(e) => {
-              setSearchValue(e.target.value)
-              setImages([])
-            }}
+            onChange={handleChange}
           />
           <button
             className='rounded-lg px-2 py-1 hover:bg-indigo-100'
