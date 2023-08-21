@@ -54,7 +54,7 @@ const Home = () => {
         <Link
           to={`search/${word}`}
           className='text-md hover:text-indigo-800 hover:underline select-none'
-          onClick={() => dispatch(updateSearchCurrentPage(word))}>
+          onClick={() => dispatch(updateSearchCurrentPage(`search/${word}`))}>
           Learn this word
         </Link>
       </div>

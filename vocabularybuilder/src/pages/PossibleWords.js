@@ -46,13 +46,17 @@ const PossibleWords = () => {
     }
   }, [searchValue])
 
-  const matchedWordsElement = useMemo(() => {
+  const matchedWordsElement = (() => {
     if (isLoading && searchValue !== '') {
       return <div>Loading...</div>
-    } else if (searchValue === '') {
+    }
+
+    if (searchValue === '') {
       return null
-    } else if (matchedWords?.length > 0) {
-      return matchedWords?.map((word, i) => (
+    }
+
+    if (matchedWords.length > 0) {
+      return matchedWords.map((word, i) => (
         <NavLink
           to={`${word}`}
           className='matched-word'
@@ -61,10 +65,14 @@ const PossibleWords = () => {
           <div className={wordStyleClassName}>{word}</div>
         </NavLink>
       ))
-    } else if (!isFirstRender.current) {
+    }
+
+    if (!isFirstRender.current) {
       return <div>Word not found</div>
     }
-  }, [isLoading, searchValue, matchedWords])
+
+    return null
+  })()
 
   useEffect(() => {
     isFirstRender.current = false
