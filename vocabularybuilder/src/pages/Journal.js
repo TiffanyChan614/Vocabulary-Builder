@@ -87,6 +87,21 @@ const Journal = () => {
 
   const displayedWords = getFilteredAndSortedWords()
 
+  const NoWordsFoundMessage = () => (
+    <div className='flex flex-col pt-5 items-center justify-center'>
+      <h3 className='font-bold text-lg mb-2'>No words found</h3>
+      <p className='text-md text-gray-600 mb-4'>
+        Seems like there are no matching words. Why not&nbsp;
+        <NavLink
+          className='text-indigo-800 hover:underline'
+          to='../search'>
+          explore new words
+        </NavLink>
+        &nbsp;or try other filters?
+      </p>
+    </div>
+  )
+
   return (
     <>
       <div className='journal flex flex-col gap-4'>
@@ -133,18 +148,7 @@ const Journal = () => {
               />
             ))
           ) : (
-            <div className='flex flex-col pt-5 items-center justify-center'>
-              <h3 className='font-bold text-lg mb-2'>No words found</h3>
-              <p className='text-md text-gray-600 mb-4'>
-                Seems like there are no matching words. Why not&nbsp;
-                <NavLink
-                  className='text-indigo-800 hover:underline'
-                  to='../search'>
-                  explore new words
-                </NavLink>
-                &nbsp;or try other filters?
-              </p>
-            </div>
+            <NoWordsFoundMessage />
           )}
         </div>
       </div>
