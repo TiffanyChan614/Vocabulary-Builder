@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   partOfSpeechFilter: '',
   showDetails: {},
+  showAllDetails: false,
 }
 
 const wordMeaningsSlice = createSlice({
@@ -13,10 +14,10 @@ const wordMeaningsSlice = createSlice({
   reducers: {
     setWordData: (state, action) => {
       const wordData = action.payload
-      console.log('wordData in wordMeaningsReducer', wordData)
+      // console.log('wordData in wordMeaningsReducer', wordData)
       if (wordData?.results && wordData?.results?.length > 0) {
         state.wordData = wordData.results.map((result) => {
-          console.log('result in reducer', result.id)
+          // console.log('result in reducer', result.id)
           return {
             id: result.id,
             word: wordData.word || 'no word',
@@ -50,8 +51,8 @@ const wordMeaningsSlice = createSlice({
           state.showDetails[result.id] = false
         }
       })
-      console.log('---------------------------------')
-      console.log('state.showDetails', state.showDetails)
+      // console.log('---------------------------------')
+      // console.log('state.showDetails', state.showDetails)
     },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload
@@ -62,9 +63,33 @@ const wordMeaningsSlice = createSlice({
     setShowDetailsById: (state, action) => {
       const { wordId, showDetails } = action.payload
       state.showDetails[wordId] = showDetails
+      for (const wordId in state.showDetails) {
+        if (state.showDetails[wordId] === false) {
+          state.showAllDetails = false
+          return
+        }
+      }
+      state.showAllDetails = true
     },
     setShowDetails: (state, action) => {
       state.showDetails = action.payload
+      for (const wordId in state.showDetails) {
+        if (state.showDetails[wordId] === false) {
+          state.showAllDetails = false
+          return
+        }
+      }
+      state.showAllDetails = true
+    },
+    toggleShowDetails: (state, action) => {
+      const value = action.payload
+      const newShowDetails = {}
+      for (const wordId in state.showDetails) {
+        newShowDetails[wordId] = value
+      }
+      state.showDetails = newShowDetails
+      console.log('state.showDetails', state.showDetails)
+      state.showAllDetails = value
     },
   },
 })
@@ -94,6 +119,13 @@ export const resetMeaningsShowDetails = () => {
   return {
     type: 'wordMeanings/setShowDetails',
     payload: {},
+  }
+}
+
+export const toggleShowDetails = (newValue) => {
+  return {
+    type: 'wordMeanings/toggleShowDetails',
+    payload: newValue,
   }
 }
 

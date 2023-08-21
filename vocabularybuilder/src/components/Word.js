@@ -10,9 +10,9 @@ const Word = ({ wordData, page }) => {
   const currentShowDetails =
     Object.keys(showDetails).length > 0 ? showDetails[wordData?.id] : false
 
-  console.log('showDetails in word', showDetails)
+  // console.log('showDetails in word', showDetails)
 
-  console.log('currentShowDetailsinWord', currentShowDetails)
+  // console.log('currentShowDetailsinWord', currentShowDetails)
 
   const speak = (e, text, voiceName, rate) => {
     e.stopPropagation()

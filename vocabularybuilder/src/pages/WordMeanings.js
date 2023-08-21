@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Word from '../components/Word'
 import { getWordData } from '../services/wordAPI'
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   updateWordData,
   updateIsLoading,
+  toggleShowDetails,
 } from '../reducers/wordMeaningsReducer'
 import Cookies from 'js-cookie'
 import { v4 as uuidv4 } from 'uuid'
@@ -14,11 +15,14 @@ import { v4 as uuidv4 } from 'uuid'
 const WordMeanings = () => {
   const { word } = useParams()
   const dispatch = useDispatch()
-  const { wordData, isLoading, partOfSpeechFilter } = useSelector(
-    (state) => state.wordMeanings
-  )
+  const { wordData, isLoading, partOfSpeechFilter, showAllDetails } =
+    useSelector((state) => state.wordMeanings)
 
-  console.log('word data in WordMeanings', wordData)
+  const [localShowAllDetails, setLocalShowAllDetails] = useState(showAllDetails)
+
+  console.log('showAllDetails', showAllDetails)
+
+  // console.log('word data in WordMeanings', wordData)
 
   let displayedMeanings
 
@@ -35,14 +39,14 @@ const WordMeanings = () => {
       displayedMeanings = wordData?.filter(
         (result) => result.partOfSpeech === partOfSpeechFilter
       )
-      console.log('displayedMeanings', displayedMeanings)
+      // console.log('displayedMeanings', displayedMeanings)
     }
   } else {
     displayedMeanings = wordData
   }
 
-  console.log('word inside WordMeanings', word)
-  console.log('wordData', wordData)
+  // console.log('word inside WordMeanings', word)
+  // console.log('wordData', wordData)
 
   const getWordDataFromCookie = () => {
     const cachedWordData = Cookies.get(word)
@@ -66,14 +70,23 @@ const WordMeanings = () => {
     }
   }
 
+  const handleDetailsClick = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const newShowAllDetails = !localShowAllDetails
+    console.log('newShowAllDetails', newShowAllDetails)
+    setLocalShowAllDetails(newShowAllDetails)
+    dispatch(toggleShowDetails(newShowAllDetails))
+  }
+
   useEffect(() => {
     async function fetchData() {
       dispatch(updateIsLoading(true))
       let returnedWordData = getWordDataFromCookie()
-      console.log('returnedWordData from cookies', returnedWordData)
+      // console.log('returnedWordData from cookies', returnedWordData)
       if (!returnedWordData) {
         returnedWordData = await getWordData(word)
-        console.log('returnedWordData from API', returnedWordData)
+        // console.log('returnedWordData from API', returnedWordData)
         if (returnedWordData.results) {
           returnedWordData.results = returnedWordData.results.map((result) => ({
             id: uuidv4(),
@@ -81,7 +94,7 @@ const WordMeanings = () => {
           }))
         }
       }
-      console.log('returnedWordData', returnedWordData)
+      // console.log('returnedWordData', returnedWordData)
       dispatch(updateWordData(returnedWordData))
       setWordDataToCookie(returnedWordData)
       dispatch(updateIsLoading(false))
@@ -105,6 +118,7 @@ const WordMeanings = () => {
       <Word
         key={wordData?.word || 'no word'}
         wordData={wordData}
+        page='search'
       />
     )
   }
@@ -113,6 +127,11 @@ const WordMeanings = () => {
     <div className='search--word-meanings flex flex-col gap-5 px-2'>
       <nav className='flex items-center flex-wrap md:justify-between gap-3'>
         <Filter page='search' />
+        <button
+          onClick={handleDetailsClick}
+          className='py-1 px-2 border-2 border-indigo-100 rounded-lg text-sm font-semibold hover:bg-indigo-100 hover:text-indigo-800'>
+          {localShowAllDetails ? 'Hide all details' : 'Show all details'}
+        </button>
       </nav>
       {wordDataElement}
     </div>
