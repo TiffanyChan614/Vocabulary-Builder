@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getRandomWord } from '../services/wordAPI'
+import { updateSearchCurrentPage } from '../reducers/searchReducer'
+import { useDispatch } from 'react-redux'
 
 const Home = () => {
   const [word, setWord] = useState(null)
+  const dispatch = useDispatch()
   const divClassName =
     'border-2 rounded-xl border-indigo-100 py-5 px-6 w-full mx-auto text-center md:px-10'
 
@@ -50,7 +53,8 @@ const Home = () => {
         <p className='text-xl font-bold text-indigo-800 my-4'>{word}</p>
         <Link
           to={`search/${word}`}
-          className='text-md hover:text-indigo-800 hover:underline select-none'>
+          className='text-md hover:text-indigo-800 hover:underline select-none'
+          onClick={() => dispatch(updateSearchCurrentPage(word))}>
           Learn this word
         </Link>
       </div>
