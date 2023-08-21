@@ -16,32 +16,39 @@ const wordMeaningsSlice = createSlice({
       const wordData = action.payload
       // console.log('wordData in wordMeaningsReducer', wordData)
 
-      const newWordData = wordData.results?.map((result) => {
-        // console.log('result in reducer', result.id)
-        return {
-          id: result.id,
-          word: wordData.word || 'no word',
-          definition: result.definition || null,
-          pronunciation: wordData.pronunciation?.all || null,
-          partOfSpeech: result.partOfSpeech || null,
-          synonyms: result.synonyms || null,
-          antonyms: result.antonyms || null,
-          examples: result.examples || null,
-          images: [],
-        }
-      }) || [
-        {
-          id: null,
-          word: wordData.word || 'no word',
-          definition: null,
-          pronunciation: null,
-          partOfSpeech: null,
-          synonyms: null,
-          antonyms: null,
-          examples: null,
-          images: [],
-        },
-      ]
+      let newWordData
+      if (wordData.results && wordData.results?.length > 0) {
+        newWordData = wordData.results?.map((result) => {
+          // console.log('result in reducer', result.id)
+          return {
+            id: result.id,
+            word: wordData.word || 'no word',
+            definition: result.definition || null,
+            pronunciation: wordData.pronunciation?.all || null,
+            partOfSpeech: result.partOfSpeech || null,
+            synonyms: result.synonyms || null,
+            antonyms: result.antonyms || null,
+            examples: result.examples || null,
+            images: [],
+          }
+        })
+      } else {
+        newWordData = [
+          {
+            id: null,
+            word: wordData.word || 'no word',
+            definition: null,
+            pronunciation: null,
+            partOfSpeech: null,
+            synonyms: null,
+            antonyms: null,
+            examples: null,
+            images: [],
+          },
+        ]
+      }
+
+      console.log('newWordData', newWordData)
 
       const newShowDetails = { ...state.showDetails }
 

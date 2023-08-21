@@ -57,12 +57,16 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
       <div className='flex gap-5 items-center'>
         <div className='flex gap-1 items-center'>
           <h2 className='text-xl  font-bold text-indigo-800'>{word}</h2>
-          <h3 className='text-lg'>{`[${pronunciation}]`}</h3>
-          <button
-            className='word--audio'
-            onClick={(e) => speak(e, word, 'samantha')}>
-            <AiFillSound size={20} />
-          </button>
+          {pronunciation && (
+            <>
+              <h3 className='text-lg'>{`[${pronunciation}]`}</h3>
+              <button
+                className='word--audio'
+                onClick={(e) => speak(e, word, 'samantha')}>
+                <AiFillSound size={20} />
+              </button>
+            </>
+          )}
         </div>
 
         {partOfSpeech && (
