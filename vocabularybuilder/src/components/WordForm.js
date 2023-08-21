@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TextArea from './TextArea'
 import WordFormImages from './WordFormImages'
@@ -16,6 +16,18 @@ import WordFormField from './WordFormField'
 const WordForm = ({ page }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (message !== '') {
+        setMessage('')
+      }
+    }, 3000)
+
+    return () => clearTimeout(timer)
+  }, [message])
 
   const formWord = useSelector((state) => {
     if (page === 'search') {
@@ -196,16 +208,25 @@ const WordForm = ({ page }) => {
       <div className='word-form-wrapper fixed inset-0 w-screen h-screen flex justify-center items-center z-50'>
         <div className='word-form bg-white w-full sm:w-2/3 rounded-xl overflow-hidden'>
           <form onSubmit={handleSubmit}>
-            <header className='word-form--header pt-6 pb-4 px-6 border-b flex items-center'>
-              <h2 className='text-xl font-bold text-indigo-800'>{word}</h2>
-              {pronunciation && (
-                <h3 className='text-lg'>{`[${pronunciation}]`}</h3>
-              )}
-              {partOfSpeech && (
-                <h4 className='text-md font-semibold ml-6'>
-                  {partOfSpeech[0].toUpperCase() + partOfSpeech.slice(1)}
-                </h4>
-              )}
+            <header className='word-form--header pt-6 pb-4 px-6 border-b-2 flex flex-col sm:flex-row items-center sm:justify-between gap-2'>
+              <div className='flex items-center'>
+                <h2 className='text-xl font-bold text-indigo-800'>{word}</h2>
+                {pronunciation && (
+                  <h3 className='text-lg'>{`[${pronunciation}]`}</h3>
+                )}
+                {partOfSpeech && (
+                  <h4 className='text-md font-semibold ml-6'>
+                    {partOfSpeech[0].toUpperCase() + partOfSpeech.slice(1)}
+                  </h4>
+                )}
+              </div>
+              <div>
+                {message && (
+                  <p className='text-md font-semibold text-green-700'>
+                    {message}
+                  </p>
+                )}
+              </div>
             </header>
             <div className='py-4 px-3 md:px-6 flex flex-col gap-3 overflow-y-auto max-h-[60vh]'>
               <div className='word-form--definition flex flex-col gap-2'>
@@ -238,6 +259,7 @@ const WordForm = ({ page }) => {
                 formData={formData}
                 setFormData={setFormData}
                 handleDelete={handleDelete}
+                setMessage={setMessage}
               />
             </div>
             <div className='p-6 border-t flex justify-between'>

@@ -2,7 +2,12 @@ import { useState, useEffect, useRef } from 'react'
 import { getImage } from '../services/pexelAPI'
 import ImageDropZone from './ImageDropZone'
 
-const WordFormImages = ({ formData, setFormData, handleDelete }) => {
+const WordFormImages = ({
+  formData,
+  setFormData,
+  handleDelete,
+  setMessage,
+}) => {
   const [images, setImages] = useState(formData.images)
   const [searchValue, setSearchValue] = useState(formData.word)
   const [showImageResults, setShowImageResults] = useState(false)
@@ -45,6 +50,7 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
         [name]: newArr,
       }
     })
+    setMessage('Images added!')
   }
 
   const handleShow = (e) => {
@@ -124,6 +130,7 @@ const WordFormImages = ({ formData, setFormData, handleDelete }) => {
         <ImageDropZone
           formData={formData}
           setFormData={setFormData}
+          setMessage={setMessage}
         />
       </div>
 

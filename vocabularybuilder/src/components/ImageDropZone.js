@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const ImageDropZone = ({ formData, setFormData }) => {
+const ImageDropZone = ({ formData, setFormData, setMessage }) => {
   const [isDragging, setIsDragging] = useState(false)
 
   const handleDragEnter = (e) => {
@@ -56,6 +56,7 @@ const ImageDropZone = ({ formData, setFormData }) => {
           ...prevFormData,
           images: [...prevFormData.images, ...imageObjects],
         }))
+        setMessage('Images added!')
       } catch (err) {
         console.err(err)
       }
