@@ -24,7 +24,7 @@ const WordForm = ({ page }) => {
       if (message !== '') {
         setMessage('')
       }
-    }, 3000)
+    }, 2000)
 
     return () => clearTimeout(timer)
   }, [message])
