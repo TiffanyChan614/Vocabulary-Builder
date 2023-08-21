@@ -8,6 +8,7 @@ const initialState = {
   showForm: false,
   formWord: '',
   showDetails: {},
+  showAllDetails: false,
 }
 
 const journalSlice = createSlice({

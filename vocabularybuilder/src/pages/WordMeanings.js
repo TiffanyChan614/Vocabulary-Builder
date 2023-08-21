@@ -18,8 +18,6 @@ const WordMeanings = () => {
   const { wordData, isLoading, partOfSpeechFilter, showAllDetails } =
     useSelector((state) => state.wordMeanings)
 
-  const [localShowAllDetails, setLocalShowAllDetails] = useState(showAllDetails)
-
   console.log('showAllDetails', showAllDetails)
 
   // console.log('word data in WordMeanings', wordData)
@@ -73,9 +71,8 @@ const WordMeanings = () => {
   const handleDetailsClick = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    const newShowAllDetails = !localShowAllDetails
+    const newShowAllDetails = !showAllDetails
     console.log('newShowAllDetails', newShowAllDetails)
-    setLocalShowAllDetails(newShowAllDetails)
     dispatch(toggleShowDetails(newShowAllDetails))
   }
 
@@ -130,7 +127,7 @@ const WordMeanings = () => {
         <button
           onClick={handleDetailsClick}
           className='py-1 px-2 border-2 border-indigo-100 rounded-lg text-sm font-semibold hover:bg-indigo-100 hover:text-indigo-800'>
-          {localShowAllDetails ? 'Hide all details' : 'Show all details'}
+          {showAllDetails ? 'Hide all details' : 'Show all details'}
         </button>
       </nav>
       {wordDataElement}
