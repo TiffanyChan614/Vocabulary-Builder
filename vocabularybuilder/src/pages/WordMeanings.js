@@ -103,26 +103,29 @@ const WordMeanings = () => {
     fetchData()
   }, [word])
 
-  let wordDataElement
-  if (isLoading || !wordData) {
-    wordDataElement = <div>Loading...</div>
-  } else if (displayedMeanings && displayedMeanings.length > 0) {
-    wordDataElement = displayedMeanings.map((result, i) => (
-      <Word
-        key={result.word + i}
-        wordData={result}
-        page='search'
-      />
-    ))
-  } else if (partOfSpeechFilter === '') {
-    wordDataElement = (
-      <Word
-        key={wordData?.word || 'no word'}
-        wordData={wordData}
-        page='search'
-      />
-    )
-  }
+  const wordDataElement = (() => {
+    if (isLoading || !wordData) {
+      return <div>Loading...</div>;
+    }
+
+    if (displayedMeanings && displayedMeanings.length > 0) {
+      return displayedMeanings.map((result, i) => (
+        <Word key={result.word + i} wordData={result} page='search' />
+      ));
+    }
+
+    if (partOfSpeechFilter === '') {
+      return (
+        <Word
+          key={wordData.word || 'no word'}
+          wordData={wordData}
+          page='search'
+        />
+      );
+    }
+
+    return null
+  })();
 
   return (
     <div className='search--word-meanings flex flex-col gap-5 px-2'>
