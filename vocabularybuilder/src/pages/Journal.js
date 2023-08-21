@@ -9,12 +9,21 @@ import {
   updateWords,
   updateJournalSearchValue,
   updateSortValue,
+  toggleJournalShowDetails,
 } from '../reducers/journalReducer'
 
 const Journal = () => {
   const dispatch = useDispatch()
-  const { words, searchValue, sortValue, partOfSpeechFilter, showForm } =
-    useSelector((state) => state.journal)
+  const {
+    words,
+    searchValue,
+    sortValue,
+    partOfSpeechFilter,
+    showForm,
+    showAllDetails,
+  } = useSelector((state) => state.journal)
+
+  console.log('showAllDetails', showAllDetails)
 
   const sortOptions = {
     updated: (a, b) => b.lastUpdated.localeCompare(a.lastUpdated),
@@ -69,6 +78,12 @@ const Journal = () => {
     dispatch(updateJournalSearchValue(''))
   }
 
+  const handleDetailsClick = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    dispatch(toggleJournalShowDetails(!showAllDetails))
+  }
+
   const displayedWords = getFilteredAndSortedWords()
 
   return (
@@ -87,6 +102,11 @@ const Journal = () => {
         <div className='journal--control flex flex-col gap-3 md:flex-row md:justify-between'>
           <nav>
             <Filter page='journal' />
+            <button
+              onClick={handleDetailsClick}
+              className='py-1 px-2 border-2 border-indigo-100 rounded-lg text-sm font-semibold hover:bg-indigo-100 hover:text-indigo-800'>
+              {showAllDetails ? 'Hide all details' : 'Show all details'}
+            </button>
           </nav>
 
           <select

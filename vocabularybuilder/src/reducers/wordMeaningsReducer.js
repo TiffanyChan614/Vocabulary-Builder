@@ -15,71 +15,106 @@ const wordMeaningsSlice = createSlice({
     setWordData: (state, action) => {
       const wordData = action.payload
       // console.log('wordData in wordMeaningsReducer', wordData)
-      if (wordData?.results && wordData?.results?.length > 0) {
-        state.wordData = wordData.results.map((result) => {
-          // console.log('result in reducer', result.id)
-          return {
-            id: result.id,
-            word: wordData.word || 'no word',
-            definition: result.definition || null,
-            pronunciation: wordData.pronunciation?.all || null,
-            partOfSpeech: result.partOfSpeech || null,
-            synonyms: result.synonyms || null,
-            antonyms: result.antonyms || null,
-            examples: result.examples || null,
-            images: [],
-          }
-        })
-      } else {
-        state.wordData = [
-          {
-            id: null,
-            word: wordData.word || 'no word',
-            definition: null,
-            pronunciation: null,
-            partOfSpeech: null,
-            synonyms: null,
-            antonyms: null,
-            examples: null,
-            images: [],
-          },
-        ]
-      }
 
-      state.wordData?.forEach((result) => {
+      const newWordData = wordData.results?.map((result) => {
+        // console.log('result in reducer', result.id)
+        return {
+          id: result.id,
+          word: wordData.word || 'no word',
+          definition: result.definition || null,
+          pronunciation: wordData.pronunciation?.all || null,
+          partOfSpeech: result.partOfSpeech || null,
+          synonyms: result.synonyms || null,
+          antonyms: result.antonyms || null,
+          examples: result.examples || null,
+          images: [],
+        }
+      }) || [
+        {
+          id: null,
+          word: wordData.word || 'no word',
+          definition: null,
+          pronunciation: null,
+          partOfSpeech: null,
+          synonyms: null,
+          antonyms: null,
+          examples: null,
+          images: [],
+        },
+      ]
+
+      const newShowDetails = { ...state.showDetails }
+
+      newWordData?.forEach((result) => {
         if (typeof state.showDetails[result.id] === 'undefined') {
-          state.showDetails[result.id] = false
+          newShowDetails[result.id] = false
         }
       })
-      // console.log('---------------------------------')
-      // console.log('state.showDetails', state.showDetails)
+
+      let allDetailsShown = true
+      for (const wordId in newShowDetails) {
+        if (!newShowDetails[wordId]) {
+          allDetailsShown = false
+          break
+        }
+      }
+
+      return {
+        ...state,
+        wordData: newWordData,
+        showDetails: newShowDetails,
+        showAllDetails: allDetailsShown,
+      }
     },
     setIsLoading: (state, action) => {
-      state.isLoading = action.payload
+      return {
+        ...state,
+        isLoading: action.payload,
+      }
     },
     setPartOfSpeechFilter: (state, action) => {
-      state.partOfSpeechFilter = action.payload
+      return {
+        ...state,
+        partOfSpeechFilter: action.payload,
+      }
     },
     setShowDetailsById: (state, action) => {
       const { wordId, showDetails } = action.payload
-      state.showDetails[wordId] = showDetails
-      for (const wordId in state.showDetails) {
-        if (state.showDetails[wordId] === false) {
-          state.showAllDetails = false
-          return
+      const newShowDetails = {
+        ...state.showDetails,
+        [wordId]: showDetails,
+      }
+
+      let allDetailsShown = true
+      for (const wordId in newShowDetails) {
+        if (!newShowDetails[wordId]) {
+          allDetailsShown = false
+          break
         }
       }
-      state.showAllDetails = true
+
+      return {
+        ...state,
+        showDetails: newShowDetails,
+        showAllDetails: allDetailsShown,
+      }
     },
     setShowDetails: (state, action) => {
-      state.showDetails = action.payload
-      for (const wordId in state.showDetails) {
-        if (state.showDetails[wordId] === false) {
-          state.showAllDetails = false
-          return
+      const newShowDetails = action.payload
+
+      let allDetailsShown = true
+      for (const wordId in newShowDetails) {
+        if (!newShowDetails[wordId]) {
+          allDetailsShown = false
+          break
         }
       }
-      state.showAllDetails = true
+
+      return {
+        ...state,
+        showDetails: newShowDetails,
+        showAllDetails: allDetailsShown,
+      }
     },
     toggleShowDetails: (state, action) => {
       const value = action.payload
@@ -87,9 +122,11 @@ const wordMeaningsSlice = createSlice({
       for (const wordId in state.showDetails) {
         newShowDetails[wordId] = value
       }
-      state.showDetails = newShowDetails
-      console.log('state.showDetails', state.showDetails)
-      state.showAllDetails = value
+      return {
+        ...state,
+        showDetails: newShowDetails,
+        showAllDetails: value,
+      }
     },
   },
 })
@@ -122,7 +159,7 @@ export const resetMeaningsShowDetails = () => {
   }
 }
 
-export const toggleShowDetails = (newValue) => {
+export const toggleMeaningsShowDetails = (newValue) => {
   return {
     type: 'wordMeanings/toggleShowDetails',
     payload: newValue,

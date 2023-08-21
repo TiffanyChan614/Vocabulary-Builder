@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Word from '../components/Word'
 import { getWordData } from '../services/wordAPI'
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   updateWordData,
   updateIsLoading,
-  toggleShowDetails,
+  toggleMeaningsShowDetails,
 } from '../reducers/wordMeaningsReducer'
 import Cookies from 'js-cookie'
 import { v4 as uuidv4 } from 'uuid'
@@ -15,10 +15,16 @@ import { v4 as uuidv4 } from 'uuid'
 const WordMeanings = () => {
   const { word } = useParams()
   const dispatch = useDispatch()
-  const { wordData, isLoading, partOfSpeechFilter, showAllDetails } =
-    useSelector((state) => state.wordMeanings)
+  const {
+    wordData,
+    isLoading,
+    partOfSpeechFilter,
+    showAllDetails,
+    showDetails,
+  } = useSelector((state) => state.wordMeanings)
 
   console.log('showAllDetails', showAllDetails)
+  console.log('showDetails', showDetails)
 
   // console.log('word data in WordMeanings', wordData)
 
@@ -71,9 +77,7 @@ const WordMeanings = () => {
   const handleDetailsClick = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    const newShowAllDetails = !showAllDetails
-    console.log('newShowAllDetails', newShowAllDetails)
-    dispatch(toggleShowDetails(newShowAllDetails))
+    dispatch(toggleMeaningsShowDetails(!showAllDetails))
   }
 
   useEffect(() => {

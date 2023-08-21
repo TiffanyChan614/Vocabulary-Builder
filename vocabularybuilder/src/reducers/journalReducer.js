@@ -16,23 +16,47 @@ const journalSlice = createSlice({
   initialState,
   reducers: {
     setWords: (state, action) => {
-      state.words = action.payload
-      state.words?.forEach((word) => {
-        console.log(word.id, state.showDetails[word.id])
-        if (typeof state.showDetails[word.id] === 'undefined') {
-          state.showDetails[word.id] = false
+      const newWords = action.payload
+      const newShowDetails = { ...state.showDetails }
+
+      newWords?.forEach((result) => {
+        if (typeof state.showDetails[result.id] === 'undefined') {
+          newShowDetails[result.id] = false
         }
       })
-      console.log('after setting words, state.showDetails', state.showDetails)
+
+      let allDetailsShown = true
+      for (const wordId in newShowDetails) {
+        if (!newShowDetails[wordId]) {
+          allDetailsShown = false
+          break
+        }
+      }
+
+      return {
+        ...state,
+        words: newWords,
+        showDetails: newShowDetails,
+        showAllDetails: allDetailsShown,
+      }
     },
     setSearchValue: (state, action) => {
-      state.searchValue = action.payload
+      return {
+        ...state,
+        searchValue: action.payload,
+      }
     },
     setSortValue: (state, action) => {
-      state.sortValue = action.payload
+      return {
+        ...state,
+        sortValue: action.payload,
+      }
     },
     setPartOfSpeechFilter: (state, action) => {
-      state.partOfSpeechFilter = action.payload
+      return {
+        ...state,
+        partOfSpeechFilter: action.payload,
+      }
     },
     setShowForm: (state, action) => {
       state.showForm = action.payload
@@ -40,15 +64,35 @@ const journalSlice = createSlice({
     setFormWord: (state, action) => {
       state.formWord = action.payload
     },
-    setShowDetails: (state, action) => {
+    setShowDetailsById: (state, action) => {
       const { wordId, showDetails } = action.payload
-      state.showDetails[wordId] = showDetails
-      console.log(
-        'after setting showDetails, state.showDetails',
-        wordId,
-        state.showDetails[wordId],
-        state.showDetails
-      )
+      const newShowDetails = { ...state.showDetails, [wordId]: showDetails }
+
+      let allDetailsShown = true
+      for (const wordId in newShowDetails) {
+        if (!newShowDetails[wordId]) {
+          allDetailsShown = false
+          break
+        }
+      }
+
+      return {
+        ...state,
+        showDetails: newShowDetails,
+        showAllDetails: allDetailsShown,
+      }
+    },
+    toggleShowDetails: (state, action) => {
+      const value = action.payload
+      const newShowDetails = {}
+      for (const wordId in state.showDetails) {
+        newShowDetails[wordId] = value
+      }
+      return {
+        ...state,
+        showDetails: newShowDetails,
+        showAllDetails: value,
+      }
     },
   },
 })
@@ -79,8 +123,16 @@ export const updateJournalFormWord = (formWord) => {
 
 export const updateJournalShowDetails = (wordId, showDetails) => {
   return {
-    type: 'journal/setShowDetails',
+    type: 'journal/setShowDetailsById',
     payload: { wordId, showDetails },
+  }
+}
+
+export const toggleJournalShowDetails = (newValue) => {
+  console.log('toggleJournalShowDetails', newValue)
+  return {
+    type: 'journal/toggleShowDetails',
+    payload: newValue,
   }
 }
 
