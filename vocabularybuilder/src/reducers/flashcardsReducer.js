@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   mode: '',
   wordArray: [],
+  number: 0,
 }
 
 const flashcardsSlice = createSlice({
@@ -21,6 +22,12 @@ const flashcardsSlice = createSlice({
         wordArray: action.payload,
       }
     },
+    setNumber: (state, action) => {
+      return {
+        ...state,
+        number: action.payload,
+      }
+    },
   },
 })
 
@@ -32,5 +39,8 @@ export const updateFlashcardsWordArray = (wordArray) => {
   return { type: 'flashcards/setWordArray', payload: wordArray }
 }
 
-export const { setMode, setWordArray } = flashcardsSlice.actions
+export const updateFlashcardsNumber = (number) => {
+  return { type: 'flashcards/setNumber', payload: number }
+}
+
 export default flashcardsSlice.reducer

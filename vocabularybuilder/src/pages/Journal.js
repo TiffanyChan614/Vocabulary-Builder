@@ -47,6 +47,9 @@ const Journal = () => {
   }, [])
 
   const getFilteredAndSortedWords = () => {
+    if (!words) {
+      return []
+    }
     let filteredAndSortedWords = [...words]
     if (searchValue !== '') {
       filteredAndSortedWords = filteredAndSortedWords
