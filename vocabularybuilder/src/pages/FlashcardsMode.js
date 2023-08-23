@@ -10,7 +10,9 @@ const FlashcardsMode = () => {
   const { mode, number, wordArray } = useSelector((state) => state.flashcards)
   const dispatch = useDispatch()
 
-  const minNum = Math.max(5, wordArray.length)
+  console.log('number', number)
+
+  const minNum = Math.min(5, wordArray.length)
 
   const words = (() => {
     try {
