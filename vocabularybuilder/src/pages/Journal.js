@@ -90,7 +90,7 @@ const Journal = () => {
   const NoWordsFoundMessage = () => (
     <div className='flex flex-col pt-5 items-center justify-center'>
       <h3 className='font-bold text-lg mb-2'>No words found</h3>
-      <p className='text-md text-gray-600 mb-4'>
+      <p className='text-md text-gray-600 mb-4 text-center'>
         Seems like there are no matching words. Why not&nbsp;
         <NavLink
           className='text-indigo-800 hover:underline'
