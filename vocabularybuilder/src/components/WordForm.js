@@ -209,7 +209,7 @@ const WordForm = ({ page }) => {
         <div className='word-form bg-white w-full sm:w-2/3 rounded-xl overflow-hidden'>
           <form onSubmit={handleSubmit}>
             <header className='word-form--header pt-6 pb-4 px-6 border-b-2 flex flex-col sm:flex-row items-center sm:justify-between gap-2'>
-              <div className='flex items-center'>
+              <div className='flex items-center gap-1'>
                 <h2 className='text-xl font-bold text-indigo-800'>{word}</h2>
                 {pronunciation && (
                   <h3 className='text-lg'>{`[${pronunciation}]`}</h3>
@@ -222,7 +222,7 @@ const WordForm = ({ page }) => {
               </div>
               <div>
                 {message && (
-                  <p className='text-md font-semibold text-green-700'>
+                  <p className='text-md font-semibold text-emerald-700'>
                     {message}
                   </p>
                 )}

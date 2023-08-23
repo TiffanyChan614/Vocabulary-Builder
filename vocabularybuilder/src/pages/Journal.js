@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Word from '../components/Word'
 import SearchField from '../components/SearchField'
 import Filter from '../components/Filter'
@@ -11,6 +11,10 @@ import {
   updateSortValue,
   toggleJournalShowDetails,
 } from '../reducers/journalReducer'
+import {
+  updateSearchSearchValue,
+  updateSearchCurrentPage,
+} from '../reducers/searchReducer'
 
 const Journal = () => {
   const dispatch = useDispatch()
@@ -92,11 +96,15 @@ const Journal = () => {
       <h3 className='font-bold text-lg mb-2'>No words found</h3>
       <p className='text-md text-gray-600 mb-4 text-center'>
         Seems like there are no matching words. Why not&nbsp;
-        <NavLink
+        <Link
           className='text-indigo-800 hover:underline'
-          to='../search'>
+          to='../search'
+          onClick={() => {
+            dispatch(updateSearchSearchValue(''))
+            dispatch(updateSearchCurrentPage('search'))
+          }}>
           explore new words
-        </NavLink>
+        </Link>
         &nbsp;or try other filters?
       </p>
     </div>

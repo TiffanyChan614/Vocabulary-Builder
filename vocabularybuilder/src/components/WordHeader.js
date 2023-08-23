@@ -73,7 +73,7 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
             </div>
           )}
           {partOfSpeech && (
-            <h4 className='font-semibold text-sm md:text-md'>
+            <h4 className='font-semibold text-md sm:ml-3'>
               {partOfSpeech[0].toUpperCase() + partOfSpeech.slice(1)}
             </h4>
           )}

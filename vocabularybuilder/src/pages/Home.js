@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getRandomWord } from '../services/wordAPI'
-import { updateSearchCurrentPage } from '../reducers/searchReducer'
+import {
+  updateSearchCurrentPage,
+  updateSearchSearchValue,
+} from '../reducers/searchReducer'
 import { useDispatch } from 'react-redux'
 
 const Home = () => {
@@ -21,6 +24,11 @@ const Home = () => {
         return word.word
       }
     }
+  }
+
+  const handleClickLink = () => {
+    dispatch(updateSearchCurrentPage(`search/${word}`))
+    dispatch(updateSearchSearchValue(word))
   }
 
   useEffect(() => {
@@ -54,7 +62,7 @@ const Home = () => {
         <Link
           to={`search/${word}`}
           className='text-md hover:text-indigo-800 hover:underline select-none'
-          onClick={() => dispatch(updateSearchCurrentPage(`search/${word}`))}>
+          onClick={handleClickLink}>
           Learn this word
         </Link>
       </div>
