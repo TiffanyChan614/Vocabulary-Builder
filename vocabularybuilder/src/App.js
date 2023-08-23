@@ -6,6 +6,9 @@ import Layout from './components/Layout'
 import WordMeanings from './pages/WordMeanings'
 import PossibleWords from './pages/PossibleWords'
 import Review from './pages/Review'
+import Flashcards from './pages/Flashcards'
+import FlashcardsMode from './pages/FlashcardsMode'
+import Card from './pages/Card'
 import { updateSearchCurrentPage } from './reducers/searchReducer'
 import { useDispatch } from 'react-redux'
 
@@ -46,6 +49,18 @@ const App = () => {
             path='review'
             element={<Review />}
           />
+          <Route
+            path='flashcards'
+            element={<Flashcards />}>
+            <Route
+              index
+              element={<FlashcardsMode />}
+            />
+            <Route
+              path='card'
+              element={<Card />}
+            />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
