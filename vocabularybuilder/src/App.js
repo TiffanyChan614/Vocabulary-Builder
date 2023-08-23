@@ -9,7 +9,6 @@ import Review from './pages/Review'
 import Flashcards from './pages/Flashcards'
 import FlashcardsMode from './pages/FlashcardsMode'
 import Card from './pages/Card'
-import { updateSearchCurrentPage } from './reducers/searchReducer'
 import { useDispatch } from 'react-redux'
 
 const App = () => {
@@ -29,14 +28,10 @@ const App = () => {
             path='search'
             element={<Search />}>
             <Route
-              onClick={() => dispatch(updateSearchCurrentPage('search'))}
               index
               element={<PossibleWords />}
             />
             <Route
-              onClick={({ params }) =>
-                dispatch(updateSearchCurrentPage(`search/${params.word}`))
-              }
               path=':word'
               element={<WordMeanings />}
             />
@@ -47,19 +42,19 @@ const App = () => {
           />
           <Route
             path='review'
-            element={<Review />}
-          />
-          <Route
-            path='flashcards'
-            element={<Flashcards />}>
+            element={<Review />}>
             <Route
-              index
-              element={<FlashcardsMode />}
-            />
-            <Route
-              path='card'
-              element={<Card />}
-            />
+              path='flashcards'
+              element={<Flashcards />}>
+              <Route
+                index
+                element={<FlashcardsMode />}
+              />
+              <Route
+                path='card'
+                element={<Card />}
+              />
+            </Route>
           </Route>
         </Route>
       </Routes>

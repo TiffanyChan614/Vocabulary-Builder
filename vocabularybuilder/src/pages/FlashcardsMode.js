@@ -10,6 +10,8 @@ const FlashcardsMode = () => {
   const { words } = useSelector((state) => state.journal)
   const dispatch = useDispatch()
 
+  const buttonStyle = {}
+
   const handleModeClick = (e) => {
     e.stopPropagation()
     dispatch(updateFlashcardsMode(e.target.name))
@@ -50,9 +52,9 @@ const FlashcardsMode = () => {
   }
 
   return (
-    <div>
-      <h2>Please select a mode:</h2>
-      <div className='flex flex-col'>
+    <div className='flex flex-col gap-5 text-center'>
+      <h2 className='text-lg font-bold'>Please select a mode:</h2>
+      <div className='flex flex-col gap-2'>
         <button
           name='wordToMeaning'
           onClick={handleModeClick}>
