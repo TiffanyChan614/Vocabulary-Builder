@@ -22,56 +22,26 @@ const FlashcardsMode = () => {
 
   const minNum = Math.min(5, words.length)
 
-  const buttonStyleClassName = (type, option) => {
+  const modeButtonStyleClassName = (buttonMode) => {
     const baseStyle =
       'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center hover:font-semibold'
     const colorStyle = () => {
-      switch (type) {
-        case 'mode':
-          switch (option) {
-            case 'wordToMeaning':
-              return (
-                'border-amber-100 hover:bg-amber-100' +
-                (mode === 'wordToMeaning' ? ' bg-amber-100 font-semibold' : '')
-              )
-            case 'meaningToWord':
-              return (
-                'border-sky-100 hover:bg-sky-100' +
-                (mode === 'meaningToWord' ? ' bg-sky-100 font-semibold' : '')
-              )
-            case 'mixed':
-              return (
-                'border-rose-100 hover:bg-rose-100' +
-                (mode === 'mixed' ? ' bg-rose-100 font-semibold' : '')
-              )
-            default:
-              return ''
-          }
-        case 'number':
-          switch (option) {
-            case `${minNum}`:
-              return (
-                'border-amber-100 hover:bg-amber-100' +
-                (number === minNum ? ' bg-amber-100 font-semibold' : '')
-              )
-            case '10':
-              return (
-                'border-sky-100 hover:bg-sky-100' +
-                (number === 10 ? ' bg-sky-100 font-semibold' : '')
-              )
-            case '15':
-              return (
-                'border-rose-100 hover:bg-rose-100' +
-                (number === 15 ? ' bg-rose-100 font-semibold' : '')
-              )
-            case '20':
-              return (
-                'border-lime-100 hover:bg-lime-100' +
-                (number === 20 ? ' bg-lime-100 font-semibold' : '')
-              )
-            default:
-              return ''
-          }
+      switch (buttonMode) {
+        case 'wordToMeaning':
+          return (
+            'border-amber-100 hover:bg-amber-100' +
+            (mode === 'wordToMeaning' ? ' bg-amber-100 font-semibold' : '')
+          )
+        case 'meaningToWord':
+          return (
+            'border-sky-100 hover:bg-sky-100' +
+            (mode === 'meaningToWord' ? ' bg-sky-100 font-semibold' : '')
+          )
+        case 'mixed':
+          return (
+            'border-rose-100 hover:bg-rose-100' +
+            (mode === 'mixed' ? ' bg-rose-100 font-semibold' : '')
+          )
         default:
           return ''
       }
@@ -79,6 +49,14 @@ const FlashcardsMode = () => {
     return baseStyle + ' ' + colorStyle()
   }
 
+  const numberButtonStyleClassName = (buttonNumber) => {
+    const baseStyle =
+      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center hover: border-indigo-100 hover:font-semibold hover:bg-indigo-100'
+    const activeStyle = 'bg-indigo-100 font-semibold border-indigo-100'
+    return (
+      baseStyle + (number === Number(buttonNumber) ? ' ' + activeStyle : '')
+    )
+  }
   const handleModeClick = (e) => {
     e.stopPropagation()
     dispatch(updateFlashcardsMode(e.target.name))
@@ -171,19 +149,19 @@ const FlashcardsMode = () => {
           <button
             name='wordToMeaning'
             onClick={handleModeClick}
-            className={buttonStyleClassName('mode', 'wordToMeaning')}>
+            className={modeButtonStyleClassName('wordToMeaning')}>
             Show Word, Guess Meaning
           </button>
           <button
             name='meaningToWord'
             onClick={handleModeClick}
-            className={buttonStyleClassName('mode', 'meaningToWord')}>
+            className={modeButtonStyleClassName('meaningToWord')}>
             Show Meaning, Guess Word
           </button>
           <button
             name='mixed'
             onClick={handleModeClick}
-            className={buttonStyleClassName('mode', 'mixed')}>
+            className={modeButtonStyleClassName('mixed')}>
             Mixed Mode
           </button>
         </div>
@@ -196,14 +174,14 @@ const FlashcardsMode = () => {
           <button
             name={minNum.toString()}
             onClick={handleNumberClick}
-            className={buttonStyleClassName('number', minNum.toString())}>
+            className={numberButtonStyleClassName(minNum.toString())}>
             5
           </button>
           {words?.length >= 10 && (
             <button
               name='10'
               onClick={handleNumberClick}
-              className={buttonStyleClassName('number', '10')}>
+              className={numberButtonStyleClassName('10')}>
               10
             </button>
           )}
@@ -211,7 +189,7 @@ const FlashcardsMode = () => {
             <button
               name='15'
               onClick={handleNumberClick}
-              className={buttonStyleClassName('number', '15')}>
+              className={numberButtonStyleClassName('15')}>
               15
             </button>
           )}
@@ -219,7 +197,7 @@ const FlashcardsMode = () => {
             <button
               name='20'
               onClick={handleNumberClick}
-              className={buttonStyleClassName('number', '20')}>
+              className={numberButtonStyleClassName('20')}>
               20
             </button>
           )}

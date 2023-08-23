@@ -94,7 +94,7 @@ const Card = () => {
         </button>
 
         <div
-          className={`text-center w-full flex flex-col items-center gap-5 min-h-[400px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
+          className={`select-none text-center w-full flex flex-col items-center gap-5 min-h-[400px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
           onClick={handleCardClick}>
           <div className='h-full text-xl flex justify-center items-center'>
             {face === 'front' ? front : back}
