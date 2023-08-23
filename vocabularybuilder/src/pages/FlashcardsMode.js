@@ -7,12 +7,10 @@ import {
 import { Link } from 'react-router-dom'
 
 const FlashcardsMode = () => {
-  const { mode, number, wordArray } = useSelector((state) => state.flashcards)
+  const { mode, number } = useSelector((state) => state.flashcards)
   const dispatch = useDispatch()
 
   console.log('number', number)
-
-  const minNum = Math.min(5, wordArray.length)
 
   const words = (() => {
     try {
@@ -21,6 +19,8 @@ const FlashcardsMode = () => {
       return []
     }
   })()
+
+  const minNum = Math.min(5, words.length)
 
   const buttonStyleClassName = (type, option) => {
     const baseStyle =
@@ -104,11 +104,44 @@ const FlashcardsMode = () => {
 
   const initWordArray = () => {
     const wordArray =
-      words?.map((word) => ({
-        word: word.word,
-        definition: word.definition,
-        images: word.images,
-      })) || []
+      words?.map((word) => {
+        const images = word.images
+        let image = null
+        if (images && images.length > 0) {
+          const randomIndex = Math.floor(Math.random() * images.length)
+          image = images[randomIndex]
+        }
+        console.log('image', image)
+        if (mode === 'wordToMeaning') {
+          return {
+            front: { type: 'word', word: word.word },
+            back: word.definition,
+          }
+        } else if (mode === 'meaningToWord') {
+          return {
+            front: {
+              type: 'definitionWithImages',
+              definition: word.definition,
+              image: image,
+            },
+            back: word.word,
+          }
+        } else {
+          return Math.random() < 0.5
+            ? {
+                front: { type: 'word', word: word.word },
+                back: word.definition,
+              }
+            : {
+                front: {
+                  type: 'definitionWithImages',
+                  definition: word.definition,
+                  image: image,
+                },
+                back: word.word,
+              }
+        }
+      }) || []
 
     const shuffledArray = shuffleArray(wordArray)
 

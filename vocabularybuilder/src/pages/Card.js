@@ -24,36 +24,39 @@ const Card = () => {
   })()
 
   const front = (() => {
-    if (mode === 'wordToMeaning') {
-      return wordArray[index].word
-    }
-    if (mode === 'meaningToWord') {
-      return wordArray[index].definition
-    }
-    if (mode === 'mixed') {
-      return Math.random() < 0.5
-        ? wordArray[index].word
-        : wordArray[index].definition
+    const cardFront = wordArray[index].front
+    if (cardFront.type === 'word') {
+      return <p>{wordArray[index].front.word}</p>
+    } else if (cardFront.type === 'definitionWithImages') {
+      const definition = wordArray[index].front.definition
+      const image = wordArray[index].front.image
+      if (image) {
+        return (
+          <div className='flex flex-col items-center'>
+            <img
+              src={image.src}
+              alt={image.alt}
+              className='h-40 w-40 object-cover rounded-lg shadow-md'
+            />
+            <p>{definition}</p>
+          </div>
+        )
+      } else {
+        return (
+          <div className='flex flex-col items-center'>
+            <p>{definition}</p>
+          </div>
+        )
+      }
     }
   })()
 
-  const back = (() => {
-    if (mode === 'wordToMeaning') {
-      return wordArray[index].definition
-    }
-    if (mode === 'meaningToWord') {
-      return wordArray[index].word
-    }
-    if (mode === 'mixed') {
-      return Math.random() < 0.5
-        ? wordArray[index].word
-        : wordArray[index].definition
-    }
-  })()
+  const back = wordArray[index].back
 
   const handleCardClick = (e) => {
     e.stopPropagation()
     setFace(face === 'front' ? 'back' : 'front')
+    console.log('face', face)
   }
 
   const handlePreviousClick = () => {
