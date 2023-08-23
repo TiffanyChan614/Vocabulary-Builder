@@ -10,7 +10,32 @@ const FlashcardsMode = () => {
   const { words } = useSelector((state) => state.journal)
   const dispatch = useDispatch()
 
-  const buttonStyle = {}
+  const buttonStyleClassName = (buttonMode) => {
+    const baseStyle =
+      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center hover:font-semibold'
+    const colorStyle = () => {
+      switch (buttonMode) {
+        case 'wordToMeaning':
+          return (
+            'border-amber-100 hover:bg-amber-100' +
+            (mode === 'wordToMeaning' ? ' bg-amber-100 font-semibold' : '')
+          )
+        case 'meaningToWord':
+          return (
+            'border-sky-100 hover:bg-sky-100' +
+            (mode === 'meaningToWord' ? ' bg-sky-100 font-semibold' : '')
+          )
+        case 'mixed':
+          return (
+            'border-rose-100 hover:bg-rose-100' +
+            (mode === 'mixed' ? ' bg-rose-100 font-semibold' : '')
+          )
+        default:
+          return ''
+      }
+    }
+    return baseStyle + ' ' + colorStyle()
+  }
 
   const handleModeClick = (e) => {
     e.stopPropagation()
@@ -54,27 +79,32 @@ const FlashcardsMode = () => {
   return (
     <div className='flex flex-col gap-5 text-center'>
       <h2 className='text-lg font-bold'>Please select a mode:</h2>
-      <div className='flex flex-col gap-2'>
+      <div className='flex flex-col gap-4'>
         <button
           name='wordToMeaning'
-          onClick={handleModeClick}>
+          onClick={handleModeClick}
+          className={buttonStyleClassName('wordToMeaning')}>
           Show Word, Guess Meaning
         </button>
         <button
           name='meaningToWord'
-          onClick={handleModeClick}>
-          Show Meaning (and Images if available), Guess Word
+          onClick={handleModeClick}
+          className={buttonStyleClassName('meaningToWord')}>
+          Show Meaning, Guess Word
         </button>
         <button
           name='mixed'
-          onClick={handleModeClick}>
+          onClick={handleModeClick}
+          className={buttonStyleClassName('mixed')}>
           Mixed Mode
         </button>
       </div>
       <Link
         to={mode === '' ? '' : 'card'}
         onClick={handleStart}>
-        <button>Start</button>
+        <button className='mt-7 w-full text-lg rounded-lg px-3 py-2 font-semibold text-white bg-indigo-400 hover:bg-indigo-500'>
+          Start
+        </button>
       </Link>
     </div>
   )

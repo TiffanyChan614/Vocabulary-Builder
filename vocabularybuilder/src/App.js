@@ -9,11 +9,8 @@ import Review from './pages/Review'
 import Flashcards from './pages/Flashcards'
 import FlashcardsMode from './pages/FlashcardsMode'
 import Card from './pages/Card'
-import { useDispatch } from 'react-redux'
 
 const App = () => {
-  const dispatch = useDispatch()
-
   return (
     <BrowserRouter>
       <Routes>
