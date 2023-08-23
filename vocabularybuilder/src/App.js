@@ -5,6 +5,7 @@ import Journal from './pages/Journal'
 import Layout from './components/Layout'
 import WordMeanings from './pages/WordMeanings'
 import PossibleWords from './pages/PossibleWords'
+import Review from './pages/Review'
 import { updateSearchCurrentPage } from './reducers/searchReducer'
 import { useDispatch } from 'react-redux'
 
@@ -40,6 +41,10 @@ const App = () => {
           <Route
             path='journal'
             element={<Journal />}
+          />
+          <Route
+            path='review'
+            element={<Review />}
           />
         </Route>
       </Routes>

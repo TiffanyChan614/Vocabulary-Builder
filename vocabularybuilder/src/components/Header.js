@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { AiOutlineHome, AiOutlineSearch } from 'react-icons/ai'
 import { BiBookBookmark } from 'react-icons/bi'
 import { useState, useEffect } from 'react'
+import { MdOutlineQuiz } from 'react-icons/md'
 
 const Header = () => {
   const activeTextStyleClassName =
@@ -39,6 +40,11 @@ const Header = () => {
       text: 'Your Journal',
       icon: <BiBookBookmark size={25} />,
       link: '/journal',
+    },
+    {
+      text: 'Review',
+      icon: <MdOutlineQuiz size={25} />,
+      link: '/review',
     },
   ]
 

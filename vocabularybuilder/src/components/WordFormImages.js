@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { getImage } from '../services/pexelAPI'
 import ImageDropZone from './ImageDropZone'
 
