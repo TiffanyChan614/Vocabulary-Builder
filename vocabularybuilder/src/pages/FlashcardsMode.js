@@ -141,29 +141,27 @@ const FlashcardsMode = () => {
     dispatch(updateFlashcardsNumber(parseInt(e.target.name)))
   }
 
+  const modeButtons = [
+    { name: 'wordToMeaning', text: 'Show Word, Guess Meaning' },
+    { name: 'meaningToWord', text: 'Show Meaning, Guess Word' },
+    { name: 'mixed', text: 'Mixed Mode' },
+  ]
+
+  const numberButtons = [5, 10, 15, 20].filter((num) => num <= words?.length)
+
   return (
     <div className='card flex flex-col gap-5 text-center'>
       <div className='card--mode flex flex-col gap-3'>
         <h2 className='text-lg font-bold'>Please select a mode:</h2>
         <div className='flex flex-col gap-4'>
-          <button
-            name='wordToMeaning'
-            onClick={handleModeClick}
-            className={modeButtonStyleClassName('wordToMeaning')}>
-            Show Word, Guess Meaning
-          </button>
-          <button
-            name='meaningToWord'
-            onClick={handleModeClick}
-            className={modeButtonStyleClassName('meaningToWord')}>
-            Show Meaning, Guess Word
-          </button>
-          <button
-            name='mixed'
-            onClick={handleModeClick}
-            className={modeButtonStyleClassName('mixed')}>
-            Mixed Mode
-          </button>
+          {modeButtons.map((button) => (
+            <button
+              name={button.name}
+              onClick={handleModeClick}
+              className={modeButtonStyleClassName(button.name)}>
+              {button.text}
+            </button>
+          ))}
         </div>
       </div>
       <div className='card--number flex flex-col gap-3'>
@@ -171,36 +169,14 @@ const FlashcardsMode = () => {
           Please select the number of flashcards:
         </h2>
         <div className='flex flex-col gap-4'>
-          <button
-            name={minNum.toString()}
-            onClick={handleNumberClick}
-            className={numberButtonStyleClassName(minNum.toString())}>
-            5
-          </button>
-          {words?.length >= 10 && (
+          {numberButtons.map((button) => (
             <button
-              name='10'
+              name={button}
               onClick={handleNumberClick}
-              className={numberButtonStyleClassName('10')}>
-              10
+              className={numberButtonStyleClassName(button)}>
+              {button}
             </button>
-          )}
-          {words?.length >= 15 && (
-            <button
-              name='15'
-              onClick={handleNumberClick}
-              className={numberButtonStyleClassName('15')}>
-              15
-            </button>
-          )}
-          {words?.length >= 20 && (
-            <button
-              name='20'
-              onClick={handleNumberClick}
-              className={numberButtonStyleClassName('20')}>
-              20
-            </button>
-          )}
+          ))}
         </div>
       </div>
 
