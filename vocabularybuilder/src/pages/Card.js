@@ -4,12 +4,9 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GrPrevious, GrNext } from 'react-icons/gr'
 
-// TODO: fix next and previous button,
-// change Link to div and create a handleNextClick and handlePreviousClick function
-
 const Card = () => {
   const { index } = useParams()
-  const { mode, wordArray } = useSelector((state) => state.flashcards)
+  const { wordArray } = useSelector((state) => state.flashcards)
   const [face, setFace] = useState('front')
   const navigate = useNavigate()
 
@@ -26,25 +23,34 @@ const Card = () => {
   const front = (() => {
     const cardFront = wordArray[index].front
     if (cardFront.type === 'word') {
-      return <p>{wordArray[index].front.word}</p>
+      return (
+        <div>
+          <p className='text-2xl text-indigo-800 font-bold'>
+            {wordArray[index].front.word}
+          </p>
+          <p className='mt-2 text-sm text-gray-600'>Guess its meaning</p>
+        </div>
+      )
     } else if (cardFront.type === 'definitionWithImages') {
       const definition = wordArray[index].front.definition
       const image = wordArray[index].front.image
       if (image) {
         return (
-          <div className='flex flex-col items-center'>
+          <div className='flex flex-col items-center gap-5'>
             <img
               src={image.src}
               alt={image.alt}
               className='h-40 w-40 object-cover rounded-lg shadow-md'
             />
-            <p>{definition}</p>
+            <p className='text-bold'>{definition}</p>
+            <p className='mt-2 text-sm text-gray-600'>Guess the word</p>
           </div>
         )
       } else {
         return (
           <div className='flex flex-col items-center'>
-            <p>{definition}</p>
+            <p className='font-semibold'>{definition}</p>
+            <p className='mt-2 text-sm text-gray-600'>Guess the word</p>
           </div>
         )
       }
@@ -88,7 +94,7 @@ const Card = () => {
         </button>
 
         <div
-          className={`w-full flex flex-col items-center h-80 py-2 px-4 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
+          className={`text-center w-full flex flex-col items-center gap-5 min-h-[400px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
           onClick={handleCardClick}>
           <div className='h-full text-xl flex justify-center items-center'>
             {face === 'front' ? front : back}
