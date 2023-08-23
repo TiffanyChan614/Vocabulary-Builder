@@ -48,7 +48,7 @@ const App = () => {
                 element={<FlashcardsMode />}
               />
               <Route
-                path='card'
+                path=':index'
                 element={<Card />}
               />
             </Route>

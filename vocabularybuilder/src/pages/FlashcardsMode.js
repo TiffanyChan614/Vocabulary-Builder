@@ -6,8 +6,7 @@ import {
 import { Link } from 'react-router-dom'
 
 const FlashcardsMode = () => {
-  const { mode } = useSelector((state) => state.flashcards)
-  const { words } = useSelector((state) => state.journal)
+  const { mode, wordArray } = useSelector((state) => state.flashcards)
   const dispatch = useDispatch()
 
   const buttonStyleClassName = (buttonMode) => {
@@ -46,28 +45,38 @@ const FlashcardsMode = () => {
     let currentIndex = array.length
     let temporaryValue
     let randomIndex
+    let arrayCopy = [...array]
 
     while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex)
       currentIndex -= 1
 
-      temporaryValue = array[currentIndex]
-      array[currentIndex] = array[randomIndex]
-      array[randomIndex] = temporaryValue
+      temporaryValue = arrayCopy[currentIndex]
+      arrayCopy[currentIndex] = arrayCopy[randomIndex]
+      arrayCopy[randomIndex] = temporaryValue
     }
+
+    return arrayCopy
   }
 
   const initWordArray = () => {
-    const wordArray = words.map((word) => ({
-      word: word.word,
-      definition: word.definition,
-      images: word.images,
-    }))
-    shuffleArray(wordArray)
-    dispatch(updateFlashcardsWordArray(wordArray))
+    try {
+      const words = JSON.parse(localStorage.getItem('journal'))
+      console.log('words', words)
+      const wordArray = words.map((word) => ({
+        word: word.word,
+        definition: word.definition,
+        images: word.images,
+      }))
+
+      dispatch(updateFlashcardsWordArray(shuffleArray(wordArray)))
+    } catch (error) {
+      console.log('error in initWordArray', error)
+    }
   }
 
   const handleStart = (e) => {
+    console.log('click start')
     if (mode === '') {
       e.preventDefault()
       window.alert('Please select a mode')
@@ -100,7 +109,7 @@ const FlashcardsMode = () => {
         </button>
       </div>
       <Link
-        to={mode === '' ? '' : 'card'}
+        to={mode === '' ? '' : '0'}
         onClick={handleStart}>
         <button className='mt-7 w-full text-lg rounded-lg px-3 py-2 font-semibold text-white bg-indigo-400 hover:bg-indigo-500'>
           Start
