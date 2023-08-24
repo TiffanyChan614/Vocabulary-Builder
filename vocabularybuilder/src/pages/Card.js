@@ -6,7 +6,7 @@ import { GrPrevious, GrNext } from 'react-icons/gr'
 
 const Card = () => {
   const { index } = useParams()
-  const { wordArray } = useSelector((state) => state.flashcards)
+  const { mode, wordArray } = useSelector((state) => state.flashcards)
   const [face, setFace] = useState('front')
   const navigate = useNavigate()
 
@@ -82,44 +82,47 @@ const Card = () => {
   }
 
   return (
-    <div className='flex flex-col justify-center items-center gap-3'>
-      <div className='w-full flex justify-center flex-grow gap-2'>
-        <button
-          onClick={handlePreviousClick}
-          className={Number(index) <= 0 ? 'cursor-auto opacity-20' : ''}>
-          <GrPrevious
-            size={25}
-            color='#808080'
-          />
-        </button>
+    <>
+      <div className='text-center'>Mode: {mode}</div>
+      <div className='flex flex-col justify-center items-center gap-3'>
+        <div className='w-full flex justify-center items-center flex-grow gap-2'>
+          <button
+            onClick={handlePreviousClick}
+            className={Number(index) <= 0 ? 'cursor-auto opacity-20' : ''}>
+            <GrPrevious
+              size={25}
+              color='#808080'
+            />
+          </button>
 
-        <div
-          className={`select-none text-center w-full flex flex-col items-center gap-5 min-h-[400px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
-          onClick={handleCardClick}>
-          <div className='h-full text-xl flex justify-center items-center'>
-            {face === 'front' ? front : back}
+          <div
+            className={`select-none text-center w-full flex flex-col justify-center items-center gap-5 min-h-[400px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
+            onClick={handleCardClick}>
+            <div className='h-full text-xl flex justify-center items-center'>
+              {face === 'front' ? front : back}
+            </div>
+            <div className='font-light text-sm text-gray-400'>{face}</div>
           </div>
-          <div className='font-light text-sm text-gray-400'>{face}</div>
+
+          <button
+            onClick={handleNextClick}
+            className={
+              Number(index) >= wordArray.length - 1
+                ? 'cursor-auto opacity-20'
+                : ''
+            }>
+            <GrNext
+              size={25}
+              color='#808080'
+            />
+          </button>
         </div>
 
-        <button
-          onClick={handleNextClick}
-          className={
-            Number(index) >= wordArray.length - 1
-              ? 'cursor-auto opacity-20'
-              : ''
-          }>
-          <GrNext
-            size={25}
-            color='#808080'
-          />
-        </button>
+        <div>
+          {Number(index) + 1} / {wordArray.length}
+        </div>
       </div>
-
-      <div>
-        {Number(index) + 1} / {wordArray.length}
-      </div>
-    </div>
+    </>
   )
 }
 
