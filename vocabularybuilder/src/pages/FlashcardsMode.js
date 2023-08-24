@@ -30,17 +30,17 @@ const FlashcardsMode = () => {
         case 'wordToMeaning':
           return (
             'border-amber-100 hover:bg-amber-100' +
-            (mode === 'wordToMeaning' ? ' bg-amber-100 font-semibold' : '')
+            (mode.name === 'wordToMeaning' ? ' bg-amber-100 font-semibold' : '')
           )
         case 'meaningToWord':
           return (
             'border-sky-100 hover:bg-sky-100' +
-            (mode === 'meaningToWord' ? ' bg-sky-100 font-semibold' : '')
+            (mode.name === 'meaningToWord' ? ' bg-sky-100 font-semibold' : '')
           )
         case 'mixed':
           return (
             'border-rose-100 hover:bg-rose-100' +
-            (mode === 'mixed' ? ' bg-rose-100 font-semibold' : '')
+            (mode.name === 'mixed' ? ' bg-rose-100 font-semibold' : '')
           )
         default:
           return ''
@@ -59,7 +59,9 @@ const FlashcardsMode = () => {
   }
   const handleModeClick = (e) => {
     e.stopPropagation()
-    dispatch(updateFlashcardsMode(e.target.name))
+    dispatch(
+      updateFlashcardsMode(modeButtons.find((b) => b.name === e.target.name))
+    )
   }
 
   const shuffleArray = (array) => {
@@ -90,13 +92,21 @@ const FlashcardsMode = () => {
           image = images[randomIndex]
         }
         console.log('image', image)
-        if (mode === 'wordToMeaning') {
+        if (mode.name === 'wordToMeaning') {
           return {
+            id: word.id,
+            originalPoints: word.points,
+            pointsEarned: 0,
+            newPoints: word.points,
             front: { type: 'word', word: word.word },
             back: word.definition,
           }
-        } else if (mode === 'meaningToWord') {
+        } else if (mode.name === 'meaningToWord') {
           return {
+            id: word.id,
+            originalPoints: word.points,
+            pointsEarned: 0,
+            newPoints: word.points,
             front: {
               type: 'definitionWithImages',
               definition: word.definition,
@@ -107,10 +117,18 @@ const FlashcardsMode = () => {
         } else {
           return Math.random() < 0.5
             ? {
+                id: word.id,
+                originalPoints: word.points,
+                pointsEarned: 0,
+                newPoints: word.points,
                 front: { type: 'word', word: word.word },
                 back: word.definition,
               }
             : {
+                id: word.id,
+                originalPoints: word.points,
+                pointsEarned: 0,
+                newPoints: word.points,
                 front: {
                   type: 'definitionWithImages',
                   definition: word.definition,
@@ -147,7 +165,9 @@ const FlashcardsMode = () => {
     { name: 'mixed', text: 'Mixed Mode' },
   ]
 
-  const numberButtons = [5, 10, 15, 20].filter((num) => num <= words?.length)
+  const numberButtons = [minNum, 10, 15, 20].filter(
+    (num) => num <= words?.length
+  )
 
   return (
     <div className='card flex flex-col gap-5 text-center'>
@@ -156,6 +176,7 @@ const FlashcardsMode = () => {
         <div className='flex flex-col gap-4'>
           {modeButtons.map((button) => (
             <button
+              key={button.name}
               name={button.name}
               onClick={handleModeClick}
               className={modeButtonStyleClassName(button.name)}>
@@ -171,6 +192,7 @@ const FlashcardsMode = () => {
         <div className='flex flex-col gap-4'>
           {numberButtons.map((button) => (
             <button
+              key={button}
               name={button}
               onClick={handleNumberClick}
               className={numberButtonStyleClassName(button)}>

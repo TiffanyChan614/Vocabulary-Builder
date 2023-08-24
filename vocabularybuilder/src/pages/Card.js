@@ -1,14 +1,34 @@
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GrPrevious, GrNext } from 'react-icons/gr'
+import { updateFlashcardsWordArrayByIndex } from '../reducers/flashcardsReducer'
 
 const Card = () => {
   const { index } = useParams()
   const { mode, wordArray } = useSelector((state) => state.flashcards)
+  const wordData = wordArray[index]
+
+  const familiarityButtons = [
+    { name: 'notFamiliar', text: 'Not familiar', score: -1, color: 'red' },
+    {
+      name: 'somewhatFamiliar',
+      text: 'Somewhat familiar',
+      score: 1,
+      color: 'yellow',
+    },
+    { name: 'veryFamiliar', text: 'Very Familiar', score: 2, color: 'green' },
+  ]
+
+  const selectedFamiliarity =
+    familiarityButtons.find(
+      (familiarity) => familiarity.score === wordData.pointsEarned
+    )?.name || null
+
   const [face, setFace] = useState('front')
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const color = (() => {
     if (index === 0 || index % 3 === 0) {
@@ -81,9 +101,49 @@ const Card = () => {
     }
   }
 
+  const handleFamiliarityClick = (e) => {
+    e.stopPropagation()
+    if (e.target.name !== selectedFamiliarity) {
+      const newScore = familiarityButtons.find(
+        (familiarity) => familiarity.name === e.target.name
+      ).score
+      console.log('newScore', newScore)
+      const updatedWordData = {
+        ...wordData,
+        pointsEarned: newScore,
+      }
+      dispatch(updateFlashcardsWordArrayByIndex(index, updatedWordData))
+      console.log('clicked', e.target.name)
+      console.log('wordData', wordData)
+    }
+  }
+
+  const getButtonClassNames = (familiarity, isSelected) => {
+    const bgClass = isSelected
+      ? familiarity.color === 'red'
+        ? 'bg-red-200 border-red-200'
+        : familiarity.color === 'yellow'
+        ? 'bg-yellow-200 border-yellow-200'
+        : familiarity.color === 'green'
+        ? 'bg-green-200 border-green-200'
+        : ''
+      : ''
+
+    const borderClass =
+      familiarity.color === 'red'
+        ? 'border-red-200 hover:bg-red-200'
+        : familiarity.color === 'yellow'
+        ? 'border-yellow-200 hover:bg-yellow-200'
+        : familiarity.color === 'green'
+        ? 'border-green-200 hover:bg-green-200'
+        : ''
+
+    return `font-semibold px-4 py-2 rounded-full cursor-pointer border-2 select-none ${borderClass} ${bgClass}`
+  }
+
   return (
     <>
-      <div className='text-center'>Mode: {mode}</div>
+      <div className='text-center'>Mode: {mode.text}</div>
       <div className='flex flex-col justify-center items-center gap-3'>
         <div className='w-full flex justify-center items-center flex-grow gap-2'>
           <button
@@ -96,7 +156,7 @@ const Card = () => {
           </button>
 
           <div
-            className={`select-none text-center w-full flex flex-col justify-center items-center gap-5 min-h-[400px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
+            className={`select-none text-center w-full flex flex-col justify-center items-center gap-5 min-h-[350px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
             onClick={handleCardClick}>
             <div className='h-full text-xl flex justify-center items-center'>
               {face === 'front' ? front : back}
@@ -120,6 +180,29 @@ const Card = () => {
 
         <div>
           {Number(index) + 1} / {wordArray.length}
+        </div>
+      </div>
+      <div className='text-center flex flex-col gap-3 items-center'>
+        <p className='font-semibold'>
+          Please rate your familiarity with this word:
+        </p>
+        <div className='flex flex-col gap-3 sm:flex-row '>
+          {familiarityButtons.map((familiarity) => {
+            console.log('color', familiarity.color)
+            console.log('isSelected', familiarity.name === selectedFamiliarity)
+            return (
+              <button
+                key={familiarity.name}
+                name={familiarity.name}
+                onClick={handleFamiliarityClick}
+                className={getButtonClassNames(
+                  familiarity,
+                  familiarity.name === selectedFamiliarity
+                )}>
+                {familiarity.text}
+              </button>
+            )
+          })}
         </div>
       </div>
     </>

@@ -28,6 +28,15 @@ const flashcardsSlice = createSlice({
         number: action.payload,
       }
     },
+    setWordArrayByIndex: (state, action) => {
+      const { index, word } = action.payload
+      const newWordArray = [...state.wordArray]
+      newWordArray[index] = word
+      return {
+        ...state,
+        wordArray: newWordArray,
+      }
+    },
   },
 })
 
@@ -37,6 +46,10 @@ export const updateFlashcardsMode = (mode) => {
 
 export const updateFlashcardsWordArray = (wordArray) => {
   return { type: 'flashcards/setWordArray', payload: wordArray }
+}
+
+export const updateFlashcardsWordArrayByIndex = (index, word) => {
+  return { type: 'flashcards/setWordArrayByIndex', payload: { index, word } }
 }
 
 export const updateFlashcardsNumber = (number) => {
