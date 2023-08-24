@@ -154,7 +154,6 @@ const Card = () => {
               color='#808080'
             />
           </button>
-
           <div
             className={`select-none text-center w-full flex flex-col justify-center items-center gap-5 min-h-[350px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
             onClick={handleCardClick}>
@@ -177,7 +176,6 @@ const Card = () => {
             />
           </button>
         </div>
-
         <div>
           {Number(index) + 1} / {wordArray.length}
         </div>
@@ -204,6 +202,9 @@ const Card = () => {
             )
           })}
         </div>
+        <button className='mt-4 bg-indigo-400 hover:bg-indigo-500 text-lg text-white rounded-lg px-5 py-2'>
+          Finish Review
+        </button>
       </div>
     </>
   )

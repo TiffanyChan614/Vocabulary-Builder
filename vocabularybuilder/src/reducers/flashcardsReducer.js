@@ -4,6 +4,8 @@ const initialState = {
   mode: '',
   wordArray: [],
   number: 0,
+  showNotFinished: false,
+  showQuit: false,
 }
 
 const flashcardsSlice = createSlice({
@@ -37,6 +39,18 @@ const flashcardsSlice = createSlice({
         wordArray: newWordArray,
       }
     },
+    setShowNotFinished: (state, action) => {
+      return {
+        ...state,
+        showNotFinished: action.payload,
+      }
+    },
+    setShowQuit: (state, action) => {
+      return {
+        ...state,
+        showQuit: action.payload,
+      }
+    },
   },
 })
 
@@ -54,6 +68,14 @@ export const updateFlashcardsWordArrayByIndex = (index, word) => {
 
 export const updateFlashcardsNumber = (number) => {
   return { type: 'flashcards/setNumber', payload: number }
+}
+
+export const updateFlashcardsShowNotFinished = (show) => {
+  return { type: 'flashcards/setShowNotFinished', payload: show }
+}
+
+export const updateFlashcardsShowQuit = (show) => {
+  return { type: 'flashcards/setShowQuit', payload: show }
 }
 
 export default flashcardsSlice.reducer

@@ -12,6 +12,7 @@ import {
 } from '../reducers/journalReducer'
 import { updateSearchShowForm } from '../reducers/searchReducer'
 import WordFormField from './WordFormField'
+import Overlay from './Overlay'
 
 const WordForm = ({ page }) => {
   const dispatch = useDispatch()
@@ -204,8 +205,7 @@ const WordForm = ({ page }) => {
 
   return (
     <>
-      <div className='word-form-overlay fixed inset-0 bg-black opacity-50 z-50'></div>
-      <div className='word-form-wrapper fixed inset-0 w-screen h-screen flex justify-center items-center z-50'>
+      <Overlay>
         <div className='word-form bg-white w-full sm:w-2/3 rounded-xl overflow-hidden'>
           <form onSubmit={handleSubmit}>
             <header className='word-form--header pt-6 pb-4 px-6 border-b-2 flex flex-col sm:flex-row items-center sm:justify-between gap-2'>
@@ -277,7 +277,7 @@ const WordForm = ({ page }) => {
             </div>
           </form>
         </div>
-      </div>
+      </Overlay>
     </>
   )
 }
