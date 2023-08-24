@@ -96,7 +96,7 @@ const FlashcardsMode = () => {
           return {
             id: word.id,
             originalPoints: word.points,
-            pointsEarned: 0,
+            pointsEarned: null,
             newPoints: word.points,
             front: { type: 'word', word: word.word },
             back: word.definition,
@@ -105,7 +105,7 @@ const FlashcardsMode = () => {
           return {
             id: word.id,
             originalPoints: word.points,
-            pointsEarned: 0,
+            pointsEarned: null,
             newPoints: word.points,
             front: {
               type: 'definitionWithImages',
@@ -119,7 +119,7 @@ const FlashcardsMode = () => {
             ? {
                 id: word.id,
                 originalPoints: word.points,
-                pointsEarned: 0,
+                pointsEarned: null,
                 newPoints: word.points,
                 front: { type: 'word', word: word.word },
                 back: word.definition,
@@ -127,7 +127,7 @@ const FlashcardsMode = () => {
             : {
                 id: word.id,
                 originalPoints: word.points,
-                pointsEarned: 0,
+                pointsEarned: null,
                 newPoints: word.points,
                 front: {
                   type: 'definitionWithImages',

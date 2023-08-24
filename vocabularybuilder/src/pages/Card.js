@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GrPrevious, GrNext } from 'react-icons/gr'
-import { updateFlashcardsWordArrayByIndex } from '../reducers/flashcardsReducer'
+import {
+  updateFlashcardsShowNotFinished,
+  updateFlashcardsWordArrayByIndex,
+} from '../reducers/flashcardsReducer'
 
 const Card = () => {
   const { index } = useParams()
@@ -45,9 +48,9 @@ const Card = () => {
     if (cardFront.type === 'word') {
       return (
         <div>
-          <p className='text-2xl text-indigo-800 font-bold'>
+          <h2 className='text-2xl text-indigo-800 font-bold'>
             {wordArray[index].front.word}
-          </p>
+          </h2>
           <p className='mt-2 text-sm text-gray-600'>Guess its meaning</p>
         </div>
       )
@@ -141,6 +144,12 @@ const Card = () => {
     return `font-semibold px-4 py-2 rounded-full cursor-pointer border-2 select-none ${borderClass} ${bgClass}`
   }
 
+  const handleFinish = () => {
+    const notFinished = wordArray.some((word) => !word.pointsEarned)
+    console.log('not finished', notFinished)
+    dispatch(updateFlashcardsShowNotFinished(notFinished))
+  }
+
   return (
     <>
       <div className='text-center'>Mode: {mode.text}</div>
@@ -202,7 +211,9 @@ const Card = () => {
             )
           })}
         </div>
-        <button className='mt-4 bg-indigo-400 hover:bg-indigo-500 text-lg text-white rounded-lg px-5 py-2'>
+        <button
+          onClick={handleFinish}
+          className='mt-4 bg-indigo-400 hover:bg-indigo-500 text-lg text-white rounded-lg px-5 py-2'>
           Finish Review
         </button>
       </div>
