@@ -207,7 +207,7 @@ const Card = () => {
         </div>
         <button
           onClick={handleFinish}
-          className='mt-4 bg-indigo-500 hover:bg-indigo-600 text-lg text-white rounded-lg px-5 py-2'>
+          className='mt-4 bg-indigo-500 hover:bg-indigo-600 text-lg font-semibold text-white rounded-lg px-5 py-2'>
           Finish Review
         </button>
       </div>

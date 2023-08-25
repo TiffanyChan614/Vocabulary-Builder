@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   updateFlashcardsWordArray,
-  resetFlashcards,
   updateFlashcardsInSession,
 } from '../reducers/flashcardsReducer'
 import { updateWords } from '../reducers/journalReducer'
@@ -11,6 +11,7 @@ const FlashcardsResult = () => {
   const { wordArray } = useSelector((state) => state.flashcards)
   const { words } = useSelector((state) => state.journal)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const newWordArray = wordArray.map((word) => {
@@ -55,10 +56,10 @@ const FlashcardsResult = () => {
   }
 
   return (
-    <div className='flex flex-col gap-3'>
+    <div className='flex flex-col gap-3 items-center w-full'>
       <h2 className='font-bold text-xl text-center text-indigo-800'>Result</h2>
-      <div className='flex flex-col gap-2'>
-        <div className='grid grid-cols-4 gap-1 font-semibold'>
+      <div className='flex flex-col gap-2 '>
+        <div className='grid grid-cols-4 gap-1 font-semibold grow'>
           <div className='grid-item p-2 text-center'>Word</div>
           <div className='grid-item p-2 text-center'>Original</div>
           <div className='grid-item p-2 text-center'>Updated</div>
@@ -68,7 +69,7 @@ const FlashcardsResult = () => {
           const { word, originalPoints, newPoints, pointsEarned } = wordData
           return (
             <div
-              className={`grid grid-cols-4 gap-1 rounded-xl ${bgColor(
+              className={`grid grid-cols-4 gap-1 rounded-xl w-full ${bgColor(
                 pointsEarned
               )}`}
               key={word + index}>
@@ -85,6 +86,11 @@ const FlashcardsResult = () => {
           )
         })}
       </div>
+      <button
+        onClick={() => navigate('../..')}
+        className='mt-4 bg-indigo-500 hover:bg-indigo-600 text-lg font-semibold text-white rounded-lg px-5 py-2'>
+        Return
+      </button>
     </div>
   )
 }

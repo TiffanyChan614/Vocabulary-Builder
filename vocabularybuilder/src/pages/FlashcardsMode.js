@@ -212,9 +212,14 @@ const FlashcardsMode = () => {
       </div>
       <button
         onClick={handleStart}
-        className='mt-7 text-lg rounded-lg px-7 py-2 font-semibold text-white bg-indigo-500 hover:bg-indigo-600'>
+        className='mt-4 bg-indigo-500 hover:bg-indigo-600 text-lg font-semibold text-white rounded-lg px-5 py-2'>
         Start
       </button>
+      <div className='mt-7 text-center'>
+        <span className='font-bold'>Reminder: </span>If you switch to other
+        pages in the middle of a review session, you will lose your current
+        review progress.
+      </div>
     </div>
   )
 }
