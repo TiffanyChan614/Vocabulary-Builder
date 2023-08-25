@@ -10,8 +10,6 @@ const FlashcardsMode = () => {
   const { mode, number } = useSelector((state) => state.flashcards)
   const dispatch = useDispatch()
 
-  console.log('number', number)
-
   const words = (() => {
     try {
       return JSON.parse(localStorage.getItem('journal'))
@@ -94,6 +92,7 @@ const FlashcardsMode = () => {
         console.log('image', image)
         if (mode.name === 'wordToMeaning') {
           return {
+            word: word.word,
             id: word.id,
             originalPoints: word.points,
             pointsEarned: null,
@@ -103,6 +102,7 @@ const FlashcardsMode = () => {
           }
         } else if (mode.name === 'meaningToWord') {
           return {
+            word: word.word,
             id: word.id,
             originalPoints: word.points,
             pointsEarned: null,
@@ -117,6 +117,7 @@ const FlashcardsMode = () => {
         } else {
           return Math.random() < 0.5
             ? {
+                word: word.word,
                 id: word.id,
                 originalPoints: word.points,
                 pointsEarned: null,
@@ -125,6 +126,7 @@ const FlashcardsMode = () => {
                 back: word.definition,
               }
             : {
+                word: word.word,
                 id: word.id,
                 originalPoints: word.points,
                 pointsEarned: null,

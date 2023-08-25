@@ -54,6 +54,7 @@ const WordForm = ({ page }) => {
     images: formWord.images || [],
     lastUpdated: now,
     created: page === 'search' ? now : formWord.created,
+    points: formWord.points || 0,
   })
 
   console.log('formWord in WordForm', formWord)
@@ -158,7 +159,7 @@ const WordForm = ({ page }) => {
     console.log('journalData', journalData)
 
     if (page === 'search') {
-      journalData.push({ ...filteredFormData, points: 0 })
+      journalData.push({ ...filteredFormData })
       localStorage.setItem('journal', JSON.stringify(journalData))
       navigate('../../journal')
       dispatch(updateJournalPartOfSpeechFilter(''))

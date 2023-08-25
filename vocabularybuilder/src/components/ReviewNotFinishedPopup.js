@@ -1,11 +1,18 @@
 import Overlay from './Overlay'
 import { updateFlashcardsShowNotFinished } from '../reducers/flashcardsReducer'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const ReviewNoFinishedPopup = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleNo = () => {
+    dispatch(updateFlashcardsShowNotFinished(false))
+  }
+
+  const handleYes = () => {
+    navigate('result')
     dispatch(updateFlashcardsShowNotFinished(false))
   }
 
@@ -19,7 +26,9 @@ const ReviewNoFinishedPopup = () => {
         </p>
         <p className='font-semibold'>Are you sure to end the review?</p>
         <div className='flex justify-around items-center gap-3'>
-          <button className='rounded-lg font-semibold text-white bg-gray-400 hover:bg-gray-500 px-4 py-2'>
+          <button
+            onClick={handleYes}
+            className='rounded-lg font-semibold text-white bg-gray-400 hover:bg-gray-500 px-4 py-2'>
             Yes
           </button>
           <button

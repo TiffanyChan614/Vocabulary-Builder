@@ -13,6 +13,9 @@ const Card = () => {
   const { mode, wordArray } = useSelector((state) => state.flashcards)
   const wordData = wordArray[index]
 
+  console.log('wordData', wordData)
+  console.log('index', index)
+
   const familiarityButtons = [
     { name: 'notFamiliar', text: 'Not familiar', score: -1, color: 'red' },
     {
@@ -80,12 +83,11 @@ const Card = () => {
     }
   })()
 
-  const back = wordArray[index].back
+  const back = <div>{wordArray[index].back}</div>
 
   const handleCardClick = (e) => {
     e.stopPropagation()
     setFace(face === 'front' ? 'back' : 'front')
-    console.log('face', face)
   }
 
   const handlePreviousClick = () => {
@@ -110,14 +112,11 @@ const Card = () => {
       const newScore = familiarityButtons.find(
         (familiarity) => familiarity.name === e.target.name
       ).score
-      console.log('newScore', newScore)
       const updatedWordData = {
         ...wordData,
         pointsEarned: newScore,
       }
       dispatch(updateFlashcardsWordArrayByIndex(index, updatedWordData))
-      console.log('clicked', e.target.name)
-      console.log('wordData', wordData)
     }
   }
 
@@ -146,15 +145,15 @@ const Card = () => {
 
   const handleFinish = () => {
     const notFinished = wordArray.some((word) => !word.pointsEarned)
-    console.log('not finished', notFinished)
     dispatch(updateFlashcardsShowNotFinished(notFinished))
+    navigate('../result')
   }
 
   return (
     <>
       <div className='text-center'>Mode: {mode.text}</div>
       <div className='flex flex-col justify-center items-center gap-3'>
-        <div className='w-full flex justify-center items-center flex-grow gap-2'>
+        <div className='card-control w-full flex justify-center items-center flex-grow gap-2'>
           <button
             onClick={handlePreviousClick}
             className={Number(index) <= 0 ? 'cursor-auto opacity-20' : ''}>
@@ -164,7 +163,7 @@ const Card = () => {
             />
           </button>
           <div
-            className={`select-none text-center w-full flex flex-col justify-center items-center gap-5 min-h-[350px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
+            className={`card select-none text-center w-full flex flex-col justify-center items-center gap-5 min-h-[250px] sm:min-h-[350px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
             onClick={handleCardClick}>
             <div className='h-full text-xl flex justify-center items-center'>
               {face === 'front' ? front : back}
@@ -194,26 +193,22 @@ const Card = () => {
           Please rate your familiarity with this word:
         </p>
         <div className='flex flex-col gap-3 sm:flex-row '>
-          {familiarityButtons.map((familiarity) => {
-            console.log('color', familiarity.color)
-            console.log('isSelected', familiarity.name === selectedFamiliarity)
-            return (
-              <button
-                key={familiarity.name}
-                name={familiarity.name}
-                onClick={handleFamiliarityClick}
-                className={getButtonClassNames(
-                  familiarity,
-                  familiarity.name === selectedFamiliarity
-                )}>
-                {familiarity.text}
-              </button>
-            )
-          })}
+          {familiarityButtons.map((familiarity) => (
+            <button
+              key={familiarity.name}
+              name={familiarity.name}
+              onClick={handleFamiliarityClick}
+              className={getButtonClassNames(
+                familiarity,
+                familiarity.name === selectedFamiliarity
+              )}>
+              {familiarity.text}
+            </button>
+          ))}
         </div>
         <button
           onClick={handleFinish}
-          className='mt-4 bg-indigo-400 hover:bg-indigo-500 text-lg text-white rounded-lg px-5 py-2'>
+          className='mt-4 bg-indigo-500 hover:bg-indigo-600 text-lg text-white rounded-lg px-5 py-2'>
           Finish Review
         </button>
       </div>

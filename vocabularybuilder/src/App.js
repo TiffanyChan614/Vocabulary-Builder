@@ -9,6 +9,7 @@ import Review from './pages/Review'
 import Flashcards from './pages/Flashcards'
 import FlashcardsMode from './pages/FlashcardsMode'
 import Card from './pages/Card'
+import FlashcardsResult from './pages/FlashcardsResult'
 
 const App = () => {
   return (
@@ -50,6 +51,10 @@ const App = () => {
               <Route
                 path=':index'
                 element={<Card />}
+              />
+              <Route
+                path='result'
+                element={<FlashcardsResult />}
               />
             </Route>
           </Route>
