@@ -13,9 +13,6 @@ const Card = () => {
   const { mode, wordArray } = useSelector((state) => state.flashcards)
   const wordData = wordArray[index]
 
-  console.log('wordData', wordData)
-  console.log('index', index)
-
   const familiarityButtons = [
     { name: 'notFamiliar', text: 'Not familiar', score: -1, color: 'red' },
     {

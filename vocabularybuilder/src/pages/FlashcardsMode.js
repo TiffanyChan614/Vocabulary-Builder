@@ -179,10 +179,10 @@ const FlashcardsMode = () => {
   )
 
   return (
-    <div className='card flex flex-col gap-5 text-center'>
-      <div className='card--mode flex flex-col gap-3'>
+    <div className='card flex flex-col gap-5 text-center items-center'>
+      <div className='card--mode flex flex-col gap-3 w-full sm:w-3/4'>
         <h2 className='text-lg font-bold'>Please select a mode:</h2>
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-4 w-full'>
           {modeButtons.map((button) => (
             <button
               key={button.name}
@@ -194,11 +194,11 @@ const FlashcardsMode = () => {
           ))}
         </div>
       </div>
-      <div className='card--number flex flex-col gap-3'>
+      <div className='card--number flex flex-col gap-3 w-full sm:w-3/4'>
         <h2 className='text-lg font-bold'>
           Please select the number of flashcards:
         </h2>
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-4 w-full'>
           {numberButtons.map((button) => (
             <button
               key={button}
@@ -212,7 +212,7 @@ const FlashcardsMode = () => {
       </div>
       <button
         onClick={handleStart}
-        className='mt-7 w-full text-lg rounded-lg px-3 py-2 font-semibold text-white bg-indigo-500 hover:bg-indigo-600'>
+        className='mt-7 text-lg rounded-lg px-7 py-2 font-semibold text-white bg-indigo-500 hover:bg-indigo-600'>
         Start
       </button>
     </div>

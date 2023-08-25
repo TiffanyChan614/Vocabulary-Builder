@@ -1,24 +1,44 @@
-import { Outlet, Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import ReviewNotFinishedPopup from '../components/ReviewNotFinishedPopup'
+import QuitSessionPopup from '../components/QuitSessionPopup'
+import {
+  updateFlashcardsShowQuit,
+  resetFlashcards,
+} from '../reducers/flashcardsReducer'
+import { useEffect } from 'react'
 
 const Flashcards = () => {
-  const { showNotFinished, inSession } = useSelector(
+  const { showNotFinished, inSession, showQuit } = useSelector(
     (state) => state.flashcards
   )
 
-  console.log('showNotFinished', showNotFinished)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    dispatch(resetFlashcards())
+  }, [])
+
+  const handleBack = () => {
+    if (inSession) {
+      dispatch(updateFlashcardsShowQuit(true))
+    } else {
+      navigate('..')
+    }
+  }
 
   return (
     <div className='flex flex-col gap-3 w-full'>
-      <Link
-        className='text-sm underline hover:font-semibold'
-        to='..'>
+      <div
+        className='text-sm underline hover:font-semibold cursor-pointer'
+        onClick={handleBack}>
         Back to Review
-      </Link>
+      </div>
       <h1 className='text-xl sm:text-2xl font-bold text-center'>Flashcards</h1>
       <Outlet />
       {showNotFinished && <ReviewNotFinishedPopup />}
+      {showQuit && <QuitSessionPopup />}
     </div>
   )
 }
