@@ -30,6 +30,7 @@ const wordMeaningsSlice = createSlice({
             antonyms: result.antonyms || null,
             examples: result.examples || null,
             images: [],
+            points: null,
           }
         })
       } else {
@@ -44,6 +45,7 @@ const wordMeaningsSlice = createSlice({
             antonyms: null,
             examples: null,
             images: [],
+            points: null,
           },
         ]
       }

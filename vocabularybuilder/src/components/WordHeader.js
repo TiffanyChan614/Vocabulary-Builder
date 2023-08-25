@@ -23,7 +23,10 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
     antonyms,
     examples,
     images,
+    points,
   } = wordData
+
+  console.log('points', points)
 
   const dispatch = useDispatch()
   const { words } = useSelector((state) => state.journal)
@@ -63,7 +66,7 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
 
         <div className='flex flex-col sm:flex-row gap-2 sm:items-center sm:gap-5'>
           {pronunciation && (
-            <div className='flex sm:gap-2'>
+            <div className='flex gap-2'>
               <h3 className='text-md md:text-lg'>{`[${pronunciation}]`}</h3>
               <button
                 className='word--audio'
@@ -76,6 +79,9 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
             <h4 className='font-semibold text-md sm:ml-3'>
               {partOfSpeech[0].toUpperCase() + partOfSpeech.slice(1)}
             </h4>
+          )}
+          {points !== null && (
+            <div className='text-blue-400'>{points + ' points'}</div>
           )}
         </div>
       </div>

@@ -1,9 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { updateFlashcardsWordArray } from '../reducers/flashcardsReducer'
+import { updateWords } from '../reducers/journalReducer'
 
 const FlashcardsResult = () => {
   const { wordArray } = useSelector((state) => state.flashcards)
+  const { words } = useSelector((state) => state.journal)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -18,7 +20,14 @@ const FlashcardsResult = () => {
         pointsEarned: newPointsEarned,
       }
     })
+    const newJournalWords = words.map((word) => ({
+      ...word,
+      points:
+        newWordArray.find((w) => w.id === word.id)?.newPoints || word.points,
+    }))
     dispatch(updateFlashcardsWordArray(newWordArray))
+    localStorage.setItem('journal', JSON.stringify(newJournalWords))
+    dispatch(updateWords(newJournalWords))
   }, [])
 
   const bgColor = (pointsEarned) => {
