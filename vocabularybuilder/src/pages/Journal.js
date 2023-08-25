@@ -36,6 +36,8 @@ const Journal = () => {
     alphabetical: (a, b) => a.word.localeCompare(b.word),
     length: (a, b) => a.word.length - b.word.length,
     partOfSpeech: (a, b) => a.partOfSpeech.localeCompare(b.partOfSpeech),
+    pointsAsc: (a, b) => a.points - b.points,
+    pointsDesc: (a, b) => b.points - a.points,
   }
 
   useEffect(() => {
@@ -142,6 +144,8 @@ const Journal = () => {
               value={sortValue}>
               <option disabled>Sort by</option>
               <option value='updated'>Recently updated</option>
+              <option value='pointsAsc'>Points - Low to High</option>
+              <option value='pointsDesc'>Points - High to Low</option>
               <option value='alphabetical'>Alphabetical</option>
               <option value='length'>Length</option>
               <option value='partOfSpeech'>Part of speech</option>
