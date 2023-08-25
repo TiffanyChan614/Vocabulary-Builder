@@ -6,6 +6,7 @@ const initialState = {
   number: 0,
   showNotFinished: false,
   showQuit: false,
+  inSession: false,
 }
 
 const flashcardsSlice = createSlice({
@@ -51,6 +52,17 @@ const flashcardsSlice = createSlice({
         showQuit: action.payload,
       }
     },
+    setInSession: (state, action) => {
+      return {
+        ...state,
+        inSession: action.payload,
+      }
+    },
+    resetFlashcards: () => {
+      return {
+        ...initialState,
+      }
+    },
   },
 })
 
@@ -76,6 +88,14 @@ export const updateFlashcardsShowNotFinished = (show) => {
 
 export const updateFlashcardsShowQuit = (show) => {
   return { type: 'flashcards/setShowQuit', payload: show }
+}
+
+export const updateFlashcardsInSession = (ended) => {
+  return { type: 'flashcards/setInSession', payload: ended }
+}
+
+export const resetFlashcards = () => {
+  return { type: 'flashcards/resetFlashcards' }
 }
 
 export default flashcardsSlice.reducer

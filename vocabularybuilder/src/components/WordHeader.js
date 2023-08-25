@@ -26,8 +26,6 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
     points,
   } = wordData
 
-  console.log('points', points)
-
   const dispatch = useDispatch()
   const { words } = useSelector((state) => state.journal)
   const updateShowDetails =

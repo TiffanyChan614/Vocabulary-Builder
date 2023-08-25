@@ -1,6 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { updateFlashcardsWordArray } from '../reducers/flashcardsReducer'
+import {
+  updateFlashcardsWordArray,
+  resetFlashcards,
+  updateFlashcardsInSession,
+} from '../reducers/flashcardsReducer'
 import { updateWords } from '../reducers/journalReducer'
 
 const FlashcardsResult = () => {
@@ -11,7 +15,6 @@ const FlashcardsResult = () => {
   useEffect(() => {
     const newWordArray = wordArray.map((word) => {
       const { originalPoints, pointsEarned } = word
-
       const newPointsEarned = pointsEarned ? pointsEarned : 0
       const newPoints = originalPoints + newPointsEarned
       return {
@@ -26,6 +29,7 @@ const FlashcardsResult = () => {
         newWordArray.find((w) => w.id === word.id)?.newPoints || word.points,
     }))
     dispatch(updateFlashcardsWordArray(newWordArray))
+    dispatch(updateFlashcardsInSession(false))
     localStorage.setItem('journal', JSON.stringify(newJournalWords))
     dispatch(updateWords(newJournalWords))
   }, [])

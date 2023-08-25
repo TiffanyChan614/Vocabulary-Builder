@@ -146,7 +146,9 @@ const Card = () => {
   const handleFinish = () => {
     const notFinished = wordArray.some((word) => !word.pointsEarned)
     dispatch(updateFlashcardsShowNotFinished(notFinished))
-    navigate('../result')
+    if (!notFinished) {
+      navigate('../result')
+    }
   }
 
   return (

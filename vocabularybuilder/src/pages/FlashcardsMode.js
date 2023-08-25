@@ -1,14 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  updateFlashcardsInSession,
   updateFlashcardsMode,
   updateFlashcardsNumber,
   updateFlashcardsWordArray,
 } from '../reducers/flashcardsReducer'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const FlashcardsMode = () => {
   const { mode, number } = useSelector((state) => state.flashcards)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const words = (() => {
     try {
@@ -151,8 +153,13 @@ const FlashcardsMode = () => {
     if (mode === '') {
       e.preventDefault()
       window.alert('Please select a mode')
+    } else if (number === 0) {
+      e.preventDefault()
+      window.alert('Please select the number of flashcards')
     } else {
       initWordArray()
+      dispatch(updateFlashcardsInSession(true))
+      navigate(mode === '' ? '' : '0')
     }
   }
 
@@ -203,14 +210,11 @@ const FlashcardsMode = () => {
           ))}
         </div>
       </div>
-
-      <Link
-        to={mode === '' ? '' : '0'}
-        onClick={handleStart}>
-        <button className='mt-7 w-full text-lg rounded-lg px-3 py-2 font-semibold text-white bg-indigo-400 hover:bg-indigo-500'>
-          Start
-        </button>
-      </Link>
+      <button
+        onClick={handleStart}
+        className='mt-7 w-full text-lg rounded-lg px-3 py-2 font-semibold text-white bg-indigo-500 hover:bg-indigo-600'>
+        Start
+      </button>
     </div>
   )
 }
