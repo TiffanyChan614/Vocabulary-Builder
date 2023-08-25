@@ -83,69 +83,48 @@ const FlashcardsMode = () => {
   }
 
   const initWordArray = () => {
+    const selectedWordData = words
+      .sort((a, b) => a.points - b.points)
+      .slice(0, number)
     const wordArray =
-      words?.map((word) => {
-        const images = word.images
-        let image = null
-        if (images && images.length > 0) {
-          const randomIndex = Math.floor(Math.random() * images.length)
-          image = images[randomIndex]
-        }
+      selectedWordData?.map((word) => {
+        const images = word.images || []
+        const image =
+          images.length > 0
+            ? images[Math.floor(Math.random() * images.length)]
+            : null
         console.log('image', image)
+
+        let frontCardType
         if (mode.name === 'wordToMeaning') {
-          return {
-            word: word.word,
-            id: word.id,
-            originalPoints: word.points,
-            pointsEarned: null,
-            newPoints: word.points,
-            front: { type: 'word', word: word.word },
-            back: word.definition,
-          }
+          frontCardType = 'word'
         } else if (mode.name === 'meaningToWord') {
-          return {
-            word: word.word,
-            id: word.id,
-            originalPoints: word.points,
-            pointsEarned: null,
-            newPoints: word.points,
-            front: {
-              type: 'definitionWithImages',
-              definition: word.definition,
-              image: image,
-            },
-            back: word.word,
-          }
-        } else {
-          return Math.random() < 0.5
-            ? {
-                word: word.word,
-                id: word.id,
-                originalPoints: word.points,
-                pointsEarned: null,
-                newPoints: word.points,
-                front: { type: 'word', word: word.word },
-                back: word.definition,
-              }
-            : {
-                word: word.word,
-                id: word.id,
-                originalPoints: word.points,
-                pointsEarned: null,
-                newPoints: word.points,
-                front: {
+          frontCardType = 'definitionWithImages'
+        } else if (mode.name === 'mixed') {
+          frontCardType = Math.random() < 0.5 ? 'word' : 'definitionWithImages'
+        }
+
+        return {
+          word: word.word,
+          id: word.id,
+          originalPoints: word.points,
+          pointsEarned: null,
+          newPoints: word.points,
+          front:
+            frontCardType === 'word'
+              ? { type: 'word', word: word.word }
+              : {
                   type: 'definitionWithImages',
                   definition: word.definition,
                   image: image,
                 },
-                back: word.word,
-              }
+          back: frontCardType === 'word' ? word.definition : word.word,
         }
       }) || []
 
     const shuffledArray = shuffleArray(wordArray)
 
-    dispatch(updateFlashcardsWordArray(shuffledArray.slice(0, number)))
+    dispatch(updateFlashcardsWordArray(shuffledArray))
   }
 
   const handleStart = (e) => {
