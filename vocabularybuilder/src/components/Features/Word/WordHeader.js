@@ -68,7 +68,7 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
               <h3 className='text-md md:text-lg'>{`[${pronunciation}]`}</h3>
               <button
                 className='word--audio'
-                onClick={(e) => speak(e, word, 'samantha')}>
+                onClick={(e) => speak(e, word, 'samantha', 0.8)}>
                 <AiFillSound size={20} />
               </button>
             </div>
