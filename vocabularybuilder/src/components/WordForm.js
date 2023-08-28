@@ -159,11 +159,20 @@ const WordForm = ({ page }) => {
     console.log('journalData', journalData)
 
     if (page === 'search') {
-      journalData.push({ ...filteredFormData })
-      localStorage.setItem('journal', JSON.stringify(journalData))
-      navigate('../../journal')
-      dispatch(updateJournalPartOfSpeechFilter(''))
-      dispatch(updateSortValue('updated'))
+      const wordExisted = journalData.some(
+        (data) =>
+          data.word === filteredFormData.word &&
+          data.definition === filteredFormData.definition
+      )
+      if (wordExisted) {
+        window.alert('Word already exists in journal')
+      } else {
+        journalData.push({ ...filteredFormData })
+        localStorage.setItem('journal', JSON.stringify(journalData))
+        navigate('../../journal')
+        dispatch(updateJournalPartOfSpeechFilter(''))
+        dispatch(updateSortValue('updated'))
+      }
     } else if (page === 'journal' && updateWords) {
       const updatedJournalData = journalData.map((word) => {
         if (word.id === filteredFormData.id) {
