@@ -68,7 +68,8 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
               <h3 className='text-md md:text-lg'>{`[${pronunciation}]`}</h3>
               <button
                 className='word--audio'
-                onClick={(e) => speak(e, word, 'samantha', 0.8)}>
+                onClick={(e) => speak(e, word, 'samantha', 0.8)}
+                aria-label='speak'>
                 <AiFillSound size={20} />
               </button>
             </div>
@@ -98,7 +99,9 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
         )}
 
         {page === 'search' && (
-          <button onClick={handleClick}>
+          <button
+            onClick={handleClick}
+            aria-label='Add to journal'>
             <AiOutlinePlus size={20} />
           </button>
         )}
@@ -106,7 +109,8 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
         {page === 'journal' && typeof wordData?.id !== 'undefined' && (
           <button
             type='button'
-            onClick={handleClick}>
+            onClick={handleClick}
+            aria-label='Edit'>
             <AiOutlineEdit size={20} />
           </button>
         )}
@@ -114,7 +118,8 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
         {page === 'journal' && typeof wordData?.id !== 'undefined' && (
           <button
             type='button'
-            onClick={() => handleDelete(wordData.id)}>
+            onClick={() => handleDelete(wordData.id)}
+            aria-label='delete'>
             <MdOutlineDeleteOutline size={20} />
           </button>
         )}

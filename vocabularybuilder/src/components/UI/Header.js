@@ -37,7 +37,7 @@ const Header = () => {
       link: '/search',
     },
     {
-      text: 'Your Journal',
+      text: 'Journal',
       icon: <BiBookBookmark size={25} />,
       link: '/journal',
     },
@@ -66,7 +66,8 @@ const Header = () => {
                       isActive
                         ? activeIconStyleClassName
                         : iconLinkStyleClassName
-                    }>
+                    }
+                    aria-label={item.text}>
                     {item.icon}
                   </div>
                 ) : (

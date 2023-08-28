@@ -21,7 +21,9 @@ const WordDetail = ({ fieldName, fieldData, transformSentence, speak }) => {
                     <p key={i}>{line}</p>
                   ))}
                 </div>
-                <button onClick={(e) => speak(e, example, 'samantha', 0.8)}>
+                <button
+                  onClick={(e) => speak(e, example, 'samantha', 0.8)}
+                  aria-label='speak'>
                   <AiFillSound size={15} />
                 </button>
               </li>
