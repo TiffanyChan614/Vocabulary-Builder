@@ -10,11 +10,13 @@ import {
   updateJournalSearchValue,
   updateSortValue,
   toggleJournalShowDetails,
+  toggleShowGoToTopButton,
 } from '../reducers/journalReducer'
 import {
   updateSearchSearchValue,
   updateSearchCurrentPage,
 } from '../reducers/searchReducer'
+import { IoIosArrowUp } from 'react-icons/io'
 
 const Journal = () => {
   const dispatch = useDispatch()
@@ -25,6 +27,7 @@ const Journal = () => {
     partOfSpeechFilter,
     showForm,
     showAllDetails,
+    showGoToTopButton,
   } = useSelector((state) => state.journal)
 
   // console.log('showAllDetails', showAllDetails)
@@ -45,6 +48,25 @@ const Journal = () => {
       dispatch(updateWords(JSON.parse(localStorage.getItem('journal'))))
     } catch {
       dispatch(updateWords([]))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (window.scrollY > 100) {
+      dispatch(toggleShowGoToTopButton(true))
+    } else {
+      dispatch(toggleShowGoToTopButton(false))
+    }
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        dispatch(toggleShowGoToTopButton(true))
+      } else {
+        dispatch(toggleShowGoToTopButton(false))
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
     }
   }, [])
 
@@ -168,6 +190,13 @@ const Journal = () => {
         </div>
       </div>
       {showForm && <WordForm page='journal' />}
+      {showGoToTopButton && (
+        <button
+          className='fixed bottom-4 right-4 bg-indigo-100 p-2 rounded-full hover:bg-indigo-200 outline-none'
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <IoIosArrowUp size={25} />
+        </button>
+      )}
     </>
   )
 }

@@ -9,6 +9,7 @@ const initialState = {
   formWord: '',
   showDetails: {},
   showAllDetails: false,
+  showGoToTopButton: false,
 }
 
 const journalSlice = createSlice({
@@ -94,6 +95,12 @@ const journalSlice = createSlice({
         showAllDetails: value,
       }
     },
+    setGoToTopButton: (state, action) => {
+      return {
+        ...state,
+        showGoToTopButton: action.payload,
+      }
+    },
   },
 })
 
@@ -132,6 +139,13 @@ export const toggleJournalShowDetails = (newValue) => {
   console.log('toggleJournalShowDetails', newValue)
   return {
     type: 'journal/toggleShowDetails',
+    payload: newValue,
+  }
+}
+
+export const toggleShowGoToTopButton = (newValue) => {
+  return {
+    type: 'journal/setGoToTopButton',
     payload: newValue,
   }
 }
