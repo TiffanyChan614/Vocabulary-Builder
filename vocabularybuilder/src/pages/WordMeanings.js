@@ -9,7 +9,6 @@ import {
   updateIsLoading,
   toggleMeaningsShowDetails,
 } from '../reducers/wordMeaningsReducer'
-import Cookies from 'js-cookie'
 import { v4 as uuidv4 } from 'uuid'
 
 const WordMeanings = () => {
@@ -52,28 +51,6 @@ const WordMeanings = () => {
   // console.log('word inside WordMeanings', word)
   // console.log('wordData', wordData)
 
-  const getWordDataFromCookie = (name) => {
-    const cachedWordData = Cookies.get(name)
-    if (cachedWordData) {
-      try {
-        return JSON.parse(cachedWordData)
-      } catch (error) {
-        console.error('Error parsing cached wordData: ', error)
-        return null
-      }
-    }
-    return null
-  }
-
-  const setWordDataToCookie = (name, data) => {
-    try {
-      const serializedWordData = JSON.stringify(data)
-      Cookies.set(name, serializedWordData, { expires: 30 })
-    } catch (error) {
-      console.error('Error serializing wordData: ', error)
-    }
-  }
-
   const handleDetailsClick = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -83,21 +60,9 @@ const WordMeanings = () => {
   useEffect(() => {
     async function fetchData() {
       dispatch(updateIsLoading(true))
-      let returnedWordData = getWordDataFromCookie(word)
-      // console.log('returnedWordData from cookies', returnedWordData)
-      if (!returnedWordData) {
-        returnedWordData = await getWordData(word)
-        // console.log('returnedWordData from API', returnedWordData)
-        if (returnedWordData.results) {
-          returnedWordData.results = returnedWordData.results.map((result) => ({
-            id: uuidv4(),
-            ...result,
-          }))
-        }
-      }
+      let returnedWordData = await getWordData(word)
       // console.log('returnedWordData', returnedWordData)
       dispatch(updateWordData(returnedWordData))
-      setWordDataToCookie(word, returnedWordData)
       dispatch(updateIsLoading(false))
     }
     fetchData()
