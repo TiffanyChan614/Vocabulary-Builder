@@ -14,6 +14,7 @@ const SearchField = ({
         value={searchValue}
         placeholder={placeholder || ''}
         onChange={handleInputChange}
+        autoFocus
       />
       <button
         type='button'
