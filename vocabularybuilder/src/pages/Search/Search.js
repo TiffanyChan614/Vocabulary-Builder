@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom'
 import SearchField from '../../components/Common/SearchField'
-import WordForm from '../../components/WordForm/WordForm'
+import WordForm from '../../components/Features/WordForm/WordForm'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   updateSearchSearchValue,

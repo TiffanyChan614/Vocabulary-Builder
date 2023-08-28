@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import TextArea from '../TextArea'
+import TextArea from '../../Common/TextArea'
 import WordFormImages from './WordFormImages'
 import { v4 as uuidv4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,10 +9,11 @@ import {
   updateJournalShowForm,
   updateWords,
   updateSortValue,
-} from '../../reducers/journalReducer'
-import { updateSearchShowForm } from '../../reducers/searchReducer'
+} from '../../../reducers/journalReducer'
+import { updateSearchShowForm } from '../../../reducers/searchReducer'
 import WordFormField from './WordFormField'
-import Overlay from '../Overlay'
+import Overlay from '../../Common/Overlay'
+import WordFormHeader from './WordFormHeader'
 
 const WordForm = ({ page }) => {
   const dispatch = useDispatch()
@@ -218,26 +219,12 @@ const WordForm = ({ page }) => {
       <Overlay>
         <div className='word-form bg-white w-full sm:w-2/3 rounded-xl overflow-hidden'>
           <form onSubmit={handleSubmit}>
-            <header className='word-form--header pt-6 pb-4 px-6 border-b-2 flex flex-col sm:flex-row items-center sm:justify-between gap-2'>
-              <div className='flex items-center gap-'>
-                <h2 className='text-xl font-bold text-indigo-800'>{word}</h2>
-                {pronunciation && (
-                  <h3 className='text-lg'>{`[${pronunciation}]`}</h3>
-                )}
-                {partOfSpeech && (
-                  <h4 className='text-md font-semibold ml-6'>
-                    {partOfSpeech[0].toUpperCase() + partOfSpeech.slice(1)}
-                  </h4>
-                )}
-              </div>
-              <div>
-                {message && (
-                  <p className='text-md font-semibold text-emerald-700'>
-                    {message}
-                  </p>
-                )}
-              </div>
-            </header>
+            <WordFormHeader
+              word={word}
+              pronunciation={pronunciation}
+              partOfSpeech={partOfSpeech}
+              message={message}
+            />
             <div className='py-4 px-3 md:px-6 flex flex-col gap-3 overflow-y-auto max-h-[60vh]'>
               <div className='word-form--definition flex flex-col gap-2'>
                 <label

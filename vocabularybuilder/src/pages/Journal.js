@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Word from '../components/Features/Word/Word'
 import SearchField from '../components/Common/SearchField'
 import Filter from '../components/Common/Filter'
-import WordForm from '../components/WordForm/WordForm'
+import WordForm from '../components/Features/WordForm/WordForm'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   updateWords,

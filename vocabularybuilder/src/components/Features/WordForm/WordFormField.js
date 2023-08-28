@@ -1,4 +1,4 @@
-import TextArea from '../TextArea'
+import TextArea from '../../Common/TextArea'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 import { AiOutlinePlus } from 'react-icons/ai'
 
