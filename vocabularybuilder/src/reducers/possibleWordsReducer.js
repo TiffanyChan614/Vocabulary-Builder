@@ -26,6 +26,4 @@ export const updateIsLoading = (isLoading) => {
   return { type: 'possibleWords/setIsLoading', payload: isLoading }
 }
 
-export const { setMatchedWords, setIsLoading } = possibleWordsSlice.actions
-
 export default possibleWordsSlice.reducer

@@ -42,6 +42,4 @@ export const updateSearchCurrentPage = (currentPage) => {
   return { type: 'search/setCurrentPage', payload: currentPage }
 }
 
-export const { setSearchValue, setShowForm, setFormWord } = searchSlice.actions
-
 export default searchSlice.reducer

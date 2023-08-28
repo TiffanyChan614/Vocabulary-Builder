@@ -136,13 +136,4 @@ export const toggleJournalShowDetails = (newValue) => {
   }
 }
 
-export const {
-  setWords,
-  setSearchValue,
-  setSortValue,
-  setPartOfSpeechFilter,
-  setShowForm,
-  setFormWord,
-} = journalSlice.actions
-
 export default journalSlice.reducer

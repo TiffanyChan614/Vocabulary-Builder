@@ -175,7 +175,4 @@ export const toggleMeaningsShowDetails = (newValue) => {
   }
 }
 
-export const { setWordData, setIsLoading, setPartOfSpeechFilter } =
-  wordMeaningsSlice.actions
-
 export default wordMeaningsSlice.reducer
