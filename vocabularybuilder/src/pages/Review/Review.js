@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import {
   updateSearchSearchValue,
   updateSearchCurrentPage,
-} from '../reducers/searchReducer'
+} from '../../reducers/searchReducer'
 
 const Review = () => {
   const location = useLocation()

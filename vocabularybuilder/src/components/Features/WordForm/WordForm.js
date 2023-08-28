@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import TextArea from './TextArea'
+import TextArea from '../TextArea'
 import WordFormImages from './WordFormImages'
 import { v4 as uuidv4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,10 +9,10 @@ import {
   updateJournalShowForm,
   updateWords,
   updateSortValue,
-} from '../reducers/journalReducer'
-import { updateSearchShowForm } from '../reducers/searchReducer'
+} from '../../reducers/journalReducer'
+import { updateSearchShowForm } from '../../reducers/searchReducer'
 import WordFormField from './WordFormField'
-import Overlay from './Overlay'
+import Overlay from '../Overlay'
 
 const WordForm = ({ page }) => {
   const dispatch = useDispatch()

@@ -1,5 +1,5 @@
-import Popup from './Popup'
-import { updateFlashcardsShowNotFinished } from '../reducers/flashcardsReducer'
+import Popup from '../../Common/Popup'
+import { updateFlashcardsShowNotFinished } from '../../../reducers/flashcardsReducer'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 

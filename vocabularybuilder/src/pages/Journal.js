@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Word from '../components/Word'
-import SearchField from '../components/SearchField'
-import Filter from '../components/Filter'
-import WordForm from '../components/WordForm'
+import Word from '../components/Features/Word/Word'
+import SearchField from '../components/Common/SearchField'
+import Filter from '../components/Common/Filter'
+import WordForm from '../components/WordForm/WordForm'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   updateWords,

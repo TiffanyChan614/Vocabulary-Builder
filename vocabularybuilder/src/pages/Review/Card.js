@@ -6,7 +6,7 @@ import { GrPrevious, GrNext } from 'react-icons/gr'
 import {
   updateFlashcardsShowNotFinished,
   updateFlashcardsWordArrayByIndex,
-} from '../reducers/flashcardsReducer'
+} from '../../reducers/flashcardsReducer'
 
 const Card = () => {
   const { index } = useParams()

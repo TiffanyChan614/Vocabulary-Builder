@@ -1,15 +1,14 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import Word from '../components/Word'
-import { getWordData } from '../services/wordAPI'
-import Filter from '../components/Filter'
+import Word from '../../components/Features/Word/Word'
+import { getWordData } from '../../services/wordAPI'
+import Filter from '../../components/Common/Filter'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   updateWordData,
   updateIsLoading,
   toggleMeaningsShowDetails,
-} from '../reducers/wordMeaningsReducer'
-import { v4 as uuidv4 } from 'uuid'
+} from '../../reducers/wordMeaningsReducer'
 
 const WordMeanings = () => {
   const { word } = useParams()

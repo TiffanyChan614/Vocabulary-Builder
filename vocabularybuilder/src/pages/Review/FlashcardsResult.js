@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import {
   updateFlashcardsWordArray,
   updateFlashcardsInSession,
-} from '../reducers/flashcardsReducer'
-import { updateWords } from '../reducers/journalReducer'
+} from '../../reducers/flashcardsReducer'
+import { updateWords } from '../../reducers/journalReducer'
 
 const FlashcardsResult = () => {
   const { wordArray } = useSelector((state) => state.flashcards)

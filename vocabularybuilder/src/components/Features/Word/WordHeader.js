@@ -6,12 +6,12 @@ import {
   updateJournalFormWord,
   updateWords,
   updateJournalShowDetails,
-} from '../reducers/journalReducer'
+} from '../../../reducers/journalReducer'
 import {
   updateSearchShowForm,
   updateSearchFormWord,
-} from '../reducers/searchReducer'
-import { updateMeaningsShowDetails } from '../reducers/wordMeaningsReducer'
+} from '../../../reducers/searchReducer'
+import { updateMeaningsShowDetails } from '../../../reducers/wordMeaningsReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {

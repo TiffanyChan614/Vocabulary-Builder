@@ -1,16 +1,16 @@
 import { useEffect } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom'
-import SearchField from '../components/SearchField'
-import WordForm from '../components/WordForm'
+import SearchField from '../../components/Common/SearchField'
+import WordForm from '../../components/WordForm/WordForm'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   updateSearchSearchValue,
   updateSearchCurrentPage,
-} from '../reducers/searchReducer'
+} from '../../reducers/searchReducer'
 import {
   resetMeaningsShowDetails,
   updateMeaningsPartOfSpeechFilter,
-} from '../reducers/wordMeaningsReducer'
+} from '../../reducers/wordMeaningsReducer'
 
 const Search = () => {
   const dispatch = useDispatch()

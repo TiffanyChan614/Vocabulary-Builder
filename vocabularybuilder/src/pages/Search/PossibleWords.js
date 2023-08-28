@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { getMatchedWords } from '../services/wordAPI'
+import { getMatchedWords } from '../../services/wordAPI'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   updateMatchedWords,
   updateIsLoading,
-} from '../reducers/possibleWordsReducer'
-import { updateSearchCurrentPage } from '../reducers/searchReducer'
+} from '../../reducers/possibleWordsReducer'
+import { updateSearchCurrentPage } from '../../reducers/searchReducer'
 
 const cache = {}
 

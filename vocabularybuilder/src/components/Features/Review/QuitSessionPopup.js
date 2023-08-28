@@ -1,7 +1,7 @@
-import Popup from './Popup'
+import Popup from '../../Common/Popup'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { updateFlashcardsShowQuit } from '../reducers/flashcardsReducer'
+import { updateFlashcardsShowQuit } from '../../../reducers/flashcardsReducer'
 
 const QuitSessionPopup = () => {
   const dispatch = useDispatch()

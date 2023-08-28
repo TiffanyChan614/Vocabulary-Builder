@@ -4,7 +4,7 @@ import {
   updateFlashcardsMode,
   updateFlashcardsNumber,
   updateFlashcardsWordArray,
-} from '../reducers/flashcardsReducer'
+} from '../../reducers/flashcardsReducer'
 import { useNavigate } from 'react-router-dom'
 
 const FlashcardsMode = () => {

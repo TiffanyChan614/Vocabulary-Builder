@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { updateJournalPartOfSpeechFilter } from '../reducers/journalReducer'
-import { updateMeaningsPartOfSpeechFilter } from '../reducers/wordMeaningsReducer'
+import { updateJournalPartOfSpeechFilter } from '../../reducers/journalReducer'
+import { updateMeaningsPartOfSpeechFilter } from '../../reducers/wordMeaningsReducer'
 import { useSelector, useDispatch } from 'react-redux'
 
 const Filter = ({ page }) => {

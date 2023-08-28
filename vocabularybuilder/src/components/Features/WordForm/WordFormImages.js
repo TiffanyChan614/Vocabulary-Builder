@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { getImage } from '../services/pexelAPI'
+import { getImage } from '../../services/pexelAPI'
 import ImageDropZone from './ImageDropZone'
 
 const WordFormImages = ({

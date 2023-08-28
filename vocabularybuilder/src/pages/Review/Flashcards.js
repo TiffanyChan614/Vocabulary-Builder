@@ -1,11 +1,11 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import ReviewNotFinishedPopup from '../components/ReviewNotFinishedPopup'
-import QuitSessionPopup from '../components/QuitSessionPopup'
+import ReviewNotFinishedPopup from '../../components/Features/Review/ReviewNotFinishedPopup'
+import QuitSessionPopup from '../../components/Features/Review/QuitSessionPopup'
 import {
   updateFlashcardsShowQuit,
   resetFlashcards,
-} from '../reducers/flashcardsReducer'
+} from '../../reducers/flashcardsReducer'
 import { useEffect } from 'react'
 
 const Flashcards = () => {
