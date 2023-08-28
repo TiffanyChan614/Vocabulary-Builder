@@ -193,7 +193,7 @@ const Journal = () => {
       {showGoToTopButton && (
         <button
           className='fixed bottom-4 right-4 bg-indigo-100 p-2 rounded-full hover:bg-indigo-200 outline-none'
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          onClick={() => window.scrollTo({ top: 0, behavior: 'auto' })}>
           <IoIosArrowUp size={25} />
         </button>
       )}
