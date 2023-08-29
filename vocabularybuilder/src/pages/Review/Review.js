@@ -9,6 +9,8 @@ const Review = () => {
   const location = useLocation()
   const dispatch = useDispatch()
   const isReviewPage = location.pathname === '/review'
+  const divStyleClassName =
+    'w-full font-semibold hover:bg-indigo-100 hover:text-indigo-800 text-lg border-2 rounded-xl border-indigo-100 flex items-center justify-center p-6'
 
   const isJournalEmpty = (() => {
     try {
@@ -39,11 +41,14 @@ const Review = () => {
               </Link>
             </div>
           ) : (
-            <Link to='flashcards'>
-              <div className='w-full font-semibold hover:bg-indigo-100 hover:text-indigo-800 text-lg border-2 rounded-xl border-indigo-100 flex items-center justify-center p-6'>
-                Flashcards
-              </div>
-            </Link>
+            <>
+              <Link to='flashcards'>
+                <div className={divStyleClassName}>Flashcards</div>
+              </Link>
+              <Link to='quiz'>
+                <div className={divStyleClassName}>Quiz</div>
+              </Link>
+            </>
           )}
         </div>
       )}

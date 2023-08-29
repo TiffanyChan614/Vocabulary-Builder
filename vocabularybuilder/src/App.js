@@ -10,6 +10,7 @@ import Flashcards from './pages/Review/Flashcards'
 import FlashcardsMode from './pages/Review/FlashcardsMode'
 import Card from './pages/Review/Card'
 import FlashcardsResult from './pages/Review/FlashcardsResult'
+import Quiz from './pages/Review/Quiz'
 
 const App = () => {
   return (
@@ -57,6 +58,10 @@ const App = () => {
                 element={<FlashcardsResult />}
               />
             </Route>
+            <Route
+              path='quiz'
+              element={<Quiz />}
+            />
           </Route>
         </Route>
       </Routes>

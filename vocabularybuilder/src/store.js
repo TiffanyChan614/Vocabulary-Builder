@@ -4,6 +4,7 @@ import searchReducer from './reducers/searchReducer'
 import possibleWordsReducer from './reducers/possibleWordsReducer'
 import wordMeaningsReducer from './reducers/wordMeaningsReducer'
 import flashcardsReducer from './reducers/flashcardsReducer'
+import quizReducer from './reducers/quizReducer'
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     possibleWords: possibleWordsReducer,
     wordMeanings: wordMeaningsReducer,
     flashcards: flashcardsReducer,
+    quiz: quizReducer,
   },
 })
 
