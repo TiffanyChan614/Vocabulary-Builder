@@ -1,6 +1,6 @@
 const WordFormHeader = ({ word, pronunciation, partOfSpeech, message }) => {
   return (
-    <header className='word-form--header pt-6 pb-4 px-6 border-b-2 flex flex-col sm:flex-row items-center sm:justify-between gap-2'>
+    <header className='word-form--header pt-5 pb-2 md:pt-6 md:pb-4 px-6 border-b-2 flex flex-col sm:flex-row items-center sm:justify-between gap-2'>
       <div className='flex items-center gap-'>
         <h2 className='text-xl font-bold text-indigo-800'>{word}</h2>
         {pronunciation && <h3 className='text-lg'>{`[${pronunciation}]`}</h3>}

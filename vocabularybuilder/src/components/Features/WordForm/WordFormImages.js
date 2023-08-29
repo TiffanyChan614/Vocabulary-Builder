@@ -62,12 +62,14 @@ const WordFormImages = ({
     setImages([])
   }
 
+  const infoTextStyleClassName = 'text-gray-500 text-sm'
+
   const imageElements = (() => {
     if (isLoading && searchValue !== '') {
-      return <div>Loading...</div>
+      return <div className={infoTextStyleClassName}>Loading...</div>
     }
     if (searchValue === '') {
-      return <div>Enter a search term</div>
+      return <div className={infoTextStyleClassName}>Enter a search term</div>
     }
     if (images.length > 0) {
       return images?.map((image, index) => (
@@ -91,9 +93,9 @@ const WordFormImages = ({
     }
 
     if (isSearchClicked.current) {
-      return <div>No images found</div>
+      return <div className={infoTextStyleClassName}>No images found</div>
     } else {
-      return <div>Please click search</div>
+      return <div className={infoTextStyleClassName}>Please click search</div>
     }
   })()
 
@@ -124,7 +126,7 @@ const WordFormImages = ({
         </div>
       </div>
       {showImageResults && (
-        <div className='word-form--images-results border-2 rounded-lg flex flex-wrap max-h-[300px] overflow-auto gap-2 md:gap-4 px-2 md:px-6 py-4'>
+        <div className='word-form--images-results border-2 rounded-lg flex flex-wrap max-h-[300px] overflow-auto gap-2 md:gap-4 px-3 md:px-6 py-4'>
           {imageElements}
         </div>
       )}
@@ -160,7 +162,7 @@ const WordFormImages = ({
               </div>
             ))
           ) : (
-            <p className='text-gray-600'>No images added</p>
+            <p className={infoTextStyleClassName}>No images added</p>
           )}
         </div>
       </div>

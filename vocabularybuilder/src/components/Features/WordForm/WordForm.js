@@ -219,7 +219,7 @@ const WordForm = ({ page }) => {
   return (
     <>
       <Overlay>
-        <div className='word-form bg-white w-full sm:w-2/3 rounded-xl overflow-hidden'>
+        <div className='word-form bg-white w-full md:w-2/3 rounded-xl overflow-hidden'>
           <form onSubmit={handleSubmit}>
             <WordFormHeader
               word={word}
@@ -261,7 +261,7 @@ const WordForm = ({ page }) => {
                 setMessage={setMessage}
               />
             </div>
-            <div className='p-6 border-t flex justify-between'>
+            <div className='py-4 px-6 md:py-6 border-t flex justify-between'>
               <Button
                 bgColor='gray'
                 size='md'
