@@ -43,7 +43,7 @@ const Search = () => {
 
   return (
     <>
-      <div className='flex flex-col gap-5 w-full max-w-screen-md'>
+      <div className='flex flex-col gap-5 w-full'>
         <SearchField
           searchValue={searchValue}
           clearSearchValue={clearSearchValue}

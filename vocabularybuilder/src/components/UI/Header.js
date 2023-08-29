@@ -51,7 +51,7 @@ const Header = () => {
   return (
     <div className='header-wrapper px-3 py-2'>
       <header>
-        <nav className='flex flex-row items-center px-3 py-3 border-b-2 border-indigo-100 gap-6 font-medium text-gray-700'>
+        <nav className='flex flex-row items-center px-3 py-2 sm:py-3 border-b-2 border-indigo-100 gap-6 font-medium text-gray-700'>
           {navigationItems.map((item) => (
             <NavLink
               key={item.link}

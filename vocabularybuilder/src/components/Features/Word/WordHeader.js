@@ -54,15 +54,12 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
   }
 
   return (
-    <div className='word--header flex justify-between'>
-      <div className='flex gap-1 flex-col sm:flex-row'>
-        <div>
+    <div className='word--header flex justify-between gap-2'>
+      <div className='flex gap-2 flex-row flex-wrap items-center'>
+        <div className='flex flex-row gap-1 items-center'>
           <h2 className='text-lg md:text-xl font-bold text-indigo-800'>
             {word}
           </h2>
-        </div>
-
-        <div className='flex flex-col sm:flex-row gap-2 sm:items-center sm:gap-5'>
           {pronunciation && (
             <div className='flex gap-2'>
               <h3 className='text-md md:text-lg'>{`[${pronunciation}]`}</h3>
@@ -74,15 +71,17 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
               </button>
             </div>
           )}
-          {partOfSpeech && (
-            <h4 className='font-semibold text-md sm:ml-3'>
-              {partOfSpeech[0].toUpperCase() + partOfSpeech.slice(1)}
-            </h4>
-          )}
-          {points !== null && (
-            <div className='text-blue-400'>{points + ' points'}</div>
-          )}
         </div>
+        {partOfSpeech && (
+          <h4 className='font-semibold text-sm md:text-md md:ml-5'>
+            {partOfSpeech[0].toUpperCase() + partOfSpeech.slice(1)}
+          </h4>
+        )}
+        {points !== null && (
+          <div className='text-blue-400 md:ml-5'>
+            {points + (points === 1 ? ' point' : ' points')}
+          </div>
+        )}
       </div>
 
       <div className='flex gap-3 items-start'>

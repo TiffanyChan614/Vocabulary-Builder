@@ -21,12 +21,12 @@ const Review = () => {
   })()
 
   return (
-    <div className='sm:w-2/3 w-full max-w-lg'>
+    <div className='w-full flex flex-col items-center'>
       {isReviewPage && (
-        <div className='flex flex-col gap-5'>
-          <h1 className='text-2xl font-bold text-center'>Review</h1>
+        <div className='flex flex-col gap-2 md:gap-5 w-full max-w-screen-md'>
+          <h1 className='text-xl md:text-2xl font-bold text-center'>Review</h1>
           {isJournalEmpty ? (
-            <div className='text-center'>
+            <div className='text-center w-full'>
               There is no word in your journal to review.{' '}
               <Link
                 className='text-indigo-800 hover:underline'
@@ -40,7 +40,7 @@ const Review = () => {
             </div>
           ) : (
             <Link to='flashcards'>
-              <div className='font-semibold hover:bg-indigo-100 hover:text-indigo-800 text-lg border-2 rounded-xl border-indigo-100 flex items-center justify-center p-6'>
+              <div className='w-full font-semibold hover:bg-indigo-100 hover:text-indigo-800 text-lg border-2 rounded-xl border-indigo-100 flex items-center justify-center p-6'>
                 Flashcards
               </div>
             </Link>

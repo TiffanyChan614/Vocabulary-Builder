@@ -139,7 +139,7 @@ const Journal = () => {
 
   return (
     <>
-      <div className='journal flex flex-col gap-4'>
+      <div className='journal flex flex-col gap-4 w-full'>
         <div className='journal--search'>
           <SearchField
             searchValue={searchValue}
