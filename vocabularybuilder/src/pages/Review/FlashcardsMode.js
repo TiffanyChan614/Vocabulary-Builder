@@ -8,6 +8,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Common/Button'
 import { getInitWordArray } from '../../utils/reviewHelper'
+import NumberChoice from '../../components/Features/Review/NumberChoice'
 
 const FlashcardsMode = () => {
   const { mode, number } = useSelector((state) => state.flashcards)
@@ -51,14 +52,6 @@ const FlashcardsMode = () => {
     return baseStyle + ' ' + colorStyle()
   }
 
-  const numberButtonStyleClassName = (buttonNumber) => {
-    const baseStyle =
-      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center hover: border-indigo-100 hover:font-semibold hover:bg-indigo-100'
-    const activeStyle = 'bg-indigo-100 font-semibold border-indigo-100'
-    return (
-      baseStyle + (number === Number(buttonNumber) ? ' ' + activeStyle : '')
-    )
-  }
   const handleModeClick = (e) => {
     e.stopPropagation()
     dispatch(
@@ -92,10 +85,6 @@ const FlashcardsMode = () => {
     { name: 'mixed', text: 'Mixed Mode' },
   ]
 
-  const numberButtons = [minNum, 10, 15, 20].filter(
-    (num) => num <= words?.length
-  )
-
   return (
     <div className='card flex flex-col gap-5 text-center items-center'>
       <div className='card--mode flex flex-col gap-3 w-full sm:w-3/4'>
@@ -112,22 +101,13 @@ const FlashcardsMode = () => {
           ))}
         </div>
       </div>
-      <div className='card--number flex flex-col gap-3 w-full sm:w-3/4'>
-        <h2 className='text-lg font-bold'>
-          Please select the number of flashcards:
-        </h2>
-        <div className='flex flex-col gap-4 w-full'>
-          {numberButtons.map((button) => (
-            <button
-              key={button}
-              name={button}
-              onClick={handleNumberClick}
-              className={numberButtonStyleClassName(button)}>
-              {button}
-            </button>
-          ))}
-        </div>
-      </div>
+      <NumberChoice
+        choiceArray={[minNum, 10, 15, 20]}
+        wordsLength={words?.length}
+        number={number}
+        prompt='Pease select the number of flashcards:'
+        handleNumberClick={handleNumberClick}
+      />
       <Button
         onClick={handleStart}
         bgColor='indigo'
