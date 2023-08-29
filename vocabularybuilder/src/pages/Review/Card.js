@@ -7,6 +7,7 @@ import {
   updateFlashcardsShowNotFinished,
   updateFlashcardsWordArrayByIndex,
 } from '../../reducers/flashcardsReducer'
+import Button from '../../components/Common/Button'
 
 const Card = () => {
   const { index } = useParams()
@@ -205,11 +206,13 @@ const Card = () => {
             </button>
           ))}
         </div>
-        <button
-          onClick={handleFinish}
-          className='mt-4 bg-indigo-500 hover:bg-indigo-600 text-lg font-semibold text-white rounded-lg px-5 py-2'>
+        <Button
+          bgColor='indigo'
+          size='lg'
+          className='mt-4 font-semibold'
+          onClick={handleFinish}>
           Finish Review
-        </button>
+        </Button>
       </div>
     </>
   )

@@ -6,6 +6,7 @@ import {
   updateSearchSearchValue,
 } from '../reducers/searchReducer'
 import { useDispatch } from 'react-redux'
+import Button from '../components/Common/Button'
 
 const Home = () => {
   const [word, setWord] = useState(null)
@@ -52,8 +53,10 @@ const Home = () => {
 
   return (
     <div className='flex flex-col gap-3 w-full items-center max-w-screen-md'>
-      <h1 className='text-3xl font-bold md:text-4xl'>Vocabulary Builder</h1>
-      <p className='text-lg font-bold md:text-xl'>
+      <h1 className='text-3xl font-bold md:text-4xl text-center'>
+        Vocabulary Builder
+      </h1>
+      <p className='text-lg font-bold md:text-xl text-center'>
         Welcome to Vocabulary Builder!
       </p>
       <div className={`home--word-of-the-day ${divClassName} mt-3`}>
@@ -68,13 +71,17 @@ const Home = () => {
       </div>
       <div className={`home--search ${divClassName}`}>
         <h3 className='text-lg font-bold'>Don't know the meaning of a word?</h3>
-        <button className='mt-4 text-md font-bold py-2 px-4 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600'>
+        <Button
+          bgColor='indigo'
+          size='md'
+          className='mt-4 font-semibold'
+          onClick={() => dispatch(updateSearchCurrentPage('search'))}>
           <Link
             to='/search'
             className='select-none'>
             Search
           </Link>
-        </button>
+        </Button>
       </div>
     </div>
   )

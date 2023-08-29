@@ -6,6 +6,7 @@ import {
   updateFlashcardsWordArray,
 } from '../../reducers/flashcardsReducer'
 import { useNavigate } from 'react-router-dom'
+import Button from '../../components/Common/Button'
 
 const FlashcardsMode = () => {
   const { mode, number } = useSelector((state) => state.flashcards)
@@ -189,11 +190,13 @@ const FlashcardsMode = () => {
           ))}
         </div>
       </div>
-      <button
+      <Button
         onClick={handleStart}
-        className='mt-4 bg-indigo-500 hover:bg-indigo-600 text-lg font-semibold text-white rounded-lg px-5 py-2'>
+        bgColor='indigo'
+        size='lg'
+        className='mt-4 font-semibold'>
         Start
-      </button>
+      </Button>
       <div className='mt-7 text-center'>
         <span className='font-bold'>Reminder: </span>If you switch to other
         pages in the middle of a review session, you will lose your current

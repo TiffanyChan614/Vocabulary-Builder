@@ -1,4 +1,6 @@
 import Overlay from './Overlay'
+import Button from './Button'
+
 const Popup = ({ title, handleYes, handleNo, children }) => {
   return (
     <Overlay>
@@ -6,16 +8,19 @@ const Popup = ({ title, handleYes, handleNo, children }) => {
         <h1 className='text-indigo-800 font-bold text-2xl'>{title}</h1>
         {children}
         <div className='flex justify-around items-center gap-3'>
-          <button
-            onClick={handleYes}
-            className='rounded-lg font-semibold text-white bg-gray-400 hover:bg-gray-500 px-4 py-2'>
+          <Button
+            bgColor='gray'
+            size='md'
+            onClick={handleYes}>
             Yes
-          </button>
-          <button
-            onClick={handleNo}
-            className='rounded-lg font-semibold text-white bg-indigo-500 hover:bg-indigo-600 px-4 py-2'>
+          </Button>
+          <Button
+            bgColor='indigo'
+            size='md'
+            className='font-semibold'
+            onClick={handleNo}>
             No
-          </button>
+          </Button>
         </div>
       </div>
     </Overlay>

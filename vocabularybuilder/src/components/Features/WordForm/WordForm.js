@@ -14,6 +14,7 @@ import { updateSearchShowForm } from '../../../reducers/searchReducer'
 import WordFormField from './WordFormField'
 import Overlay from '../../Common/Overlay'
 import WordFormHeader from './WordFormHeader'
+import Button from '../../Common/Button'
 
 const WordForm = ({ page }) => {
   const dispatch = useDispatch()
@@ -260,17 +261,20 @@ const WordForm = ({ page }) => {
               />
             </div>
             <div className='p-6 border-t flex justify-between'>
-              <button
-                className='hover:bg-gray-100 rounded px-2 py-1'
+              <Button
+                bgColor='gray'
+                size='md'
                 type='button'
                 onClick={() => toggleShowForm(false)}>
                 Cancel
-              </button>
-              <button
-                className='hover:bg-indigo-100 rounded px-2 py-1 font-semibold'
+              </Button>
+              <Button
+                bgColor='indigo'
+                size='md'
+                className='font-semibold'
                 type='submit'>
                 Confirm
-              </button>
+              </Button>
             </div>
           </form>
         </div>
