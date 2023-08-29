@@ -57,6 +57,7 @@ const WordForm = ({ page }) => {
     lastUpdated: now,
     created: page === 'search' ? now : formWord.created,
     points: formWord.points || 0,
+    lastReviewed: formWord.lastReviewed || null,
   })
 
   console.log('formWord in WordForm', formWord)

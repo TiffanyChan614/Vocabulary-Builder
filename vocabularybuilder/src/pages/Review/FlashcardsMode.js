@@ -84,9 +84,31 @@ const FlashcardsMode = () => {
   }
 
   const initWordArray = () => {
-    const selectedWordData = words
+    const numWordsWithLowestPoints = Math.floor(number * 0.7)
+    const numWordsWithEarliestReview = number - numWordsWithLowestPoints
+    const wordsWithLowestPoints = words
       .sort((a, b) => a.points - b.points)
-      .slice(0, number)
+      .slice(0, numWordsWithLowestPoints)
+    console.log('wordsWithLowestPoints', wordsWithLowestPoints)
+    const wordsWithEarliestReview = words
+      .filter((word) => !wordsWithLowestPoints.some((w) => w.id === word.id))
+      .sort((a, b) => {
+        if (a.lastReviewed === null && b.lastReviewed === null) {
+          return 0
+        } else if (a.lastReviewed === null) {
+          return -1
+        } else if (b.lastReviewed === null) {
+          return 1
+        } else {
+          return a.lastReviewed - b.lastReviewed
+        }
+      })
+      .slice(0, numWordsWithEarliestReview)
+    console.log('wordsWithEarliestReview', wordsWithEarliestReview)
+    const selectedWordData = [
+      ...wordsWithLowestPoints,
+      ...wordsWithEarliestReview,
+    ]
     const wordArray =
       selectedWordData?.map((word) => {
         const images = word.images || []

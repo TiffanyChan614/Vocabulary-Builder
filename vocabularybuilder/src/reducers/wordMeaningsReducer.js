@@ -31,6 +31,7 @@ const wordMeaningsSlice = createSlice({
             examples: result.examples || null,
             images: [],
             points: null,
+            lastReviewed: null,
           }
         })
       } else {
@@ -46,6 +47,7 @@ const wordMeaningsSlice = createSlice({
             examples: null,
             images: [],
             points: null,
+            lastReviewed: null,
           },
         ]
       }
