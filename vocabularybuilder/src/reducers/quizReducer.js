@@ -57,7 +57,7 @@ const quizSlice = createSlice({
   },
 })
 
-export const updateQuizWordsArray = (wordArray) => {
+export const updateQuizWordArray = (wordArray) => {
   return { type: 'quiz/setWordArray', payload: wordArray }
 }
 

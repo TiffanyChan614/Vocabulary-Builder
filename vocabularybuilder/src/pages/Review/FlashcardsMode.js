@@ -70,7 +70,7 @@ const FlashcardsMode = () => {
     } else {
       dispatch(updateFlashcardsWordArray(getInitWordArray(words, number, mode)))
       dispatch(updateFlashcardsInSession(true))
-      navigate(mode === '' ? '' : '0')
+      navigate(mode === '' || number === 0 ? '' : '0')
     }
   }
 
@@ -86,8 +86,8 @@ const FlashcardsMode = () => {
   ]
 
   return (
-    <div className='card flex flex-col gap-5 text-center items-center'>
-      <div className='card--mode flex flex-col gap-3 w-full sm:w-3/4'>
+    <div className='flashcards--options flex flex-col gap-5 text-center items-center'>
+      <div className='flashcards--mode flex flex-col gap-3 w-full sm:w-3/4'>
         <h2 className='text-lg font-bold'>Please select a mode:</h2>
         <div className='flex flex-col gap-4 w-full'>
           {modeButtons.map((button) => (
@@ -105,7 +105,7 @@ const FlashcardsMode = () => {
         choiceArray={[minNum, 10, 15, 20]}
         wordsLength={words?.length}
         number={number}
-        prompt='Pease select the number of flashcards:'
+        prompt='Please select the number of flashcards:'
         handleNumberClick={handleNumberClick}
       />
       <Button

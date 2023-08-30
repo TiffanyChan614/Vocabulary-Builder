@@ -11,6 +11,7 @@ import FlashcardsMode from './pages/Review/FlashcardsMode'
 import Card from './pages/Review/Card'
 import FlashcardsResult from './pages/Review/FlashcardsResult'
 import Quiz from './pages/Review/Quiz'
+import QuizMode from './pages/Review/QuizMode'
 
 const App = () => {
   return (
@@ -60,8 +61,12 @@ const App = () => {
             </Route>
             <Route
               path='quiz'
-              element={<Quiz />}
-            />
+              element={<Quiz />}>
+              <Route
+                index
+                element={<QuizMode />}
+              />
+            </Route>
           </Route>
         </Route>
       </Routes>
