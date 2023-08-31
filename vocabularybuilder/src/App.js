@@ -12,6 +12,7 @@ import Card from './pages/Review/Card'
 import FlashcardsResult from './pages/Review/FlashcardsResult'
 import Quiz from './pages/Review/Quiz'
 import QuizMode from './pages/Review/QuizMode'
+import QuizQuestion from './pages/Review/QuizQuestion'
 
 const App = () => {
   return (
@@ -65,6 +66,10 @@ const App = () => {
               <Route
                 index
                 element={<QuizMode />}
+              />
+              <Route
+                path=':index'
+                element={<QuizQuestion />}
               />
             </Route>
           </Route>

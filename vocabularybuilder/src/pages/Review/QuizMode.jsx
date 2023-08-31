@@ -7,10 +7,12 @@ import {
 } from '../../reducers/quizReducer'
 import Button from '../../components/Common/Button'
 import { getQuizInitQuestionArray } from '../../utils/reviewHelper'
+import { useNavigate } from 'react-router-dom'
 
 const QuizMode = () => {
   const { number } = useSelector((state) => state.quiz)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const words = (() => {
     try {
@@ -37,6 +39,7 @@ const QuizMode = () => {
         const initWordArray = await getQuizInitQuestionArray(words, number)
         dispatch(updateQuizQuestionArray(initWordArray))
         dispatch(updateQuizInSession(true))
+        navigate('0')
       } catch (error) {
         console.error('Error initializing quiz', error)
       }

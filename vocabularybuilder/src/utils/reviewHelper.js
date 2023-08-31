@@ -150,6 +150,8 @@ const getWordDefinitionQuestions = (quizChoices) => {
     }
     if (questionType) {
       questions.push({
+        word: choice.word,
+        id: choice.id,
         questionType,
         question:
           questionType === 'wordToDefinition' ? choice.word : choice.definition,
@@ -187,6 +189,8 @@ const getSynonymAntonymQuestions = (quizChoices) => {
     }
     if (questionType) {
       questions.push({
+        word: choice.word,
+        id: choice.id,
         questionType,
         question: choice[questionType],
         correctAnswer: choice.word,
@@ -218,6 +222,8 @@ const getBlanksQuestions = (quizChoices) => {
         question = choice.definition
       }
       questions.push({
+        word: choice.word,
+        id: choice.id,
         questionType,
         question,
         correctAnswer: choice.word,
