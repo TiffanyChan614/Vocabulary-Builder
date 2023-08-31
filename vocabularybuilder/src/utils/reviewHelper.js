@@ -139,23 +139,33 @@ const getQuizChoices = async (words) => {
 }
 
 const getWordDefinitionQuestions = (quizChoices) => {
-  return quizChoices?.map((choice) => {
-    const questionType =
-      Math.random() < 0.5 ? 'wordToDefinition' : 'definitionToWord'
-
-    return {
-      questionType,
-      question:
-        questionType === 'wordToDefinition' ? choice.word : choice.definition,
-      correctAnswer:
-        questionType === 'wordToDefinition' ? choice.definition : choice.word,
-      choices: shuffleArray(
-        quizChoices.map((choice) =>
-          questionType === 'wordToDefinition' ? choice.definition : choice.word
-        )
-      ),
+  const questions = []
+  for (const choice of quizChoices) {
+    let questionType
+    if (choice.source === 'journal') {
+      questionType =
+        Math.random() < 0.5 ? 'wordToDefinition' : 'definitionToWord'
+    } else {
+      questionType = null
     }
-  })
+    if (questionType) {
+      questions.push({
+        questionType,
+        question:
+          questionType === 'wordToDefinition' ? choice.word : choice.definition,
+        correctAnswer:
+          questionType === 'wordToDefinition' ? choice.definition : choice.word,
+        choices: shuffleArray(
+          quizChoices.map((choice) =>
+            questionType === 'wordToDefinition'
+              ? choice.definition
+              : choice.word
+          )
+        ),
+      })
+    }
+  }
+  return questions
 }
 
 const getSynonymAntonymQuestions = (quizChoices) => {
