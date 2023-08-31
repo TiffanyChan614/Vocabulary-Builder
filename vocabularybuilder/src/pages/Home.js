@@ -21,7 +21,7 @@ const Home = () => {
       word = await getRandomWord()
       console.log('new word', word)
 
-      if (word && word.results && word.results.length > 0) {
+      if (word?.results?.length > 0) {
         return word.word
       }
     }

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  wordArray: [],
+  questionArray: [],
   number: 0,
   showNotFinished: false,
   showQuiz: false,
@@ -12,10 +12,10 @@ const quizSlice = createSlice({
   name: 'quiz',
   initialState,
   reducers: {
-    setWordArray: (state, action) => {
+    setQuestionArray: (state, action) => {
       return {
         ...state,
-        wordArray: action.payload,
+        questionArray: action.payload,
       }
     },
     setNumber: (state, action) => {
@@ -26,11 +26,11 @@ const quizSlice = createSlice({
     },
     setWordArrayByIndex: (state, action) => {
       const { index, word } = action.payload
-      const newWordArray = [...state.wordArray]
+      const newWordArray = [...state.questionArray]
       newWordArray[index] = word
       return {
         ...state,
-        wordArray: newWordArray,
+        questionArray: newWordArray,
       }
     },
     setShowNotFinished: (state, action) => {
@@ -57,8 +57,8 @@ const quizSlice = createSlice({
   },
 })
 
-export const updateQuizWordArray = (wordArray) => {
-  return { type: 'quiz/setWordArray', payload: wordArray }
+export const updateQuizQuestionArray = (questionArray) => {
+  return { type: 'quiz/setQuestionArray', payload: questionArray }
 }
 
 export const updateQuizNumber = (number) => {

@@ -1,3 +1,5 @@
+import { getRandomWord } from '../services/wordAPI'
+
 const shuffleArray = (array) => {
   let currentIndex = array.length
   let temporaryValue
@@ -68,7 +70,7 @@ const createCardData = (word, mode, image) => {
   }
 }
 
-export const getInitWordArray = (words, number, mode) => {
+const getSelectedWordData = (words, number) => {
   const wordsWithLowestPoints = getWordsWithLowestPoints(words, number)
   console.log('wordsWithLowestPoints', wordsWithLowestPoints)
   const wordsWithEarliestReview = getWordsWithEarliestReview(
@@ -77,10 +79,11 @@ export const getInitWordArray = (words, number, mode) => {
     wordsWithLowestPoints
   )
   console.log('wordsWithEarliestReview', wordsWithEarliestReview)
-  const selectedWordData = [
-    ...wordsWithLowestPoints,
-    ...wordsWithEarliestReview,
-  ]
+  return [...wordsWithLowestPoints, ...wordsWithEarliestReview]
+}
+
+export const getFlashcardsInitWordArray = (words, number, mode) => {
+  const selectedWordData = getSelectedWordData(words, number)
   const wordArray =
     selectedWordData?.map((word) => {
       const images = word.images || []
@@ -93,4 +96,147 @@ export const getInitWordArray = (words, number, mode) => {
     }) || []
 
   return shuffleArray(wordArray)
+}
+
+const getQuizChoices = async (words) => {
+  const uniqueWords = {}
+  const quizChoices = words
+    .filter((word) => {
+      if (!uniqueWords[word.word]) {
+        uniqueWords[word.word] = true
+        return true
+      } else {
+        return false
+      }
+    })
+    .map((word) => ({ ...word, source: 'journal' }))
+  //   console.log('quizChoices', quizChoices)
+  while (quizChoices.length < 4) {
+    console.log('Get words from API')
+    let word
+    do {
+      word = await getRandomWord()
+    } while (!word || !word.results || word.results.length === 0)
+
+    const randomDefinition =
+      word.results[Math.floor(Math.random() * word.results.length)]
+
+    const isDuplicate = quizChoices.some(
+      (choice) =>
+        choice.word === word.word &&
+        choice.definition === randomDefinition.definition
+    )
+
+    if (!isDuplicate) {
+      quizChoices.push({
+        word: word.word,
+        definition: randomDefinition.definition,
+        source: 'api',
+      })
+    }
+  }
+  return quizChoices
+}
+
+const getWordDefinitionQuestions = (quizChoices) => {
+  return quizChoices?.map((choice) => {
+    const questionType =
+      Math.random() < 0.5 ? 'wordToDefinition' : 'definitionToWord'
+
+    return {
+      questionType,
+      question:
+        questionType === 'wordToDefinition' ? choice.word : choice.definition,
+      correctAnswer:
+        questionType === 'wordToDefinition' ? choice.definition : choice.word,
+      choices: shuffleArray(
+        quizChoices.map((choice) =>
+          questionType === 'wordToDefinition' ? choice.definition : choice.word
+        )
+      ),
+    }
+  })
+}
+
+const getSynonymAntonymQuestions = (quizChoices) => {
+  const questions = []
+  for (const choice of quizChoices) {
+    let questionType
+    if (
+      choice.source === 'journal' &&
+      choice.synonyms?.length > 0 &&
+      choice.antonyms?.length > 0
+    ) {
+      questionType = Math.random() < 0.5 ? 'synonyms' : 'antonyms'
+    } else if (choice.source === 'journal' && choice.synonyms?.length > 0) {
+      questionType = 'synonyms'
+    } else if (choice.source === 'journal' && choice.antonyms?.length > 0) {
+      questionType = 'antonyms'
+    } else {
+      questionType = null
+    }
+    if (questionType) {
+      questions.push({
+        questionType,
+        question: choice[questionType],
+        correctAnswer: choice.word,
+        choices: shuffleArray(quizChoices.map((choice) => choice.word)),
+      })
+    }
+  }
+  //   console.log('synonym-antonym questions', questions)
+  return questions
+}
+
+const getBlanksQuestions = (quizChoices) => {
+  const questions = []
+  for (const choice of quizChoices) {
+    let questionType
+    if (choice.source === 'journal' && choice.images?.length > 0) {
+      questionType = 'blank-' + (Math.random() < 0.5 ? 'definition' : 'images')
+    } else if (choice.source === 'journal') {
+      questionType = 'blank-definition'
+    } else {
+      questionType = null
+    }
+    if (questionType) {
+      let question
+      if (questionType === 'blank-images') {
+        question =
+          choice.images[Math.floor(Math.random() * choice.images?.length)]
+      } else {
+        question = choice.definition
+      }
+      questions.push({
+        questionType,
+        question,
+        correctAnswer: choice.word,
+      })
+    }
+  }
+  return questions
+}
+
+export const getQuizInitQuestionArray = async (words, number) => {
+  const selectedWordData = getSelectedWordData(words, number)
+  console.log('selected word data in getQuizInitWordArray', selectedWordData)
+  const quizChoices = await getQuizChoices(selectedWordData)
+  console.log('quiz choice in getQuizInitWordArray', quizChoices)
+  const wordDefinitionQuestions = getWordDefinitionQuestions(quizChoices)
+  console.log(
+    'word-definition questions in getQuizInitWordArray',
+    wordDefinitionQuestions
+  )
+  const synonymAntonymQuestions = getSynonymAntonymQuestions(quizChoices)
+  console.log(
+    'synonym-antonym questions in getQuizInitWordArray',
+    synonymAntonymQuestions
+  )
+  const blanksQuestions = getBlanksQuestions(quizChoices)
+  console.log('blanks questions in getQuizInitWordArray', blanksQuestions)
+  return [
+    ...wordDefinitionQuestions,
+    ...synonymAntonymQuestions,
+    ...blanksQuestions,
+  ]
 }

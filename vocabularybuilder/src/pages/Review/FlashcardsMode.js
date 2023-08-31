@@ -7,7 +7,7 @@ import {
 } from '../../reducers/flashcardsReducer'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Common/Button'
-import { getInitWordArray } from '../../utils/reviewHelper'
+import { getFlashcardsInitWordArray } from '../../utils/reviewHelper'
 import NumberChoice from '../../components/Features/Review/NumberChoice'
 
 const FlashcardsMode = () => {
@@ -68,7 +68,11 @@ const FlashcardsMode = () => {
       e.preventDefault()
       window.alert('Please select the number of flashcards')
     } else {
-      dispatch(updateFlashcardsWordArray(getInitWordArray(words, number, mode)))
+      dispatch(
+        updateFlashcardsWordArray(
+          getFlashcardsInitWordArray(words, number, mode)
+        )
+      )
       dispatch(updateFlashcardsInSession(true))
       navigate(mode === '' || number === 0 ? '' : '0')
     }

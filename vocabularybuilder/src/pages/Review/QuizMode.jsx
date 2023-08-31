@@ -2,10 +2,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import NumberChoice from '../../components/Features/Review/NumberChoice'
 import {
   updateQuizNumber,
-  updateQuizWordArray,
-  updateFlashcardsInSession,
+  updateQuizQuestionArray,
+  updateQuizInSession,
 } from '../../reducers/quizReducer'
 import Button from '../../components/Common/Button'
+import { getQuizInitQuestionArray } from '../../utils/reviewHelper'
 
 const QuizMode = () => {
   const { number } = useSelector((state) => state.quiz)
@@ -26,14 +27,19 @@ const QuizMode = () => {
     dispatch(updateQuizNumber(parseInt(e.target.name)))
   }
 
-  const handleStart = (e) => {
+  const handleStart = async (e) => {
     e.stopPropagation()
     if (number === 0) {
       e.preventDefault()
       window.alert('Please select the number of words you want to review.')
     } else {
-      dispatch(updateQuizWordArray())
-      dispatch(updateFlashcardsInSession(true))
+      try {
+        const initWordArray = await getQuizInitQuestionArray(words, number)
+        dispatch(updateQuizQuestionArray(initWordArray))
+        dispatch(updateQuizInSession(true))
+      } catch (error) {
+        console.error('Error initializing quiz', error)
+      }
     }
   }
 
