@@ -4,9 +4,13 @@ import {
   updateQuizNumber,
   updateQuizQuestionArray,
   updateQuizInSession,
+  updateQuizWordArray,
 } from '../../reducers/quizReducer'
 import Button from '../../components/Common/Button'
-import { getQuizInitQuestionArray } from '../../utils/reviewHelper'
+import {
+  getQuizInitQuestionArray,
+  getQuizInitWordArray,
+} from '../../utils/reviewHelper'
 import { useNavigate } from 'react-router-dom'
 
 const QuizMode = () => {
@@ -36,8 +40,10 @@ const QuizMode = () => {
       window.alert('Please select the number of words you want to review.')
     } else {
       try {
-        const initWordArray = await getQuizInitQuestionArray(words, number)
-        dispatch(updateQuizQuestionArray(initWordArray))
+        const initWordArray = getQuizInitWordArray(words, number)
+        dispatch(updateQuizWordArray(initWordArray))
+        const initQuestionArray = await getQuizInitQuestionArray(initWordArray)
+        dispatch(updateQuizQuestionArray(initQuestionArray))
         dispatch(updateQuizInSession(true))
         navigate('0')
       } catch (error) {

@@ -5,13 +5,11 @@ const NumberChoice = ({
   prompt,
   handleNumberClick,
 }) => {
-  const numberButtonStyleClassName = (buttonNumber) => {
+  const numberButtonStyleClassName = (buttonName) => {
     const baseStyle =
       'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center hover: border-indigo-100 hover:font-semibold hover:bg-indigo-100'
     const activeStyle = 'bg-indigo-100 font-semibold border-indigo-100'
-    return (
-      baseStyle + (number === Number(buttonNumber) ? ' ' + activeStyle : '')
-    )
+    return baseStyle + (number === buttonName ? ' ' + activeStyle : '')
   }
 
   const numberButtons = choiceArray.filter((num) => num <= wordsLength)

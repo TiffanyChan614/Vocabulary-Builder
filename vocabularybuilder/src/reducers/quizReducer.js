@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+  wordArray: [],
   questionArray: [],
   number: 0,
   showNotFinished: false,
@@ -12,6 +13,12 @@ const quizSlice = createSlice({
   name: 'quiz',
   initialState,
   reducers: {
+    setWordArray: (state, action) => {
+      return {
+        ...state,
+        wordArray: action.payload,
+      }
+    },
     setQuestionArray: (state, action) => {
       return {
         ...state,
@@ -24,13 +31,18 @@ const quizSlice = createSlice({
         number: action.payload,
       }
     },
-    setWordArrayByIndex: (state, action) => {
-      const { index, word } = action.payload
-      const newWordArray = [...state.questionArray]
-      newWordArray[index] = word
+    setWordArrayById: (state, action) => {
+      const { id, word } = action.payload
+      const newWordArray = state.wordArray.map((w) => {
+        if (w.id === id) {
+          return word
+        } else {
+          return w
+        }
+      })
       return {
         ...state,
-        questionArray: newWordArray,
+        wordArray: newWordArray,
       }
     },
     setShowNotFinished: (state, action) => {
@@ -57,6 +69,10 @@ const quizSlice = createSlice({
   },
 })
 
+export const updateQuizWordArray = (wordArray) => {
+  return { type: 'quiz/setWordArray', payload: wordArray }
+}
+
 export const updateQuizQuestionArray = (questionArray) => {
   return { type: 'quiz/setQuestionArray', payload: questionArray }
 }
@@ -65,8 +81,8 @@ export const updateQuizNumber = (number) => {
   return { type: 'quiz/setNumber', payload: number }
 }
 
-export const updateQuizWordArrayByIndex = (index, word) => {
-  return { type: 'quiz/setWordArrayByIndex', payload: { index, word } }
+export const updateQuizWordArrayById = (id, word) => {
+  return { type: 'quiz/setWordArrayById', payload: { id, word } }
 }
 
 export const updateQuizShowNotFinished = (showNotFinished) => {

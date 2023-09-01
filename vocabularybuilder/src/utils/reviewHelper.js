@@ -144,26 +144,38 @@ const getWordDefinitionQuestions = (quizChoices) => {
     let questionType
     if (choice.source === 'journal') {
       questionType =
-        Math.random() < 0.5 ? 'wordToDefinition' : 'definitionToWord'
+        Math.random() < 0.5 ? 'mc-wordToDefinition' : 'mc-definitionToWord'
     } else {
       questionType = null
     }
     if (questionType) {
+      const isWordToDefinition =
+        questionType === 'mc-wordToDefinition' ? true : false
+      const correctAnswer =
+        questionType === 'mc-wordToDefinition' ? choice.definition : choice.word
+
+      const incorrectAnswers = shuffleArray(
+        quizChoices
+          .map((choice) => {
+            const isDifferentWord = choice.word !== correctAnswer
+            const isDifferentDefinition = choice.definition !== correctAnswer
+            if (isWordToDefinition) {
+              return isDifferentDefinition ? choice.definition : null
+            } else {
+              return isDifferentWord ? choice.word : null
+            }
+          })
+          .filter((answer) => answer !== null)
+      ).slice(0, 3)
+
+      const choices = shuffleArray([correctAnswer, ...incorrectAnswers])
+
       questions.push({
-        word: choice.word,
         id: choice.id,
         questionType,
-        question:
-          questionType === 'wordToDefinition' ? choice.word : choice.definition,
-        correctAnswer:
-          questionType === 'wordToDefinition' ? choice.definition : choice.word,
-        choices: shuffleArray(
-          quizChoices.map((choice) =>
-            questionType === 'wordToDefinition'
-              ? choice.definition
-              : choice.word
-          )
-        ),
+        question: isWordToDefinition ? choice.word : choice.definition,
+        correctAnswer,
+        choices,
       })
     }
   }
@@ -179,22 +191,32 @@ const getSynonymAntonymQuestions = (quizChoices) => {
       choice.synonyms?.length > 0 &&
       choice.antonyms?.length > 0
     ) {
-      questionType = Math.random() < 0.5 ? 'synonyms' : 'antonyms'
+      questionType = Math.random() < 0.5 ? 'mc-synonyms' : 'mc-antonyms'
     } else if (choice.source === 'journal' && choice.synonyms?.length > 0) {
-      questionType = 'synonyms'
+      questionType = 'mc-synonyms'
     } else if (choice.source === 'journal' && choice.antonyms?.length > 0) {
-      questionType = 'antonyms'
+      questionType = 'mc-antonyms'
     } else {
       questionType = null
     }
     if (questionType) {
+      const correctAnswer = choice.word
+
+      const incorrectAnswers = shuffleArray(
+        quizChoices
+          .filter((choice) => choice.word !== correctAnswer)
+          .map((choice) => choice.word)
+          .slice(0, 3)
+      )
+      const choices = shuffleArray([correctAnswer, ...incorrectAnswers])
+      const question = choice[questionType.split('-')[1]].join(', ')
+
       questions.push({
-        word: choice.word,
         id: choice.id,
         questionType,
-        question: choice[questionType],
+        question,
         correctAnswer: choice.word,
-        choices: shuffleArray(quizChoices.map((choice) => choice.word)),
+        choices,
       })
     }
   }
@@ -222,7 +244,6 @@ const getBlanksQuestions = (quizChoices) => {
         question = choice.definition
       }
       questions.push({
-        word: choice.word,
         id: choice.id,
         questionType,
         question,
@@ -233,9 +254,17 @@ const getBlanksQuestions = (quizChoices) => {
   return questions
 }
 
-export const getQuizInitQuestionArray = async (words, number) => {
+export const getQuizInitWordArray = (words, number) => {
   const selectedWordData = getSelectedWordData(words, number)
-  console.log('selected word data in getQuizInitWordArray', selectedWordData)
+  return selectedWordData.map((word) => ({
+    ...word,
+    pointsEarned: null,
+    originalPoints: word.points,
+    newPoints: word.points,
+  }))
+}
+
+export const getQuizInitQuestionArray = async (selectedWordData) => {
   const quizChoices = await getQuizChoices(selectedWordData)
   console.log('quiz choice in getQuizInitWordArray', quizChoices)
   const wordDefinitionQuestions = getWordDefinitionQuestions(quizChoices)
