@@ -5,7 +5,7 @@ const initialState = {
   questionArray: [],
   number: 0,
   showNotFinished: false,
-  showQuiz: false,
+  showQuit: false,
   inSession: false,
 }
 
@@ -51,10 +51,10 @@ const quizSlice = createSlice({
         showNotFinished: action.payload,
       }
     },
-    setShowQuiz: (state, action) => {
+    setShowQuit: (state, action) => {
       return {
         ...state,
-        showQuiz: action.payload,
+        showQuit: action.payload,
       }
     },
     setInSession: (state, action) => {
@@ -89,8 +89,8 @@ export const updateQuizShowNotFinished = (showNotFinished) => {
   return { type: 'quiz/setShowNotFinished', payload: showNotFinished }
 }
 
-export const updateQuizShowQuit = (showQuiz) => {
-  return { type: 'quiz/setShowQuit', payload: showQuiz }
+export const updateQuizShowQuit = (showQuit) => {
+  return { type: 'quiz/setShowQuit', payload: showQuit }
 }
 
 export const updateQuizInSession = (inSession) => {
