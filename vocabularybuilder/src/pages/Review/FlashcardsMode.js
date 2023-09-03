@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Common/Button'
 import { getFlashcardsInitWordArray } from '../../utils/reviewHelper'
 import NumberChoice from '../../components/Features/Review/NumberChoice'
+import ModeChoice from '../../components/Features/Review/ModeChoice'
 
 const FlashcardsMode = () => {
   const { mode, number } = useSelector((state) => state.flashcards)
@@ -25,42 +26,19 @@ const FlashcardsMode = () => {
 
   const minNum = Math.min(5, words.length)
 
-  const modeButtonStyleClassName = (buttonMode) => {
-    const baseStyle =
-      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center hover:font-semibold'
-    const colorStyle = () => {
-      switch (buttonMode) {
-        case 'wordToMeaning':
-          return (
-            'border-amber-100 hover:bg-amber-100' +
-            (mode.name === 'wordToMeaning' ? ' bg-amber-100 font-semibold' : '')
-          )
-        case 'meaningToWord':
-          return (
-            'border-sky-100 hover:bg-sky-100' +
-            (mode.name === 'meaningToWord' ? ' bg-sky-100 font-semibold' : '')
-          )
-        case 'mixed':
-          return (
-            'border-rose-100 hover:bg-rose-100' +
-            (mode.name === 'mixed' ? ' bg-rose-100 font-semibold' : '')
-          )
-        default:
-          return ''
-      }
-    }
-    return baseStyle + ' ' + colorStyle()
-  }
+  const modesArray = [
+    { name: 'wordToMeaning', text: 'Show Word, Guess Meaning' },
+    { name: 'meaningToWord', text: 'Show Meaning, Guess Word' },
+    { name: 'mixed', text: 'Mixed Mode' },
+  ]
 
   const handleModeClick = (e) => {
-    e.stopPropagation()
     dispatch(
-      updateFlashcardsMode(modeButtons.find((b) => b.name === e.target.name))
+      updateFlashcardsMode(modesArray.find((b) => b.name === e.target.name))
     )
   }
 
   const handleStart = (e) => {
-    e.stopPropagation()
     if (mode === '') {
       e.preventDefault()
       window.alert('Please select a mode')
@@ -83,27 +61,15 @@ const FlashcardsMode = () => {
     dispatch(updateFlashcardsNumber(parseInt(e.target.name)))
   }
 
-  const modeButtons = [
-    { name: 'wordToMeaning', text: 'Show Word, Guess Meaning' },
-    { name: 'meaningToWord', text: 'Show Meaning, Guess Word' },
-    { name: 'mixed', text: 'Mixed Mode' },
-  ]
-
   return (
     <div className='flashcards--options flex flex-col gap-5 text-center items-center'>
       <div className='flashcards--mode flex flex-col gap-3 w-full sm:w-3/4'>
         <h2 className='text-lg font-bold'>Please select a mode:</h2>
-        <div className='flex flex-col gap-4 w-full'>
-          {modeButtons.map((button) => (
-            <button
-              key={button.name}
-              name={button.name}
-              onClick={handleModeClick}
-              className={modeButtonStyleClassName(button.name)}>
-              {button.text}
-            </button>
-          ))}
-        </div>
+        <ModeChoice
+          mode={mode}
+          modesArray={modesArray}
+          handleModeClick={handleModeClick}
+        />
       </div>
       <NumberChoice
         choiceArray={[minNum, 10, 15, 20]}

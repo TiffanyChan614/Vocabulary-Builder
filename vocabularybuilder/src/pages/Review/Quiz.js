@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import ReviewNotFinishedPopup from '../../components/Features/Review/ReviewNotFinishedPopup'
-import QuitSessionPopup from '../../components/Features/Review/QuitSessionPopup'
+import EndSessionPopup from '../../components/Features/Review/EndSessionPopup'
+import BackPopup from '../../components/Features/Review/BackPopup'
 import { updateQuizShowQuit, resetQuiz } from '../../reducers/quizReducer'
 import { useEffect } from 'react'
 
@@ -33,8 +33,8 @@ const Quiz = () => {
       </div>
       <h1 className='text-xl sm:text-2xl font-bold text-center'>Quiz</h1>
       <Outlet />
-      {showNotFinished && <ReviewNotFinishedPopup page='quiz' />}
-      {showQuit && <QuitSessionPopup page='quiz' />}
+      {showNotFinished && <EndSessionPopup page='quiz' />}
+      {showQuit && <BackPopup page='quiz' />}
     </div>
   )
 }

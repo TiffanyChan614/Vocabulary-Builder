@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import ReviewNotFinishedPopup from '../../components/Features/Review/ReviewNotFinishedPopup'
-import QuitSessionPopup from '../../components/Features/Review/QuitSessionPopup'
+import EndSessionPopup from '../../components/Features/Review/EndSessionPopup'
+import BackPopup from '../../components/Features/Review/BackPopup'
 import {
   updateFlashcardsShowQuit,
   resetFlashcards,
@@ -37,8 +37,8 @@ const Flashcards = () => {
       </div>
       <h1 className='text-xl sm:text-2xl font-bold text-center'>Flashcards</h1>
       <Outlet />
-      {showNotFinished && <ReviewNotFinishedPopup page='flashcards' />}
-      {showQuit && <QuitSessionPopup page='flashcards' />}
+      {showNotFinished && <EndSessionPopup page='flashcards' />}
+      {showQuit && <BackPopup page='flashcards' />}
     </div>
   )
 }

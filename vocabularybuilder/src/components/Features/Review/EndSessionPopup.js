@@ -4,7 +4,7 @@ import { updateQuizShowNotFinished } from '../../../reducers/quizReducer'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-const ReviewNoFinishedPopup = ({ page }) => {
+const EndSessionPopup = ({ page }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -44,4 +44,4 @@ const ReviewNoFinishedPopup = ({ page }) => {
   )
 }
 
-export default ReviewNoFinishedPopup
+export default EndSessionPopup

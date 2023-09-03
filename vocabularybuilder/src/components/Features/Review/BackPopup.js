@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { updateFlashcardsShowQuit } from '../../../reducers/flashcardsReducer'
 import { updateQuizShowQuit } from '../../../reducers/quizReducer'
 
-const QuitSessionPopup = ({ page }) => {
+const BackPopup = ({ page }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -31,4 +31,4 @@ const QuitSessionPopup = ({ page }) => {
   )
 }
 
-export default QuitSessionPopup
+export default BackPopup
