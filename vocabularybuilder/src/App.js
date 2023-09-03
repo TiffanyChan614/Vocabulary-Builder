@@ -14,6 +14,7 @@ import Quiz from './pages/Review/Quiz'
 import QuizMode from './pages/Review/QuizMode'
 import QuizQuestion from './pages/Review/QuizQuestion'
 import QuizResult from './pages/Review/QuizResult'
+import NotFound from './pages/NotFound'
 
 const App = () => {
   return (
@@ -79,6 +80,10 @@ const App = () => {
             </Route>
           </Route>
         </Route>
+        <Route
+          path='*'
+          element={<NotFound />}
+        />
       </Routes>
     </BrowserRouter>
   )
