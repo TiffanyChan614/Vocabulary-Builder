@@ -152,7 +152,7 @@ const Card = () => {
   return (
     <>
       <div className='text-center'>Mode: {mode.text}</div>
-      <div className='flex flex-col justify-center items-center gap-3'>
+      <div className='flex flex-col items-center gap-3'>
         <div className='card-control w-full flex justify-center items-center flex-grow gap-2'>
           <button
             onClick={handlePreviousClick}
@@ -163,7 +163,7 @@ const Card = () => {
             />
           </button>
           <div
-            className={`card select-none text-center w-full flex flex-col justify-center items-center gap-5 min-h-[250px] sm:min-h-[350px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
+            className={`card select-none text-center flex flex-col justify-center items-center gap-5 min-w-[250px] sm:min-w-[450px] min-h-[250px] sm:min-h-[350px] px-5 pt-5 pb-3 ${color} shadow-md rounded-lg hover:shadow-lg cursor-pointer`}
             onClick={handleCardClick}>
             <div className='h-full text-xl flex justify-center items-center'>
               {face === 'front' ? front : back}

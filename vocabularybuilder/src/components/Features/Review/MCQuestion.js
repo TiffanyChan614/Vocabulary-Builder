@@ -1,10 +1,9 @@
 const MCQuestion = ({ checked, chosen, questionData, handleSelect }) => {
-  console.log('checked in MCQuestion', checked)
   const { questionType, question, correctAnswer, choices } = questionData
 
   const answerButtonStyleClassName = (buttonName) => {
     const baseStyle =
-      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center'
+      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center max-w-[750px]'
     const uncheckedStyle =
       'hover:font-semibold hover:bg-indigo-100 border-indigo-100'
     const chosenStyle = 'bg-indigo-100 font-semibold border-indigo-100'
@@ -38,10 +37,10 @@ const MCQuestion = ({ checked, chosen, questionData, handleSelect }) => {
     'mc-antonyms': 'Choose the word that is an antonym of the following words:',
   }
   return (
-    <div className='flex flex-col gap-4 text-center'>
+    <div className='flex flex-col gap-4 text-center items-center'>
       <p>{typeToPrompt[questionType]}</p>
       <p className='font-semibold'>{question}</p>
-      <div className='flex flex-col gap-3'>
+      <div className='flex flex-col gap-3 items-center'>
         {choices?.map((answer) => (
           <button
             key={answer}

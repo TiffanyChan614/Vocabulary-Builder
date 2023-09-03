@@ -14,7 +14,6 @@ const QuitSessionPopup = ({ page }) => {
 
   const handleNo = () => {
     if (page === 'quiz') {
-      console.log('updateQuizShowQuit(false)')
       dispatch(updateQuizShowQuit(false))
     } else {
       dispatch(updateFlashcardsShowQuit(false))
