@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { v4 as uuidv4 } from 'uuid'
 
 const initialState = {
   wordData: [],
@@ -21,7 +22,7 @@ const wordMeaningsSlice = createSlice({
         newWordData = wordData.results?.map((result) => {
           // console.log('result in reducer', result.id)
           return {
-            id: result.id,
+            id: result.id || uuidv4(),
             word: wordData.word || 'no word',
             definition: result.definition || null,
             pronunciation: wordData.pronunciation?.all || null,

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { getMatchedWords } from '../../services/wordAPI'
 import { useSelector, useDispatch } from 'react-redux'

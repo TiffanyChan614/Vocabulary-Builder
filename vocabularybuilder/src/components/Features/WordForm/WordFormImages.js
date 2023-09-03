@@ -16,7 +16,6 @@ const WordFormImages = ({
   const isSearchClicked = useRef(false)
 
   const handleSearch = async (e) => {
-    e.stopPropagation()
     isSearchClicked.current = true
     setShowImageResults(true)
     if (searchValue !== '') {
@@ -28,9 +27,8 @@ const WordFormImages = ({
   }
 
   const handleAdd = (e, index) => {
-    e.stopPropagation()
     if (formData.images.length >= 3) {
-      window.alert('Only 3 images allowed')
+      alert('Only 3 images allowed')
       return
     }
     const name = e.target.name

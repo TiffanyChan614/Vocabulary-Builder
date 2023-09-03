@@ -31,7 +31,7 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
   const updateShowDetails =
     page === 'journal' ? updateJournalShowDetails : updateMeaningsShowDetails
   const updateFormWord =
-    page === 'search' ? updateSearchFormWord : updateJournalFormWord
+    page === 'journal' ? updateJournalFormWord : updateSearchFormWord
 
   const handleDelete = (id) => {
     const newWords = words.filter((word) => word.id !== id)
@@ -48,9 +48,14 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
   }
 
   const handleClick = (e) => {
-    e.stopPropagation()
     toggleShowForm(true)
     dispatch(updateFormWord(wordData))
+  }
+
+  const handleShowDetails = () => {
+    console.log('wordData', wordData)
+    console.log('wordData?.id', wordData?.id)
+    dispatch(updateShowDetails(wordData?.id, !currentShowDetails))
   }
 
   return (
@@ -89,10 +94,7 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
           antonyms?.length > 0 ||
           examples?.length > 0 ||
           images?.length > 0) && (
-          <button
-            onClick={() =>
-              dispatch(updateShowDetails(wordData?.id, !currentShowDetails))
-            }>
+          <button onClick={handleShowDetails}>
             <FiMoreHorizontal size={20} />
           </button>
         )}

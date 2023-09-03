@@ -5,30 +5,26 @@ const ImageDropZone = ({ formData, setFormData, setMessage }) => {
 
   const handleDragEnter = (e) => {
     e.preventDefault()
-    e.stopPropagation()
     setIsDragging(true)
   }
 
   const handleDragLeave = (e) => {
     e.preventDefault()
-    e.stopPropagation()
     setIsDragging(false)
   }
 
   const handleDragOver = (e) => {
     e.preventDefault()
-    e.stopPropagation()
   }
 
   const handleDrop = async (e) => {
     e.preventDefault()
-    e.stopPropagation()
     setIsDragging(false)
     const files = e.dataTransfer.files
     if (files && files.length > 0) {
       const currentImagesLength = formData.images.length
       if (files.length + currentImagesLength > 3) {
-        window.alert('Only 3 images allowed')
+        alert('Only 3 images allowed')
         return
       }
       const promises = []

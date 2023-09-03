@@ -42,7 +42,7 @@ const QuizMode = () => {
 
   const handleNumberClick = (e) => {
     e.stopPropagation()
-    dispatch(updateQuizNumber(parseInt(e.target.name)))
+    dispatch(updateQuizNumber(Number(e.target.name)))
   }
 
   const handleStart = async (e) => {
@@ -50,6 +50,9 @@ const QuizMode = () => {
     if (number === 0) {
       e.preventDefault()
       window.alert('Please select the number of words you want to review.')
+    } else if (number === 0) {
+      e.preventDefault()
+      alert('Please select the number of words you want to review.')
     } else {
       try {
         const initWordArray = getQuizInitWordArray(words, number)

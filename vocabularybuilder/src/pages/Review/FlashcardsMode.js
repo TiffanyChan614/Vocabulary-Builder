@@ -41,10 +41,10 @@ const FlashcardsMode = () => {
   const handleStart = (e) => {
     if (mode === '') {
       e.preventDefault()
-      window.alert('Please select a mode')
+      alert('Please select a mode')
     } else if (number === 0) {
       e.preventDefault()
-      window.alert('Please select the number of flashcards')
+      alert('Please select the number of flashcards')
     } else {
       dispatch(
         updateFlashcardsWordArray(
@@ -57,8 +57,7 @@ const FlashcardsMode = () => {
   }
 
   const handleNumberClick = (e) => {
-    e.stopPropagation()
-    dispatch(updateFlashcardsNumber(parseInt(e.target.name)))
+    dispatch(updateFlashcardsNumber(Number(e.target.name)))
   }
 
   return (

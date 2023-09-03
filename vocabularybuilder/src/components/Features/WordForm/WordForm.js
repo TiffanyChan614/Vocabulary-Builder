@@ -92,7 +92,6 @@ const WordForm = ({ page }) => {
   }
 
   const handleDelete = (e, index) => {
-    e.stopPropagation()
     console.log('e.target', e.target)
     const name = e.target.name
     console.log('name', name, 'index', index)
@@ -108,7 +107,6 @@ const WordForm = ({ page }) => {
 
   const handleAdd = (e) => {
     console.log('e.target', e.target)
-    e.stopPropagation()
     const name = e.target.name
     console.log('handleAdd name', name)
     setFormData((prevFormData) => {

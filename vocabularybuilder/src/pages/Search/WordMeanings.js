@@ -52,7 +52,6 @@ const WordMeanings = () => {
 
   const handleDetailsClick = (e) => {
     e.preventDefault()
-    e.stopPropagation()
     dispatch(toggleMeaningsShowDetails(!showAllDetails))
   }
 
@@ -60,7 +59,7 @@ const WordMeanings = () => {
     async function fetchData() {
       dispatch(updateIsLoading(true))
       let returnedWordData = await getWordData(word)
-      // console.log('returnedWordData', returnedWordData)
+      console.log('returnedWordData', returnedWordData)
       dispatch(updateWordData(returnedWordData))
       dispatch(updateIsLoading(false))
     }
