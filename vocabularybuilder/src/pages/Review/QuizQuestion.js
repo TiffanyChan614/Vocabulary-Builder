@@ -132,6 +132,26 @@ const QuizQuestion = () => {
     </Button>
   )
 
+  const resultButton = (
+    <Button
+      bgColor='indigo'
+      size='lg'
+      onClick={() => navigate('../result')}
+      className='mt-4 font-semibold'>
+      See Result
+    </Button>
+  )
+
+  const reviewButtonToShow = (() => {
+    if (Number(index) === questionArray.length - 1) {
+      return resultButton
+    } else if (checked) {
+      return nextButton
+    } else {
+      return checkButton
+    }
+  })()
+
   return (
     <div className='flex flex-col gap-2 items-center'>
       <h2 className='text-lg text-center font-bold'>
@@ -175,7 +195,7 @@ const QuizQuestion = () => {
             End Session
           </Button>
         )}
-        {checked ? nextButton : checkButton}
+        {reviewButtonToShow}
       </div>
     </div>
   )

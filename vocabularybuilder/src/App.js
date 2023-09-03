@@ -13,6 +13,7 @@ import FlashcardsResult from './pages/Review/FlashcardsResult'
 import Quiz from './pages/Review/Quiz'
 import QuizMode from './pages/Review/QuizMode'
 import QuizQuestion from './pages/Review/QuizQuestion'
+import QuizResult from './pages/Review/QuizResult'
 
 const App = () => {
   return (
@@ -70,6 +71,10 @@ const App = () => {
               <Route
                 path=':index'
                 element={<QuizQuestion />}
+              />
+              <Route
+                path='result'
+                element={<QuizResult />}
               />
             </Route>
           </Route>

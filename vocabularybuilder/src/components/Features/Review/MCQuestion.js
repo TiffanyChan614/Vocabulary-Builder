@@ -3,7 +3,7 @@ const MCQuestion = ({ checked, chosen, questionData, handleSelect }) => {
 
   const answerButtonStyleClassName = (buttonName) => {
     const baseStyle =
-      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center max-w-[750px]'
+      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center max-w-[750px] min-w-[250px]'
     const uncheckedStyle =
       'hover:font-semibold hover:bg-indigo-100 border-indigo-100'
     const chosenStyle = 'bg-indigo-100 font-semibold border-indigo-100'

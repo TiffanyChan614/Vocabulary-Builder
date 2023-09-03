@@ -1,15 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import {
-  updateFlashcardsWordArray,
-  updateFlashcardsInSession,
-} from '../../reducers/flashcardsReducer'
+  updateQuizWordArray,
+  updateQuizInSession,
+} from '../../reducers/quizReducer'
 import { updateWords } from '../../reducers/journalReducer'
 import ResultTable from '../../components/Features/Review/ResultTable'
 
-const FlashcardsResult = () => {
-  const { wordArray } = useSelector((state) => state.flashcards)
+const QuizResult = () => {
+  const { wordArray } = useSelector((state) => state.quiz)
   const { words } = useSelector((state) => state.journal)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -34,8 +34,8 @@ const FlashcardsResult = () => {
           ? word.lastReviewed
           : new Date().toISOString(),
     }))
-    dispatch(updateFlashcardsWordArray(newWordArray))
-    dispatch(updateFlashcardsInSession(false))
+    dispatch(updateQuizWordArray(newWordArray))
+    dispatch(updateQuizInSession(false))
     localStorage.setItem('journal', JSON.stringify(newJournalWords))
     dispatch(updateWords(newJournalWords))
   }, [])
@@ -53,4 +53,4 @@ const FlashcardsResult = () => {
   )
 }
 
-export default FlashcardsResult
+export default QuizResult
