@@ -289,3 +289,7 @@ export const getQuizInitQuestionArray = async (selectedWordData) => {
 export const checkBlanksCorrect = (blanksAns, correctAnswer) => {
   return blanksAns.join('') === correctAnswer
 }
+
+export const hasBlank = (blanksAns) => {
+  return blanksAns.some((blank) => blank === '')
+}

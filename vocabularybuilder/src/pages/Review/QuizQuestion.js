@@ -5,20 +5,23 @@ import { updateQuizWordArrayById } from '../../reducers/quizReducer'
 import { useState, useEffect } from 'react'
 import Button from '../../components/Common/Button'
 import BlanksQuestion from './BlanksQuestion'
+import { checkBlanksCorrect, hasBlank } from '../../utils/reviewHelper'
 
 const QuizQuestion = () => {
-  const [chosen, setChosen] = useState('')
-  const [checked, setChecked] = useState(false)
-  const [message, setMessage] = useState('')
   const { index } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const [blanksAns, setBlanksAns] = useState([])
+  const [chosen, setChosen] = useState('')
+  const [checked, setChecked] = useState(false)
+  const [correctWrongMessage, setCorrectWrongMessage] = useState('')
+  const [showCorrectSpelling, setShowCorrectSpelling] = useState(false)
+
   const { questionArray, wordArray } = useSelector((state) => state.quiz)
   const questionData = questionArray[index]
   console.log('questionData', questionData)
   const questionType = questionData.questionType.split('-')[0]
-
-  const [blanksAns, setBlanksAns] = useState([])
 
   useEffect(() => {
     if (questionType === 'blank') {
@@ -46,9 +49,9 @@ const QuizQuestion = () => {
   useEffect(() => {
     if (checked) {
       if (chosen === questionData.correctAnswer) {
-        setMessage('Correct:)')
+        setCorrectWrongMessage('Correct:)')
       } else {
-        setMessage('Wrong:<')
+        setCorrectWrongMessage('Wrong:<')
       }
     }
   }, [chosen, checked, questionData.correctAnswer])
@@ -57,12 +60,28 @@ const QuizQuestion = () => {
     if (questionType === 'mc') {
       if (!chosen) {
         alert('Please select an answer')
+        return
       } else {
         const wordData = wordArray.find((word) => word.id === questionData.id)
         const pointsEarned = chosen === questionData.correctAnswer ? 1 : -1
         let updatedWordData = { ...wordData, pointsEarned }
         dispatch(updateQuizWordArrayById(wordData.id, updatedWordData))
       }
+    } else {
+      if (hasBlank(blanksAns)) {
+        alert('Please fill in all blanks')
+        return
+      }
+      const wordData = wordArray.find((word) => word.id === questionData.id)
+      const pointsEarned = checkBlanksCorrect(
+        blanksAns,
+        questionData.correctAnswer
+      )
+        ? 2
+        : -1
+      setShowCorrectSpelling(true)
+      let updatedWordData = { ...wordData, pointsEarned }
+      dispatch(updateQuizWordArrayById(wordData.id, updatedWordData))
     }
     setChecked(true)
   }
@@ -89,7 +108,8 @@ const QuizQuestion = () => {
       const newIndex = Number(index) + 1
       setChecked(false)
       setChosen('')
-      setMessage('')
+      setCorrectWrongMessage('')
+      setShowCorrectSpelling(false)
       navigate(`../${newIndex}`)
     }
   }
@@ -119,15 +139,15 @@ const QuizQuestion = () => {
       <h2 className='text-lg text-center font-bold'>
         Question {Number(index) + 1}
       </h2>
-      {message && (
+      {correctWrongMessage && (
         <p
           className={`text-center text-md font-semibold
       ${
         chosen === questionData.correctAnswer
-          ? 'text-emerald-700'
-          : 'text-rose-700'
+          ? 'text-emerald-500'
+          : 'text-rose-500'
       }`}>
-          {message}
+          {correctWrongMessage}
         </p>
       )}
       {questionType === 'mc' && (
@@ -145,6 +165,11 @@ const QuizQuestion = () => {
           questionData={questionData}
           handleChange={handleChange}
         />
+      )}
+      {showCorrectSpelling && (
+        <div className='font-semibold text-sm text-gray-500'>
+          Answer: {questionData.correctAnswer}
+        </div>
       )}
       {checked ? nextButton : checkButton}
     </div>
