@@ -78,7 +78,7 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
           </h4>
         )}
         {points !== null && (
-          <div className='text-blue-400 md:ml-5'>
+          <div className='text-blue-500 md:ml-5'>
             {points + (points === 1 ? ' point' : ' points')}
           </div>
         )}

@@ -267,17 +267,21 @@ export const getQuizInitWordArray = (words, number) => {
 export const getQuizInitQuestionArray = async (selectedWordData) => {
   const quizChoices = await getQuizChoices(selectedWordData)
   console.log('quiz choice in getQuizInitWordArray', quizChoices)
-  const wordDefinitionQuestions = getWordDefinitionQuestions(quizChoices)
+  const wordDefinitionQuestions = shuffleArray(
+    getWordDefinitionQuestions(quizChoices)
+  )
   console.log(
     'word-definition questions in getQuizInitWordArray',
     wordDefinitionQuestions
   )
-  const synonymAntonymQuestions = getSynonymAntonymQuestions(quizChoices)
+  const synonymAntonymQuestions = shuffleArray(
+    getSynonymAntonymQuestions(quizChoices)
+  )
   console.log(
     'synonym-antonym questions in getQuizInitWordArray',
     synonymAntonymQuestions
   )
-  const blanksQuestions = getBlanksQuestions(quizChoices)
+  const blanksQuestions = shuffleArray(getBlanksQuestions(quizChoices))
   console.log('blanks questions in getQuizInitWordArray', blanksQuestions)
   return [
     ...wordDefinitionQuestions,

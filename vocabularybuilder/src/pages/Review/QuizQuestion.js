@@ -52,7 +52,7 @@ const QuizQuestion = () => {
         setCorrectWrongMessage({ text: 'Wrong:<', style: 'text-rose-600' })
       }
     }
-  }, [chosen, checked, questionData.correctAnswer])
+  }, [chosen, checked, questionData.correctAnswer, questionType, blanksAns])
 
   const handleCheckClick = () => {
     if (questionType === 'mc') {
@@ -163,13 +163,6 @@ const QuizQuestion = () => {
       <h2 className='text-lg text-center font-bold'>
         Question {Number(index) + 1}
       </h2>
-      {correctWrongMessage && (
-        <div
-          className={`text-center text-md font-semibold
-      ${correctWrongMessage.style}`}>
-          {correctWrongMessage.text}
-        </div>
-      )}
       {questionType === 'mc' && (
         <MCQuestion
           checked={checked}
@@ -189,6 +182,13 @@ const QuizQuestion = () => {
       {showCorrectSpelling && (
         <div className='font-semibold text-sm text-gray-500'>
           Answer: {questionData.correctAnswer}
+        </div>
+      )}
+      {correctWrongMessage && (
+        <div
+          className={`text-center text-md font-semibold
+      ${correctWrongMessage.style}`}>
+          {correctWrongMessage.text}
         </div>
       )}
       <div className='flex gap-2 items-center justify-center'>
