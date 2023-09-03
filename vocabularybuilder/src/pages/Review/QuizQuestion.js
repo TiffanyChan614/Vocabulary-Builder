@@ -38,7 +38,7 @@ const QuizQuestion = () => {
         ...initialBlanksAns.slice(1),
       ])
     }
-  }, [questionData.correctAnswer.length, questionType])
+  }, [questionData.correctAnswer, questionType])
 
   useEffect(() => {
     if (checked) {
@@ -61,8 +61,11 @@ const QuizQuestion = () => {
         return
       } else {
         const wordData = wordArray.find((word) => word.id === questionData.id)
-        const pointsEarned = chosen === questionData.correctAnswer ? 1 : -1
-        let updatedWordData = { ...wordData, pointsEarned }
+        const newPointsEarned = chosen === questionData.correctAnswer ? 1 : -1
+        let updatedWordData = {
+          ...wordData,
+          pointsEarned: wordData.pointsEarned + newPointsEarned,
+        }
         dispatch(updateQuizWordArrayById(wordData.id, updatedWordData))
       }
     } else {
@@ -71,14 +74,17 @@ const QuizQuestion = () => {
         return
       }
       const wordData = wordArray.find((word) => word.id === questionData.id)
-      const pointsEarned = checkBlanksCorrect(
+      const newPointsEarned = checkBlanksCorrect(
         blanksAns,
         questionData.correctAnswer
       )
         ? 2
         : -1
       setShowCorrectSpelling(true)
-      let updatedWordData = { ...wordData, pointsEarned }
+      let updatedWordData = {
+        ...wordData,
+        pointsEarned: wordData.pointsEarned + newPointsEarned,
+      }
       dispatch(updateQuizWordArrayById(wordData.id, updatedWordData))
     }
     setChecked(true)

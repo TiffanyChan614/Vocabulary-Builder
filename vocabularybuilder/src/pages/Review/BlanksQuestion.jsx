@@ -67,6 +67,7 @@ const BlanksQuestion = ({ checked, blanksAns, questionData, handleChange }) => {
       maxLength='1'
       onInput={(e) => handleInput(e, index)}
       onKeyDown={(e) => handleKeyDown(e, index)}
+      autoComplete='off'
     />
   ))
 

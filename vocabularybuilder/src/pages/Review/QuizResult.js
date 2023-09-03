@@ -28,7 +28,8 @@ const QuizResult = () => {
     const newJournalWords = words.map((word) => ({
       ...word,
       points:
-        newWordArray.find((w) => w.id === word.id)?.newPoints || word.points,
+        word.points + newWordArray.find((w) => w.id === word.id)?.newPoints ||
+        word.points,
       lastReviewed:
         newWordArray.find((w) => w.id === word.id)?.pointsEarned === 0
           ? word.lastReviewed
