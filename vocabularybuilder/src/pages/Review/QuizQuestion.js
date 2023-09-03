@@ -149,7 +149,7 @@ const QuizQuestion = () => {
   )
 
   const reviewButtonToShow = (() => {
-    if (Number(index) === questionArray.length - 1) {
+    if (checked && Number(index) === questionArray.length - 1) {
       return resultButton
     } else if (checked) {
       return nextButton
