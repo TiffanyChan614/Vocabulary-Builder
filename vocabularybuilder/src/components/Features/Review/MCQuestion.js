@@ -3,7 +3,7 @@ const MCQuestion = ({ checked, chosen, questionData, handleSelect }) => {
 
   const answerButtonStyleClassName = (buttonName) => {
     const baseStyle =
-      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center max-w-[750px] min-w-[250px]'
+      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center min-w-[250px]'
     const uncheckedStyle =
       'hover:font-semibold hover:bg-indigo-100 border-indigo-100'
     const chosenStyle = 'bg-indigo-100 font-semibold border-indigo-100'
@@ -29,17 +29,35 @@ const MCQuestion = ({ checked, chosen, questionData, handleSelect }) => {
   }
 
   const typeToPrompt = {
-    'mc-wordToDefinition':
-      'Choose the word that matches the following definition:',
-    'mc-definitionToWord':
-      'Choose the definition that matches the following word:',
-    'mc-synonyms': 'Choose the word that is a synonym of the following words:',
-    'mc-antonyms': 'Choose the word that is an antonym of the following words:',
+    'mc-definitionToWord': (
+      <p>
+        Choose the <span className='font-semibold'>word </span>that matches the
+        following definition:
+      </p>
+    ),
+    'mc-wordToDefinition': (
+      <p>
+        Choose the <span className='font-semibold'>definition</span> that
+        matches the following word:
+      </p>
+    ),
+    'mc-synonyms': (
+      <p>
+        Choose the word that is a <span className='font-semibold'>synonym</span>{' '}
+        of the following words:
+      </p>
+    ),
+    'mc-antonyms': (
+      <p>
+        Choose the word that is an{' '}
+        <span className='font-semibold'>antonym</span> of the following words:
+      </p>
+    ),
   }
   return (
-    <div className='flex flex-col gap-4 text-center items-center'>
-      <p>{typeToPrompt[questionType]}</p>
-      <p className='font-semibold'>{question}</p>
+    <div className='flex flex-col gap-3 text-center items-center'>
+      {typeToPrompt[questionType]}
+      <p className='font-semibold text-indigo-800 text-lg'>{question}</p>
       <div className='flex flex-col gap-3 items-center'>
         {choices?.map((answer) => (
           <button

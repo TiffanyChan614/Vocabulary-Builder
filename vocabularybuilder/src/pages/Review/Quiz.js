@@ -25,9 +25,9 @@ const Quiz = () => {
   }
 
   return (
-    <div className='flex flex-col gap-3 w-full'>
+    <div className='flex flex-col gap-3 w-full items-center'>
       <div
-        className='text-sm underline hover:font-semibold cursor-pointer'
+        className='text-sm underline hover:font-semibold cursor-pointer self-start'
         onClick={handleBack}>
         Back to Review
       </div>

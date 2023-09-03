@@ -115,7 +115,7 @@ const QuizQuestion = () => {
   const checkButton = (
     <Button
       bgColor='indigo'
-      size='lg'
+      size='md'
       onClick={handleCheckClick}
       className='mt-4 font-semibold'>
       Check
@@ -125,7 +125,7 @@ const QuizQuestion = () => {
   const nextButton = (
     <Button
       bgColor='indigo'
-      size='lg'
+      size='md'
       onClick={handleNextClick}
       className='mt-4 font-semibold'>
       Next
@@ -135,7 +135,7 @@ const QuizQuestion = () => {
   const resultButton = (
     <Button
       bgColor='indigo'
-      size='lg'
+      size='md'
       onClick={() => navigate('../result')}
       className='mt-4 font-semibold'>
       See Result
@@ -153,7 +153,7 @@ const QuizQuestion = () => {
   })()
 
   return (
-    <div className='flex flex-col gap-2 items-center'>
+    <div className='flex flex-col gap-2 items-center max-w-[750px] '>
       <h2 className='text-lg text-center font-bold'>
         Question {Number(index) + 1}
       </h2>
@@ -189,7 +189,7 @@ const QuizQuestion = () => {
         {index < questionArray.length - 1 && (
           <Button
             bgColor='gray'
-            size='lg'
+            size='md'
             className='mt-4'
             onClick={() => dispatch(updateQuizShowNotFinished(true))}>
             End Session
