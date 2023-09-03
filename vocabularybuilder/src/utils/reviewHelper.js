@@ -224,7 +224,7 @@ const getSynonymAntonymQuestions = (quizChoices) => {
   return questions
 }
 
-const getBlanksQuestions = (quizChoices) => {
+const getBlankQuestions = (quizChoices) => {
   const questions = []
   for (const choice of quizChoices) {
     let questionType
@@ -264,30 +264,61 @@ export const getQuizInitWordArray = (words, number) => {
   }))
 }
 
-export const getQuizInitQuestionArray = async (selectedWordData) => {
+export const getQuizInitQuestionArray = async (selectedWordData, mode) => {
   const quizChoices = await getQuizChoices(selectedWordData)
   console.log('quiz choice in getQuizInitWordArray', quizChoices)
-  const wordDefinitionQuestions = shuffleArray(
-    getWordDefinitionQuestions(quizChoices)
-  )
-  console.log(
-    'word-definition questions in getQuizInitWordArray',
-    wordDefinitionQuestions
-  )
-  const synonymAntonymQuestions = shuffleArray(
-    getSynonymAntonymQuestions(quizChoices)
-  )
-  console.log(
-    'synonym-antonym questions in getQuizInitWordArray',
-    synonymAntonymQuestions
-  )
-  const blanksQuestions = shuffleArray(getBlanksQuestions(quizChoices))
-  console.log('blanks questions in getQuizInitWordArray', blanksQuestions)
-  return [
+
+  let wordDefinitionQuestions = []
+  let synonymAntonymQuestions = []
+  let blanksQuestions = []
+
+  if (mode.name === 'MC') {
+    wordDefinitionQuestions = shuffleArray(
+      getWordDefinitionQuestions(quizChoices)
+    )
+    console.log(
+      'word-definition questions in getQuizInitWordArray',
+      wordDefinitionQuestions
+    )
+
+    synonymAntonymQuestions = shuffleArray(
+      getSynonymAntonymQuestions(quizChoices)
+    )
+    console.log(
+      'synonym-antonym questions in getQuizInitWordArray',
+      synonymAntonymQuestions
+    )
+  } else if (mode.name === 'blank') {
+    blanksQuestions = shuffleArray(getBlankQuestions(quizChoices))
+    console.log('blanks questions in getQuizInitWordArray', blanksQuestions)
+  } else if (mode.name === 'mixed') {
+    wordDefinitionQuestions = shuffleArray(
+      getWordDefinitionQuestions(quizChoices)
+    )
+    console.log(
+      'word-definition questions in getQuizInitWordArray',
+      wordDefinitionQuestions
+    )
+
+    synonymAntonymQuestions = shuffleArray(
+      getSynonymAntonymQuestions(quizChoices)
+    )
+    console.log(
+      'synonym-antonym questions in getQuizInitWordArray',
+      synonymAntonymQuestions
+    )
+
+    blanksQuestions = shuffleArray(getBlankQuestions(quizChoices))
+    console.log('blanks questions in getQuizInitWordArray', blanksQuestions)
+  }
+
+  const result = [
     ...wordDefinitionQuestions,
     ...synonymAntonymQuestions,
     ...blanksQuestions,
   ]
+
+  return result
 }
 
 export const checkBlanksCorrect = (blanksAns, correctAnswer) => {

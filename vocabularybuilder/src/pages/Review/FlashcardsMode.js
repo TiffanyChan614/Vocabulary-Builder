@@ -63,14 +63,11 @@ const FlashcardsMode = () => {
 
   return (
     <div className='flashcards--options flex flex-col gap-5 text-center items-center'>
-      <div className='flashcards--mode flex flex-col gap-3 w-full sm:w-3/4'>
-        <h2 className='text-lg font-bold'>Please select a mode:</h2>
-        <ModeChoice
-          mode={mode}
-          modesArray={modesArray}
-          handleModeClick={handleModeClick}
-        />
-      </div>
+      <ModeChoice
+        mode={mode}
+        modesArray={modesArray}
+        handleModeClick={handleModeClick}
+      />
       <NumberChoice
         choiceArray={[minNum, 10, 15, 20]}
         wordsLength={words?.length}

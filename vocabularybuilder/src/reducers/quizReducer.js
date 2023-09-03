@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   wordArray: [],
   questionArray: [],
+  mode: '',
   number: 0,
   showNotFinished: false,
   showQuit: false,
@@ -23,6 +24,12 @@ const quizSlice = createSlice({
       return {
         ...state,
         questionArray: action.payload,
+      }
+    },
+    setMode: (state, action) => {
+      return {
+        ...state,
+        mode: action.payload,
       }
     },
     setNumber: (state, action) => {
@@ -75,6 +82,10 @@ export const updateQuizWordArray = (wordArray) => {
 
 export const updateQuizQuestionArray = (questionArray) => {
   return { type: 'quiz/setQuestionArray', payload: questionArray }
+}
+
+export const updateQuizMode = (mode) => {
+  return { type: 'quiz/setMode', payload: mode }
 }
 
 export const updateQuizNumber = (number) => {

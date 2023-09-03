@@ -5,6 +5,7 @@ import {
   updateQuizQuestionArray,
   updateQuizInSession,
   updateQuizWordArray,
+  updateQuizMode,
 } from '../../reducers/quizReducer'
 import Button from '../../components/Common/Button'
 import {
@@ -12,9 +13,10 @@ import {
   getQuizInitWordArray,
 } from '../../utils/reviewHelper'
 import { useNavigate } from 'react-router-dom'
+import ModeChoice from '../../components/Features/Review/ModeChoice'
 
 const QuizMode = () => {
-  const { number } = useSelector((state) => state.quiz)
+  const { mode, number } = useSelector((state) => state.quiz)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -27,6 +29,16 @@ const QuizMode = () => {
   })()
 
   const minNum = Math.min(5, words.length)
+
+  const modesArray = [
+    { name: 'MC', text: 'Multiple Choice' },
+    { name: 'blank', text: 'Fill in the Blanks' },
+    { name: 'mixed', text: 'Mixed' },
+  ]
+
+  const handleModeClick = (e) => {
+    dispatch(updateQuizMode(modesArray.find((b) => b.name === e.target.name)))
+  }
 
   const handleNumberClick = (e) => {
     e.stopPropagation()
@@ -42,7 +54,10 @@ const QuizMode = () => {
       try {
         const initWordArray = getQuizInitWordArray(words, number)
         dispatch(updateQuizWordArray(initWordArray))
-        const initQuestionArray = await getQuizInitQuestionArray(initWordArray)
+        const initQuestionArray = await getQuizInitQuestionArray(
+          initWordArray,
+          mode
+        )
         dispatch(updateQuizQuestionArray(initQuestionArray))
         dispatch(updateQuizInSession(true))
         navigate('0')
@@ -55,6 +70,11 @@ const QuizMode = () => {
   return (
     <div className='quiz--options flex flex-col gap-5 text-center items-center'>
       <div className='quiz--mode flex flex-col gap-3 w-full sm:w-3/4 items-center'>
+        <ModeChoice
+          mode={mode}
+          modesArray={modesArray}
+          handleModeClick={handleModeClick}
+        />
         <NumberChoice
           choiceArray={[minNum, 10]}
           wordsLength={words?.length}

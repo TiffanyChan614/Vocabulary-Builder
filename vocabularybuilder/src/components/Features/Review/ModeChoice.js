@@ -29,16 +29,20 @@ const ModeChoice = ({ mode, modesArray, handleModeClick }) => {
   }
 
   return (
-    <div className='flex flex-col gap-4 w-full'>
-      {modesArray.map((button) => (
-        <button
-          key={button.name}
-          name={button.name}
-          className={modeButtonStyleClassName(button.name)}
-          onClick={handleModeClick}>
-          {button.text}
-        </button>
-      ))}
+    <div className='flashcards--mode flex flex-col gap-3 w-full sm:w-3/4'>
+      <h2 className='text-lg font-bold'>Please select a mode:</h2>
+
+      <div className='flex flex-col gap-4 w-full'>
+        {modesArray.map((button) => (
+          <button
+            key={button.name}
+            name={button.name}
+            className={modeButtonStyleClassName(button.name)}
+            onClick={handleModeClick}>
+            {button.text}
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
