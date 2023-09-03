@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import { getMatchedWords } from '../../services/wordAPI'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -57,13 +57,13 @@ const PossibleWords = () => {
 
     if (matchedWords.length > 0) {
       return matchedWords.map((word, i) => (
-        <NavLink
+        <Link
           to={`${word}`}
           className='matched-word'
           key={word + i}
           onClick={() => dispatch(updateSearchCurrentPage(`search/${word}`))}>
           <div className={wordStyleClassName}>{word}</div>
-        </NavLink>
+        </Link>
       ))
     }
 

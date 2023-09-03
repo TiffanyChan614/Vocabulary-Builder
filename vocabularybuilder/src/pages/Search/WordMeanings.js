@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import Word from '../../components/Features/Word/Word'
 import { getWordData } from '../../services/wordAPI'
 import Filter from '../../components/Common/Filter'
@@ -9,6 +9,7 @@ import {
   updateIsLoading,
   toggleMeaningsShowDetails,
 } from '../../reducers/wordMeaningsReducer'
+import { updateSearchCurrentPage } from '../../reducers/searchReducer'
 
 const WordMeanings = () => {
   const { word } = useParams()
@@ -98,11 +99,19 @@ const WordMeanings = () => {
     <div className='search--word-meanings flex flex-col gap-5 px-2'>
       <nav className='flex items-center flex-wrap md:justify-between gap-3'>
         <Filter page='search' />
-        <button
-          onClick={handleDetailsClick}
-          className='py-1 px-3 border-2 border-indigo-100 rounded-lg text-sm font-semibold hover:bg-indigo-100 hover:text-indigo-800'>
-          {showAllDetails ? 'Hide all details' : 'Show all details'}
-        </button>
+        <div className='flex justify-between w-full items-center'>
+          <Link
+            to='..'
+            className='ml-2 underline text-sm hover:text-indigo-800 md:text-md'
+            onClick={() => dispatch(updateSearchCurrentPage('search'))}>
+            Back
+          </Link>
+          <button
+            onClick={handleDetailsClick}
+            className='py-1 px-3 border-2 border-indigo-100 rounded-lg text-sm font-semibold hover:bg-indigo-100 hover:text-indigo-800'>
+            {showAllDetails ? 'Hide all details' : 'Show all details'}
+          </button>
+        </div>
       </nav>
       {wordDataElement}
     </div>
