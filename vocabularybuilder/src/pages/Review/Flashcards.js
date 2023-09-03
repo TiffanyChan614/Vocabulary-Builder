@@ -37,8 +37,8 @@ const Flashcards = () => {
       </div>
       <h1 className='text-xl sm:text-2xl font-bold text-center'>Flashcards</h1>
       <Outlet />
-      {showNotFinished && <ReviewNotFinishedPopup />}
-      {showQuit && <QuitSessionPopup />}
+      {showNotFinished && <ReviewNotFinishedPopup page='flashcards' />}
+      {showQuit && <QuitSessionPopup page='flashcards' />}
     </div>
   )
 }

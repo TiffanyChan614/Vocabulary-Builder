@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import Button from '../../components/Common/Button'
 import BlanksQuestion from './BlanksQuestion'
 import { checkBlanksCorrect, hasBlank } from '../../utils/reviewHelper'
+import { updateQuizShowNotFinished } from '../../reducers/quizReducer'
 
 const QuizQuestion = () => {
   const { index } = useParams()
@@ -15,7 +16,7 @@ const QuizQuestion = () => {
   const [blanksAns, setBlanksAns] = useState([])
   const [chosen, setChosen] = useState('')
   const [checked, setChecked] = useState(false)
-  const [correctWrongMessage, setCorrectWrongMessage] = useState('')
+  const [correctWrongMessage, setCorrectWrongMessage] = useState(null)
   const [showCorrectSpelling, setShowCorrectSpelling] = useState(false)
 
   const { questionArray, wordArray } = useSelector((state) => state.quiz)
@@ -39,19 +40,16 @@ const QuizQuestion = () => {
     }
   }, [questionData.correctAnswer.length, questionType])
 
-  console.log('----------------------------------------------------')
-  console.log('initial render')
-  console.log('questionType', questionType, questionType === 'blank')
-  console.log('chosen', chosen)
-  console.log('blanksAns', blanksAns)
-  console.log('----------------------------------------------------')
-
   useEffect(() => {
     if (checked) {
-      if (chosen === questionData.correctAnswer) {
-        setCorrectWrongMessage('Correct:)')
+      if (
+        (questionType === 'mc' && chosen === questionData.correctAnswer) ||
+        (questionType === 'blank' &&
+          checkBlanksCorrect(blanksAns, questionData.correctAnswer))
+      ) {
+        setCorrectWrongMessage({ text: 'Correct:)', style: 'text-emerald-600' })
       } else {
-        setCorrectWrongMessage('Wrong:<')
+        setCorrectWrongMessage({ text: 'Wrong:<', style: 'text-rose-600' })
       }
     }
   }, [chosen, checked, questionData.correctAnswer])
@@ -135,20 +133,16 @@ const QuizQuestion = () => {
   )
 
   return (
-    <div className='flex flex-col gap-3 items-center'>
+    <div className='flex flex-col gap-2 items-center'>
       <h2 className='text-lg text-center font-bold'>
         Question {Number(index) + 1}
       </h2>
       {correctWrongMessage && (
-        <p
+        <div
           className={`text-center text-md font-semibold
-      ${
-        chosen === questionData.correctAnswer
-          ? 'text-emerald-500'
-          : 'text-rose-500'
-      }`}>
-          {correctWrongMessage}
-        </p>
+      ${correctWrongMessage.style}`}>
+          {correctWrongMessage.text}
+        </div>
       )}
       {questionType === 'mc' && (
         <MCQuestion
@@ -171,7 +165,18 @@ const QuizQuestion = () => {
           Answer: {questionData.correctAnswer}
         </div>
       )}
-      {checked ? nextButton : checkButton}
+      <div className='flex gap-2 items-center justify-center'>
+        {index < questionArray.length - 1 && (
+          <Button
+            bgColor='gray'
+            size='lg'
+            className='mt-4'
+            onClick={() => dispatch(updateQuizShowNotFinished(true))}>
+            End Session
+          </Button>
+        )}
+        {checked ? nextButton : checkButton}
+      </div>
     </div>
   )
 }

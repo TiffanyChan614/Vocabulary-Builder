@@ -33,8 +33,8 @@ const Quiz = () => {
       </div>
       <h1 className='text-xl sm:text-2xl font-bold text-center'>Quiz</h1>
       <Outlet />
-      {showNotFinished && <ReviewNotFinishedPopup />}
-      {showQuit && <QuitSessionPopup />}
+      {showNotFinished && <ReviewNotFinishedPopup page='quiz' />}
+      {showQuit && <QuitSessionPopup page='quiz' />}
     </div>
   )
 }

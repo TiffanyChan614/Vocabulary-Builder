@@ -2,8 +2,9 @@ import Popup from '../../Common/Popup'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { updateFlashcardsShowQuit } from '../../../reducers/flashcardsReducer'
+import { updateQuizShowQuit } from '../../../reducers/quizReducer'
 
-const QuitSessionPopup = () => {
+const QuitSessionPopup = ({ page }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -12,7 +13,12 @@ const QuitSessionPopup = () => {
   }
 
   const handleNo = () => {
-    dispatch(updateFlashcardsShowQuit(false))
+    if (page === 'quiz') {
+      console.log('updateQuizShowQuit(false)')
+      dispatch(updateQuizShowQuit(false))
+    } else {
+      dispatch(updateFlashcardsShowQuit(false))
+    }
   }
 
   return (

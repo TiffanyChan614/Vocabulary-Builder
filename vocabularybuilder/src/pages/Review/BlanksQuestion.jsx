@@ -71,8 +71,8 @@ const BlanksQuestion = ({ checked, blanksAns, questionData, handleChange }) => {
   ))
 
   return (
-    <div className='flex flex-col gap-4 text-center items-center p-4'>
-      <p className='text-xl font-semibold'>Fill in the blanks:</p>
+    <div className='flex flex-col gap-3 text-center items-center'>
+      <p className='text-lg font-semibold'>Fill in the blanks:</p>
       {questionElement}
       <div className='flex flex-wrap gap-2 justify-center items-center w-full'>
         {blanksElement}
