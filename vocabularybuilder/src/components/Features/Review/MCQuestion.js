@@ -4,24 +4,28 @@ const MCQuestion = ({ checked, chosen, questionData, handleSelect }) => {
 
   const answerButtonStyleClassName = (buttonName) => {
     const baseStyle =
-      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center border-indigo-100 '
-    const uncheckedStyle = 'hover:font-semibold hover:bg-indigo-100'
-    const chosenStyle = 'bg-indigo-100 font-semibold'
+      'border-2 text-gray-600 rounded-xl py-2 px-4 w-full flex justify-center items-center'
+    const uncheckedStyle =
+      'hover:font-semibold hover:bg-indigo-100 border-indigo-100'
+    const chosenStyle = 'bg-indigo-100 font-semibold border-indigo-100'
     const correctStyle = 'bg-emerald-100 text-emerald-700 border-emerald-100'
     const chosenCorrectStyle =
       'bg-emerald-100 font-semibold text-emerald-700 border-emerald-100'
     const wrongStyle = 'bg-rose-100 font-semibold text-rose-700 border-rose-100'
     if (!checked) {
       return (
-        baseStyle + (chosen === buttonName ? ' ' + chosenStyle : uncheckedStyle)
+        baseStyle +
+        (chosen === buttonName ? ' ' + chosenStyle : ' ' + uncheckedStyle)
       )
     } else if (chosen === buttonName && checked) {
       return (
         baseStyle +
-        (chosen === correctAnswer ? ' ' + chosenCorrectStyle : wrongStyle)
+        (chosen === correctAnswer ? ' ' + chosenCorrectStyle : ' ' + wrongStyle)
       )
     } else {
-      return baseStyle + (buttonName === correctAnswer ? correctStyle : '')
+      return (
+        baseStyle + (buttonName === correctAnswer ? ' ' + correctStyle : '')
+      )
     }
   }
 

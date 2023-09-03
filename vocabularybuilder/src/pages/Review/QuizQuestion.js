@@ -4,6 +4,7 @@ import MCQuestion from '../../components/Features/Review/MCQuestion'
 import { updateQuizWordArrayById } from '../../reducers/quizReducer'
 import { useState, useEffect } from 'react'
 import Button from '../../components/Common/Button'
+import BlanksQuestion from './BlanksQuestion'
 
 const QuizQuestion = () => {
   const [chosen, setChosen] = useState('')
@@ -17,7 +18,30 @@ const QuizQuestion = () => {
   console.log('questionData', questionData)
   const questionType = questionData.questionType.split('-')[0]
 
+  const [blanksAns, setBlanksAns] = useState([])
+
+  useEffect(() => {
+    if (questionType === 'blank') {
+      const initialBlanksAns =
+        questionType === 'blank'
+          ? Array.from(
+              { length: questionData.correctAnswer.length },
+              (_, index) => ''
+            )
+          : []
+      setBlanksAns([
+        questionData.correctAnswer[0],
+        ...initialBlanksAns.slice(1),
+      ])
+    }
+  }, [questionData.correctAnswer.length, questionType])
+
+  console.log('----------------------------------------------------')
+  console.log('initial render')
+  console.log('questionType', questionType, questionType === 'blank')
   console.log('chosen', chosen)
+  console.log('blanksAns', blanksAns)
+  console.log('----------------------------------------------------')
 
   useEffect(() => {
     if (checked) {
@@ -33,9 +57,10 @@ const QuizQuestion = () => {
     if (questionType === 'mc') {
       if (!chosen) {
         alert('Please select an answer')
-      } else if (chosen === questionData.correctAnswer) {
+      } else {
         const wordData = wordArray.find((word) => word.id === questionData.id)
-        let updatedWordData = { ...wordData, pointsEarned: 1 }
+        const pointsEarned = chosen === questionData.correctAnswer ? 1 : -1
+        let updatedWordData = { ...wordData, pointsEarned }
         dispatch(updateQuizWordArrayById(wordData.id, updatedWordData))
       }
     }
@@ -43,9 +68,20 @@ const QuizQuestion = () => {
   }
 
   const handleSelectClick = (e) => {
-    if (questionType === 'mc') {
+    if (questionType === 'mc' && !checked) {
       setChosen(e.target.name)
     }
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    const index = name.split('-')[1]
+    setBlanksAns((prev) => {
+      const newAns = [...prev]
+      newAns[index] = value
+      console.log('blanks ans', newAns)
+      return newAns
+    })
   }
 
   const handleNextClick = () => {
@@ -100,6 +136,14 @@ const QuizQuestion = () => {
           chosen={chosen}
           questionData={questionData}
           handleSelect={handleSelectClick}
+        />
+      )}
+      {questionType === 'blank' && (
+        <BlanksQuestion
+          checked={checked}
+          blanksAns={blanksAns}
+          questionData={questionData}
+          handleChange={handleChange}
         />
       )}
       {checked ? nextButton : checkButton}

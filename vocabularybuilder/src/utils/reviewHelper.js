@@ -285,3 +285,7 @@ export const getQuizInitQuestionArray = async (selectedWordData) => {
     ...blanksQuestions,
   ]
 }
+
+export const checkBlanksCorrect = (blanksAns, correctAnswer) => {
+  return blanksAns.join('') === correctAnswer
+}
