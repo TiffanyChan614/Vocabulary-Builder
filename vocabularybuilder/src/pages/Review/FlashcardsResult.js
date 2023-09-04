@@ -1,44 +1,13 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import {
-  updateFlashcardsWordArray,
-  updateFlashcardsInSession,
-} from '../../reducers/flashcardsReducer'
-import { updateWords } from '../../reducers/journalReducer'
 import ResultTable from '../../components/Features/Review/ResultTable'
+import useReviewResult from '../../hooks/useReviewResult'
 
 const FlashcardsResult = () => {
   const { wordArray } = useSelector((state) => state.flashcards)
   const { words } = useSelector((state) => state.journal)
-  const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const newWordArray = wordArray.map((word) => {
-      const { originalPoints, pointsEarned } = word
-      const newPointsEarned = pointsEarned ? pointsEarned : 0
-      const newPoints = originalPoints + newPointsEarned
-      return {
-        ...word,
-        newPoints: newPoints < 0 ? 0 : newPoints,
-        pointsEarned: newPointsEarned,
-      }
-    })
-    const newJournalWords = words.map((word) => ({
-      ...word,
-      points:
-        newWordArray.find((w) => w.id === word.id)?.newPoints || word.points,
-      lastReviewed:
-        newWordArray.find((w) => w.id === word.id)?.pointsEarned === 0
-          ? word.lastReviewed
-          : new Date().toISOString(),
-    }))
-    dispatch(updateFlashcardsWordArray(newWordArray))
-    dispatch(updateFlashcardsInSession(false))
-    localStorage.setItem('journal', JSON.stringify(newJournalWords))
-    dispatch(updateWords(newJournalWords))
-  }, [])
+  useReviewResult(wordArray, words, 'flashcards')
 
   return (
     <div className='flex flex-col gap-3 items-center w-full'>
