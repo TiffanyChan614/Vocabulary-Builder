@@ -15,7 +15,7 @@ const NumberChoice = ({
   const numberButtons = choiceArray.filter((num) => num <= wordsLength)
 
   return (
-    <div className='card--number flex flex-col gap-3 w-full sm:w-3/4'>
+    <div className='card--number flex flex-col gap-3 w-full sm:w-3/4 max-w-[400px]'>
       <h2 className='text-lg font-bold'>{prompt}</h2>
       <div className='flex flex-col gap-4 w-full'>
         {numberButtons.map((button) => (

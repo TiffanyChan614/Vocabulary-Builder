@@ -82,34 +82,32 @@ const QuizMode = () => {
   }
 
   return (
-    <div className='quiz--options flex flex-col gap-5 text-center items-center'>
-      <div className='quiz--mode flex flex-col gap-3 w-full sm:w-3/4 items-center'>
-        {error && <div>Error: {error.message}</div>}
-        {isLoading && <div>Initializing quiz...</div>}
-        {!error && !isLoading && (
-          <>
-            <ModeChoice
-              mode={mode}
-              modesArray={modesArray}
-              handleModeClick={handleModeClick}
-            />
-            <NumberChoice
-              choiceArray={[minNum, 10]}
-              wordsLength={words?.length}
-              number={number}
-              prompt='Please select the number of words you want to review:'
-              handleNumberClick={handleNumberClick}
-            />
-            <Button
-              onClick={handleStart}
-              bgColor='indigo'
-              size='lg'
-              className='mt-4 font-semibold'>
-              Start
-            </Button>
-          </>
-        )}
-      </div>
+    <div className='quiz--mode flex flex-col gap-3 w-full sm:w-3/4 items-center text-center'>
+      {error && <div>Error: {error.message}</div>}
+      {isLoading && <div>Initializing quiz...</div>}
+      {!error && !isLoading && (
+        <>
+          <ModeChoice
+            mode={mode}
+            modesArray={modesArray}
+            handleModeClick={handleModeClick}
+          />
+          <NumberChoice
+            choiceArray={[minNum, 10]}
+            wordsLength={words?.length}
+            number={number}
+            prompt='Please select the number of words you want to review:'
+            handleNumberClick={handleNumberClick}
+          />
+          <Button
+            onClick={handleStart}
+            bgColor='indigo'
+            size='lg'
+            className='mt-4 font-semibold'>
+            Start
+          </Button>
+        </>
+      )}
     </div>
   )
 }

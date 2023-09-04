@@ -29,7 +29,7 @@ const ModeChoice = ({ mode, modesArray, handleModeClick }) => {
   }
 
   return (
-    <div className='flashcards--mode flex flex-col gap-3 w-full sm:w-3/4'>
+    <div className='flashcards--mode flex flex-col gap-3 w-full sm:w-3/4 max-w-[400px]'>
       <h2 className='text-lg font-bold'>Please select a mode:</h2>
 
       <div className='flex flex-col gap-4 w-full'>
