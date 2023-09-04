@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { getRandomWord } from '../services/wordAPI'
 import {
   updateSearchCurrentPage,
@@ -10,26 +10,39 @@ import Button from '../components/Common/Button'
 
 const Home = () => {
   const [word, setWord] = useState(null)
+  const [error, setError] = useState(null)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const divClassName =
     'max-w-screen-md border-2 rounded-xl border-indigo-100 py-5 px-6 w-full mx-auto text-center md:px-10'
 
-  const fetchRandomWord = async () => {
-    let word = await getRandomWord()
-    while (true) {
-      console.log('fetching random word')
-      word = await getRandomWord()
-      console.log('new word', word)
+  const fetchRandomWord = async (maxRetries = 20) => {
+    let retries = 0
+    let word = null
+    while (retries < maxRetries) {
+      try {
+        console.log('fetching random word')
+        word = await getRandomWord()
+        console.log('new word', word)
 
-      if (word?.results?.length > 0) {
-        return word.word
+        if (word?.results?.length > 0) {
+          return word.word
+        }
+      } catch (error) {
+        setError(error)
       }
+      retries++
     }
   }
 
-  const handleClickLink = () => {
+  const handleLearnWord = () => {
     dispatch(updateSearchCurrentPage(`search/${word}`))
     dispatch(updateSearchSearchValue(word))
+  }
+
+  const handleSearchClick = () => {
+    dispatch(updateSearchCurrentPage('search'))
+    navigate('/search')
   }
 
   useEffect(() => {
@@ -46,7 +59,18 @@ const Home = () => {
         return word
       }
     }
-    getWordOfTheDay().then((word) => setWord(word))
+    getWordOfTheDay()
+      .then((word) => {
+        setError(null)
+        setWord(word)
+      })
+      .catch((error) =>
+        setError({
+          ...error,
+          message:
+            'Sorry, we could not fetch the word of the day. Please try refreshing the page.',
+        })
+      )
   }, [])
 
   console.log('word', word)
@@ -60,27 +84,29 @@ const Home = () => {
         Welcome to Vocabulary Builder!
       </p>
       <div className={`home--word-of-the-day ${divClassName} mt-2 md:mt-3`}>
-        <h3 className='text-lg font-bold'>Word of the day</h3>
-        <p className='text-xl font-bold text-indigo-800 my-4'>{word}</p>
-        <Link
-          to={`search/${word}`}
-          className='text-md hover:text-indigo-800 hover:underline select-none'
-          onClick={handleClickLink}>
-          Learn this word
-        </Link>
+        {error ? (
+          <div>Error: {error.message}</div>
+        ) : (
+          <>
+            <h3 className='text-lg font-bold'>Word of the day</h3>
+            <p className='text-xl font-bold text-indigo-800 my-4'>{word}</p>
+            <Link
+              to={`search/${word}`}
+              className='text-md hover:text-indigo-800 hover:underline select-none'
+              onClick={handleLearnWord}>
+              Learn this word
+            </Link>
+          </>
+        )}
       </div>
       <div className={`home--search ${divClassName}`}>
         <h3 className='text-lg font-bold'>Don't know the meaning of a word?</h3>
         <Button
           bgColor='indigo'
           size='md'
-          className='mt-4 font-semibold'
-          onClick={() => dispatch(updateSearchCurrentPage('search'))}>
-          <Link
-            to='/search'
-            className='select-none'>
-            Search
-          </Link>
+          className='mt-4 font-semibold select-none'
+          onClick={handleSearchClick}>
+          Search
         </Button>
       </div>
     </div>

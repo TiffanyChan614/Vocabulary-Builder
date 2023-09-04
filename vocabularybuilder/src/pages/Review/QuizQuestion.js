@@ -4,7 +4,7 @@ import MCQuestion from '../../components/Features/Review/MCQuestion'
 import { updateQuizWordArrayById } from '../../reducers/quizReducer'
 import { useState, useEffect } from 'react'
 import Button from '../../components/Common/Button'
-import BlanksQuestion from './BlanksQuestion'
+import BlanksQuestion from '../../components/Features/Review/BlanksQuestion'
 import { checkBlanksCorrect, hasBlank } from '../../utils/reviewHelper'
 import { updateQuizShowNotFinished } from '../../reducers/quizReducer'
 

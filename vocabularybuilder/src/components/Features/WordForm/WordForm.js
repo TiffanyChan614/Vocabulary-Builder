@@ -48,7 +48,7 @@ const WordForm = ({ page }) => {
     pronunciation: formWord.pronunciation || '',
     partOfSpeech: formWord.partOfSpeech,
     definition:
-      formWord.definition[0].toUpperCase() + formWord.definition.slice(1) ||
+      formWord.definition?.[0].toUpperCase() + formWord.definition?.slice(1) ||
       'No definition found',
     synonyms: formWord.synonyms || [],
     antonyms: formWord.antonyms || [],
@@ -133,7 +133,7 @@ const WordForm = ({ page }) => {
         acc[key] = formData[key]
       } else if (Array.isArray(formData[key])) {
         acc[key] = []
-      } else {
+      } else if (key === 'definition' && formData[key] === '') {
         acc[key] = 'No definition found'
       }
       return acc

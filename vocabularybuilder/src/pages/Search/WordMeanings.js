@@ -5,9 +5,10 @@ import { getWordData } from '../../services/wordAPI'
 import Filter from '../../components/Common/Filter'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  updateWordData,
-  updateIsLoading,
+  updateMeaningsWordData,
+  updateMeaningsIsLoading,
   toggleMeaningsShowDetails,
+  updateMeaningsError,
 } from '../../reducers/wordMeaningsReducer'
 import { updateSearchCurrentPage } from '../../reducers/searchReducer'
 
@@ -20,6 +21,7 @@ const WordMeanings = () => {
     partOfSpeechFilter,
     showAllDetails,
     showDetails,
+    error,
   } = useSelector((state) => state.wordMeanings)
 
   console.log('showAllDetails', showAllDetails)
@@ -58,11 +60,23 @@ const WordMeanings = () => {
 
   useEffect(() => {
     async function fetchData() {
-      dispatch(updateIsLoading(true))
-      let returnedWordData = await getWordData(word)
-      console.log('returnedWordData', returnedWordData)
-      dispatch(updateWordData(returnedWordData))
-      dispatch(updateIsLoading(false))
+      dispatch(updateMeaningsIsLoading(true))
+      try {
+        let returnedWordData = await getWordData(word)
+        console.log('returnedWordData', returnedWordData)
+        dispatch(updateMeaningsWordData(returnedWordData))
+        dispatch(updateMeaningsError(null))
+      } catch (error) {
+        dispatch(
+          updateMeaningsError({
+            ...error,
+            message:
+              'Sorry, we are having trouble fetching the data. Please try again later.',
+          })
+        )
+      } finally {
+        dispatch(updateMeaningsIsLoading(false))
+      }
     }
     fetchData()
   }, [word])
@@ -113,7 +127,7 @@ const WordMeanings = () => {
           </button>
         </div>
       </nav>
-      {wordDataElement}
+      {error ? <div>Error: {error.message}</div> : wordDataElement}
     </div>
   )
 }

@@ -19,6 +19,7 @@ const getWordData = async (word) => {
       return null
     } else {
       console.error(error)
+      throw error
     }
   }
 }
@@ -45,7 +46,8 @@ const getMatchedWords = async (word) => {
       console.error('word not found')
       return null
     } else {
-      console.log(error)
+      console.error(error)
+      throw error
     }
   }
 }
@@ -68,6 +70,7 @@ const getRandomWord = async () => {
     return response.data
   } catch (error) {
     console.error(error)
+    throw error
   }
 }
 

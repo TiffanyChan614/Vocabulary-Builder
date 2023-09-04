@@ -8,6 +8,8 @@ const initialState = {
   showNotFinished: false,
   showQuit: false,
   inSession: false,
+  isLoading: false,
+  error: null,
 }
 
 const quizSlice = createSlice({
@@ -73,6 +75,18 @@ const quizSlice = createSlice({
     resetQuiz: () => {
       return initialState
     },
+    setError: (state, action) => {
+      return {
+        ...state,
+        error: action.payload,
+      }
+    },
+    setIsLoading: (state, action) => {
+      return {
+        ...state,
+        isLoading: action.payload,
+      }
+    },
   },
 })
 
@@ -110,6 +124,14 @@ export const updateQuizInSession = (inSession) => {
 
 export const resetQuiz = () => {
   return { type: 'quiz/resetQuiz' }
+}
+
+export const updateQuizError = (error) => {
+  return { type: 'quiz/setError', payload: error }
+}
+
+export const updateQuizIsLoading = (isLoading) => {
+  return { type: 'quiz/setIsLoading', payload: isLoading }
 }
 
 export default quizSlice.reducer

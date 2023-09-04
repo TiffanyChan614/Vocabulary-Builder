@@ -1,4 +1,4 @@
-import { checkBlanksCorrect } from '../../utils/reviewHelper'
+import { checkBlanksCorrect } from '../../../utils/reviewHelper'
 
 const BlanksQuestion = ({ checked, blanksAns, questionData, handleChange }) => {
   const { questionType, question, correctAnswer } = questionData

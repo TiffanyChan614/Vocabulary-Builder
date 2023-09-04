@@ -12,6 +12,7 @@ const WordFormImages = ({
   const [searchValue, setSearchValue] = useState(formData.word)
   const [showImageResults, setShowImageResults] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   const isSearchClicked = useRef(false)
 
@@ -20,9 +21,14 @@ const WordFormImages = ({
     setShowImageResults(true)
     if (searchValue !== '') {
       setIsLoading(true)
-      const newImages = await getImage(searchValue, 10)
-      setIsLoading(false)
-      setImages(newImages)
+      try {
+        const newImages = await getImage(searchValue, 10)
+        setImages(newImages)
+      } catch (error) {
+        setError(error)
+      } finally {
+        setIsLoading(false)
+      }
     }
   }
 
@@ -125,7 +131,7 @@ const WordFormImages = ({
       </div>
       {showImageResults && (
         <div className='word-form--images-results border-2 rounded-lg flex flex-wrap max-h-[300px] overflow-auto gap-2 md:gap-4 px-3 md:px-6 py-4'>
-          {imageElements}
+          {error ? <div>Error: {error.message}</div> : imageElements}
         </div>
       )}
       <div>

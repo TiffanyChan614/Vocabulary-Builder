@@ -7,6 +7,7 @@ const initialState = {
   partOfSpeechFilter: '',
   showDetails: {},
   showAllDetails: false,
+  error: null,
 }
 
 const wordMeaningsSlice = createSlice({
@@ -140,14 +141,20 @@ const wordMeaningsSlice = createSlice({
         showAllDetails: value,
       }
     },
+    setError: (state, action) => {
+      return {
+        ...state,
+        error: action.payload,
+      }
+    },
   },
 })
 
-export const updateWordData = (wordData) => {
+export const updateMeaningsWordData = (wordData) => {
   return { type: 'wordMeanings/setWordData', payload: wordData }
 }
 
-export const updateIsLoading = (isLoading) => {
+export const updateMeaningsIsLoading = (isLoading) => {
   return { type: 'wordMeanings/setIsLoading', payload: isLoading }
 }
 
@@ -156,7 +163,7 @@ export const updateMeaningsPartOfSpeechFilter = (filter) => {
 }
 
 export const updateMeaningsShowDetails = (wordId, showDetails) => {
-  console.log('new showDetails', { ...showDetails, [wordId]: showDetails })
+  // console.log('new showDetails', { ...showDetails, [wordId]: showDetails })
   return {
     type: 'wordMeanings/setShowDetailsById',
     payload: { wordId, showDetails },
@@ -175,6 +182,13 @@ export const toggleMeaningsShowDetails = (newValue) => {
   return {
     type: 'wordMeanings/toggleShowDetails',
     payload: newValue,
+  }
+}
+
+export const updateMeaningsError = (error) => {
+  return {
+    type: 'wordMeanings/setError',
+    payload: error,
   }
 }
 

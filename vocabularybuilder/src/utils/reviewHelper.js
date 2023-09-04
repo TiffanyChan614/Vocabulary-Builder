@@ -113,26 +113,31 @@ const getQuizChoices = async (words) => {
   //   console.log('quizChoices', quizChoices)
   while (quizChoices.length < 4) {
     console.log('Get words from API')
-    let word
-    do {
-      word = await getRandomWord()
-    } while (!word || !word.results || word.results.length === 0)
+    try {
+      const word = await getRandomWord()
 
-    const randomDefinition =
-      word.results[Math.floor(Math.random() * word.results.length)]
+      if (!word || !word.results || word.results.length === 0) {
+        continue
+      }
 
-    const isDuplicate = quizChoices.some(
-      (choice) =>
-        choice.word === word.word &&
-        choice.definition === randomDefinition.definition
-    )
+      const randomDefinition =
+        word.results[Math.floor(Math.random() * word.results.length)]
 
-    if (!isDuplicate) {
-      quizChoices.push({
-        word: word.word,
-        definition: randomDefinition.definition,
-        source: 'api',
-      })
+      const isDuplicate = quizChoices.some(
+        (choice) =>
+          choice.word === word.word &&
+          choice.definition === randomDefinition.definition
+      )
+
+      if (!isDuplicate) {
+        quizChoices.push({
+          word: word.word,
+          definition: randomDefinition.definition,
+          source: 'api',
+        })
+      }
+    } catch (error) {
+      throw new Error(error)
     }
   }
   return quizChoices
