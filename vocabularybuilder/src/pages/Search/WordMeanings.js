@@ -98,15 +98,19 @@ const WordMeanings = () => {
           page='search'
         />
       ))
-    }
-
-    if (partOfSpeechFilter === '') {
+    } else if (partOfSpeechFilter === '') {
       return (
         <Word
           key={wordData.word || 'no word'}
           wordData={wordData}
           page='search'
         />
+      )
+    } else {
+      return (
+        <div>
+          No results found. Try clearing the filter or switch to other filters.
+        </div>
       )
     }
 
