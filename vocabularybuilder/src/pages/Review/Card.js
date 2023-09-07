@@ -105,7 +105,6 @@ const Card = () => {
   }
 
   const handleFamiliarityClick = (e) => {
-    e.stopPropagation()
     if (e.target.name !== selectedFamiliarity) {
       const newScore = familiarityButtons.find(
         (familiarity) => familiarity.name === e.target.name
@@ -114,7 +113,7 @@ const Card = () => {
         ...wordData,
         pointsEarned: newScore,
       }
-      dispatch(setFlashcardsWordArrayByIndex(index, updatedWordData))
+      dispatch(setFlashcardsWordArrayByIndex({ index, word: updatedWordData }))
     }
   }
 

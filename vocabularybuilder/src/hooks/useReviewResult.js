@@ -24,16 +24,18 @@ const useReviewResult = (wordArray, words, page) => {
         pointsEarned: newPointsEarned,
       }
     })
+
+    console.log('newWordArray', newWordArray)
     const newJournalWords = words.map((word) => ({
       ...word,
-      points:
-        word.points + newWordArray.find((w) => w.id === word.id)?.newPoints ||
-        word.points,
+      points: newWordArray.find((w) => w.id === word.id)?.newPoints || 0,
       lastReviewed:
         newWordArray.find((w) => w.id === word.id)?.pointsEarned === 0
           ? word.lastReviewed
           : new Date().toISOString(),
     }))
+
+    console.log('newJournalWords', newJournalWords)
     const updateWordArray =
       page === 'quiz' ? setQuizWordArray : setFlashcardsWordArray
     const updateInSession =
