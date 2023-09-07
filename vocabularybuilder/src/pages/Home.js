@@ -42,6 +42,7 @@ const Home = () => {
 
   const handleSearchClick = () => {
     dispatch(setSearchCurrentPage('search'))
+    dispatch(setSearchSearchValue(''))
     navigate('/search')
   }
 
