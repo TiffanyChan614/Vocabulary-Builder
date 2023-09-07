@@ -21,10 +21,10 @@ const QuizQuestion = () => {
 
   const { questionArray, wordArray } = useSelector((state) => state.quiz)
   const questionData = questionArray[index]
-  console.log('questionData', questionData)
+  // console.log('questionData', questionData)
   const questionType = questionData?.questionType.split('-')[0]
 
-  console.log('initWordArray', wordArray)
+  // console.log('initWordArray', wordArray)
 
   useEffect(() => {
     if (!questionData || !questionType) {
@@ -60,7 +60,7 @@ const QuizQuestion = () => {
 
   const handleCheckClick = () => {
     const wordData = wordArray.find((word) => word.id === questionData.id)
-    console.log('wordData before update', wordArray)
+    // console.log('wordData before update', wordArray)
     if (questionType === 'mc') {
       if (!chosen) {
         alert('Please select an answer')
@@ -71,6 +71,12 @@ const QuizQuestion = () => {
           ...wordData,
           pointsEarned: wordData.pointsEarned + newPointsEarned,
         }
+        console.log('correct? ', chosen === questionData.correctAnswer)
+        console.log(
+          'pointsEarned',
+          wordData.word,
+          wordData.pointsEarned + newPointsEarned
+        )
         dispatch(
           setQuizWordArrayById({ id: wordData.id, word: updatedWordData })
         )
@@ -91,7 +97,12 @@ const QuizQuestion = () => {
         ...wordData,
         pointsEarned: wordData.pointsEarned + newPointsEarned,
       }
-      console.log('updatedWordData', updatedWordData)
+      console.log(
+        'pointsEarned',
+        wordData.word,
+        wordData.pointsEarned + newPointsEarned
+      )
+      // console.log('updatedWordData', updatedWordData)
       dispatch(setQuizWordArrayById({ id: wordData.id, word: updatedWordData }))
     }
     setChecked(true)
