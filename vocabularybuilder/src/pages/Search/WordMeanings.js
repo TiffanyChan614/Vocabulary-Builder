@@ -62,7 +62,10 @@ const WordMeanings = () => {
     async function fetchData() {
       dispatch(setMeaningsIsLoading(true))
       try {
-        if (wordData.every((data) => data.word === word)) {
+        if (
+          wordData.length > 0 &&
+          wordData.every((data) => data.word === word)
+        ) {
           console.log('wordData already exists')
         } else {
           let returnedWordData = await getWordData(word)
