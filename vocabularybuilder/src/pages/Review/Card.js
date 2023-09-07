@@ -1,7 +1,6 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import { GrPrevious, GrNext } from 'react-icons/gr'
 import {
   setShowNotFinished as setFlashcardsShowNotFinished,
@@ -10,9 +9,23 @@ import {
 import Button from '../../components/Common/Button'
 
 const Card = () => {
+  const navigate = useNavigate()
   const { index } = useParams()
   const { mode, wordArray } = useSelector((state) => state.flashcards)
+  const [face, setFace] = useState('front')
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (index < 0 || index > wordArray.length - 1 || !wordArray[index]) {
+      navigate('../..')
+    }
+  }, [index, wordArray])
+
   const wordData = wordArray[index]
+
+  if (!wordData) {
+    return null
+  }
 
   const familiarityButtons = [
     { name: 'notFamiliar', text: 'Not familiar', score: -1, color: 'red' },
@@ -29,10 +42,6 @@ const Card = () => {
     familiarityButtons.find(
       (familiarity) => familiarity.score === wordData.pointsEarned
     )?.name || null
-
-  const [face, setFace] = useState('front')
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   const color = (() => {
     if (index === 0 || index % 3 === 0) {

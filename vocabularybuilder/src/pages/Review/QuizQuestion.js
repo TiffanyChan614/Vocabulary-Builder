@@ -22,16 +22,18 @@ const QuizQuestion = () => {
   const { questionArray, wordArray } = useSelector((state) => state.quiz)
   const questionData = questionArray[index]
   console.log('questionData', questionData)
-  const questionType = questionData.questionType.split('-')[0]
+  const questionType = questionData?.questionType.split('-')[0]
 
   console.log('initWordArray', wordArray)
 
   useEffect(() => {
-    if (questionType === 'blank') {
+    if (!questionData || !questionType) {
+      navigate('../..')
+    } else if (questionType === 'blank') {
       const initialBlanksAns =
         questionType === 'blank'
           ? Array.from(
-              { length: questionData.correctAnswer.length },
+              { length: questionData?.correctAnswer.length },
               (_, index) => ''
             )
           : []
@@ -40,7 +42,7 @@ const QuizQuestion = () => {
         ...initialBlanksAns.slice(1),
       ])
     }
-  }, [questionData.correctAnswer, questionType])
+  }, [questionData, questionType])
 
   useEffect(() => {
     if (checked) {
@@ -54,7 +56,7 @@ const QuizQuestion = () => {
         setCorrectWrongMessage({ text: 'Wrong:<', style: 'text-rose-600' })
       }
     }
-  }, [chosen, checked, questionData.correctAnswer, questionType, blanksAns])
+  }, [chosen, checked, questionData?.correctAnswer, questionType, blanksAns])
 
   const handleCheckClick = () => {
     const wordData = wordArray.find((word) => word.id === questionData.id)
