@@ -4,12 +4,12 @@ import SearchField from '../../components/Common/SearchField'
 import WordForm from '../../components/Features/WordForm/WordForm'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  updateSearchSearchValue,
-  updateSearchCurrentPage,
+  setSearchValue as setSearchSearchValue,
+  setCurrentPage as setSearchCurrentPage,
 } from '../../reducers/searchReducer'
 import {
-  resetMeaningsShowDetails,
-  updateMeaningsPartOfSpeechFilter,
+  setShowAllDetails as setMeaningsShowDetails,
+  setPartOfSpeechFilter as setMeaningsPartOfSpeechFilter,
 } from '../../reducers/wordMeaningsReducer'
 
 const Search = () => {
@@ -24,17 +24,17 @@ const Search = () => {
   console.log('searchValue in Search', searchValue)
 
   const handleInputChange = (e) => {
-    dispatch(resetMeaningsShowDetails())
-    dispatch(updateMeaningsPartOfSpeechFilter(''))
-    dispatch(updateSearchSearchValue(e.target.value))
-    dispatch(updateSearchCurrentPage('search'))
+    dispatch(setMeaningsShowDetails({}))
+    dispatch(setMeaningsPartOfSpeechFilter(''))
+    dispatch(setSearchSearchValue(e.target.value))
+    dispatch(setSearchCurrentPage('search'))
   }
 
   const clearSearchValue = () => {
-    dispatch(resetMeaningsShowDetails())
-    dispatch(updateMeaningsPartOfSpeechFilter(''))
-    dispatch(updateSearchSearchValue(''))
-    dispatch(updateSearchCurrentPage('search'))
+    dispatch(setMeaningsShowDetails({}))
+    dispatch(setMeaningsPartOfSpeechFilter(''))
+    dispatch(setSearchSearchValue(''))
+    dispatch(setSearchCurrentPage('search'))
   }
 
   useEffect(() => {

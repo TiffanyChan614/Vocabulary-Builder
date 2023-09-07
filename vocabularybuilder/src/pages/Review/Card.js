@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GrPrevious, GrNext } from 'react-icons/gr'
 import {
-  updateFlashcardsShowNotFinished,
-  updateFlashcardsWordArrayByIndex,
+  setShowNotFinished as setFlashcardsShowNotFinished,
+  setWordArrayByIndex as setFlashcardsWordArrayByIndex,
 } from '../../reducers/flashcardsReducer'
 import Button from '../../components/Common/Button'
 
@@ -114,7 +114,7 @@ const Card = () => {
         ...wordData,
         pointsEarned: newScore,
       }
-      dispatch(updateFlashcardsWordArrayByIndex(index, updatedWordData))
+      dispatch(setFlashcardsWordArrayByIndex(index, updatedWordData))
     }
   }
 
@@ -143,7 +143,7 @@ const Card = () => {
 
   const handleFinish = () => {
     const notFinished = wordArray.some((word) => !word.pointsEarned)
-    dispatch(updateFlashcardsShowNotFinished(notFinished))
+    dispatch(setFlashcardsShowNotFinished(notFinished))
     if (!notFinished) {
       navigate('../result')
     }

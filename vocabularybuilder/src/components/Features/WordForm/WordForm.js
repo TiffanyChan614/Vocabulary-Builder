@@ -5,12 +5,12 @@ import WordFormImages from './WordFormImages'
 import { v4 as uuidv4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  updateJournalPartOfSpeechFilter,
-  updateJournalShowForm,
-  updateWords,
-  updateSortValue,
+  setPartOfSpeechFilter as setJournalPartOfSpeechFilter,
+  setShowForm as setJournalShowForm,
+  setWords as setJournalWords,
+  setSortValue as setJournalSortValue,
 } from '../../../reducers/journalReducer'
-import { updateSearchShowForm } from '../../../reducers/searchReducer'
+import { setShowForm as setSearchShowForm } from '../../../reducers/searchReducer'
 import WordFormField from './WordFormField'
 import Overlay from '../../Common/Overlay'
 import WordFormHeader from './WordFormHeader'
@@ -64,9 +64,9 @@ const WordForm = ({ page }) => {
 
   const toggleShowForm = (show) => {
     if (page === 'search') {
-      dispatch(updateSearchShowForm(show))
+      dispatch(setSearchShowForm(show))
     } else if (page === 'journal') {
-      dispatch(updateJournalShowForm(show))
+      dispatch(setJournalShowForm(show))
     }
   }
 
@@ -171,10 +171,10 @@ const WordForm = ({ page }) => {
         journalData.push({ ...filteredFormData })
         localStorage.setItem('journal', JSON.stringify(journalData))
         navigate('../../journal')
-        dispatch(updateJournalPartOfSpeechFilter(''))
-        dispatch(updateSortValue('updated'))
+        dispatch(setJournalPartOfSpeechFilter(''))
+        dispatch(setJournalSortValue('updated'))
       }
-    } else if (page === 'journal' && updateWords) {
+    } else if (page === 'journal' && setJournalWords) {
       const updatedJournalData = journalData.map((word) => {
         if (word.id === filteredFormData.id) {
           return filteredFormData
@@ -183,7 +183,7 @@ const WordForm = ({ page }) => {
       })
       localStorage.setItem('journal', JSON.stringify(updatedJournalData))
       console.log('updatedJournalData', updatedJournalData)
-      dispatch(updateWords(updatedJournalData))
+      dispatch(setJournalWords(updatedJournalData))
     }
 
     toggleShowForm(false)

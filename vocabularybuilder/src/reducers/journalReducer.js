@@ -83,7 +83,7 @@ const journalSlice = createSlice({
         showAllDetails: allDetailsShown,
       }
     },
-    toggleShowDetails: (state, action) => {
+    setShowAllDetails: (state, action) => {
       const value = action.payload
       const newShowDetails = {}
       for (const wordId in state.showDetails) {
@@ -104,50 +104,15 @@ const journalSlice = createSlice({
   },
 })
 
-export const updateWords = (words) => {
-  return { type: 'journal/setWords', payload: words }
-}
-
-export const updateJournalSearchValue = (searchValue) => {
-  return { type: 'journal/setSearchValue', payload: searchValue }
-}
-
-export const updateSortValue = (sortValue) => {
-  return { type: 'journal/setSortValue', payload: sortValue }
-}
-
-export const updateJournalPartOfSpeechFilter = (filter) => {
-  return { type: 'journal/setPartOfSpeechFilter', payload: filter }
-}
-
-export const updateJournalShowForm = (showForm) => {
-  return { type: 'journal/setShowForm', payload: showForm }
-}
-
-export const updateJournalFormWord = (formWord) => {
-  return { type: 'journal/setFormWord', payload: formWord }
-}
-
-export const updateJournalShowDetails = (wordId, showDetails) => {
-  return {
-    type: 'journal/setShowDetailsById',
-    payload: { wordId, showDetails },
-  }
-}
-
-export const toggleJournalShowDetails = (newValue) => {
-  console.log('toggleJournalShowDetails', newValue)
-  return {
-    type: 'journal/toggleShowDetails',
-    payload: newValue,
-  }
-}
-
-export const toggleShowGoToTopButton = (newValue) => {
-  return {
-    type: 'journal/setGoToTopButton',
-    payload: newValue,
-  }
-}
-
+export const {
+  setWords,
+  setSearchValue,
+  setSortValue,
+  setPartOfSpeechFilter,
+  setShowForm,
+  setFormWord,
+  setShowDetailsById,
+  setShowAllDetails,
+  setGoToTopButton,
+} = journalSlice.actions
 export default journalSlice.reducer

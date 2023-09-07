@@ -1,6 +1,6 @@
 import Popup from '../../Common/Popup'
-import { updateFlashcardsShowNotFinished } from '../../../reducers/flashcardsReducer'
-import { updateQuizShowNotFinished } from '../../../reducers/quizReducer'
+import { setShowNotFinished as setFlashcardsShowNotFinished } from '../../../reducers/flashcardsReducer'
+import { setShowNotFinished as setQuizShowNotFinished } from '../../../reducers/quizReducer'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -10,18 +10,18 @@ const EndSessionPopup = ({ page }) => {
 
   const handleNo = () => {
     if (page === 'quiz') {
-      dispatch(updateQuizShowNotFinished(false))
+      dispatch(setQuizShowNotFinished(false))
     } else {
-      dispatch(updateFlashcardsShowNotFinished(false))
+      dispatch(setFlashcardsShowNotFinished(false))
     }
   }
 
   const handleYes = () => {
     navigate('result')
     if (page === 'quiz') {
-      dispatch(updateQuizShowNotFinished(false))
+      dispatch(setQuizShowNotFinished(false))
     } else {
-      dispatch(updateFlashcardsShowNotFinished(false))
+      dispatch(setFlashcardsShowNotFinished(false))
     }
   }
 

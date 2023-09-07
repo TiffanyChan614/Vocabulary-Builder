@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getRandomWord } from '../services/wordAPI'
 import {
-  updateSearchCurrentPage,
-  updateSearchSearchValue,
+  setCurrentPage as setSearchCurrentPage,
+  setSearchValue as setSearchSearchValue,
 } from '../reducers/searchReducer'
 import { useDispatch } from 'react-redux'
 import Button from '../components/Common/Button'
@@ -36,12 +36,12 @@ const Home = () => {
   }
 
   const handleLearnWord = () => {
-    dispatch(updateSearchCurrentPage(`search/${word}`))
-    dispatch(updateSearchSearchValue(word))
+    dispatch(setSearchCurrentPage(`search/${word}`))
+    dispatch(setSearchSearchValue(word))
   }
 
   const handleSearchClick = () => {
-    dispatch(updateSearchCurrentPage('search'))
+    dispatch(setSearchCurrentPage('search'))
     navigate('/search')
   }
 

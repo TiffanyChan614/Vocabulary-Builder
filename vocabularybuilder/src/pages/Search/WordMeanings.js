@@ -5,12 +5,12 @@ import { getWordData } from '../../services/wordAPI'
 import Filter from '../../components/Common/Filter'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  updateMeaningsWordData,
-  updateMeaningsIsLoading,
-  toggleMeaningsShowDetails,
-  updateMeaningsError,
+  setWordData as setMeaningsWordData,
+  setIsLoading as setMeaningsIsLoading,
+  setShowAllDetails as setMeaningsShowAllDetails,
+  setError as setMeaningsError,
 } from '../../reducers/wordMeaningsReducer'
-import { updateSearchCurrentPage } from '../../reducers/searchReducer'
+import { setCurrentPage as setSearchCurrentPage } from '../../reducers/searchReducer'
 
 const WordMeanings = () => {
   const { word } = useParams()
@@ -55,27 +55,27 @@ const WordMeanings = () => {
 
   const handleDetailsClick = (e) => {
     e.preventDefault()
-    dispatch(toggleMeaningsShowDetails(!showAllDetails))
+    dispatch(setMeaningsShowAllDetails(!showAllDetails))
   }
 
   useEffect(() => {
     async function fetchData() {
-      dispatch(updateMeaningsIsLoading(true))
+      dispatch(setMeaningsIsLoading(true))
       try {
         let returnedWordData = await getWordData(word)
         console.log('returnedWordData', returnedWordData)
-        dispatch(updateMeaningsWordData(returnedWordData))
-        dispatch(updateMeaningsError(null))
+        dispatch(setMeaningsWordData(returnedWordData))
+        dispatch(setMeaningsError(null))
       } catch (error) {
         dispatch(
-          updateMeaningsError({
+          setMeaningsError({
             ...error,
             message:
               'Sorry, we are having trouble fetching the data. Please try again later.',
           })
         )
       } finally {
-        dispatch(updateMeaningsIsLoading(false))
+        dispatch(setMeaningsIsLoading(false))
       }
     }
     fetchData()
@@ -117,7 +117,7 @@ const WordMeanings = () => {
           <Link
             to='..'
             className='ml-2 underline text-sm hover:text-indigo-800 md:text-md'
-            onClick={() => dispatch(updateSearchCurrentPage('search'))}>
+            onClick={() => dispatch(setSearchCurrentPage('search'))}>
             Back
           </Link>
           <button

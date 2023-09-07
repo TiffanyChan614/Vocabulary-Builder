@@ -26,20 +26,6 @@ const searchSlice = createSlice({
   },
 })
 
-export const updateSearchSearchValue = (searchValue) => {
-  return { type: 'search/setSearchValue', payload: searchValue }
-}
-
-export const updateSearchShowForm = (showForm) => {
-  return { type: 'search/setShowForm', payload: showForm }
-}
-
-export const updateSearchFormWord = (formWord) => {
-  return { type: 'search/setFormWord', payload: formWord }
-}
-
-export const updateSearchCurrentPage = (currentPage) => {
-  return { type: 'search/setCurrentPage', payload: currentPage }
-}
-
+export const { setSearchValue, setShowForm, setFormWord, setCurrentPage } =
+  searchSlice.actions
 export default searchSlice.reducer

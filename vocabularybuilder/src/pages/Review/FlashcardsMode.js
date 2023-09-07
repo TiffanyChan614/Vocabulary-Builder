@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  updateFlashcardsInSession,
-  updateFlashcardsMode,
-  updateFlashcardsNumber,
-  updateFlashcardsWordArray,
+  setInSession as setFlashcardsInSession,
+  setMode as setFlashcardsMode,
+  setNumber as setFlashcardsNumber,
+  setWordArray as setFlashcardsWordArray,
 } from '../../reducers/flashcardsReducer'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Common/Button'
@@ -34,7 +34,7 @@ const FlashcardsMode = () => {
 
   const handleModeClick = (e) => {
     dispatch(
-      updateFlashcardsMode(modesArray.find((b) => b.name === e.target.name))
+      setFlashcardsMode(modesArray.find((b) => b.name === e.target.name))
     )
   }
 
@@ -47,17 +47,15 @@ const FlashcardsMode = () => {
       alert('Please select the number of flashcards')
     } else {
       dispatch(
-        updateFlashcardsWordArray(
-          getFlashcardsInitWordArray(words, number, mode)
-        )
+        setFlashcardsWordArray(getFlashcardsInitWordArray(words, number, mode))
       )
-      dispatch(updateFlashcardsInSession(true))
+      dispatch(setFlashcardsInSession(true))
       navigate(mode === '' || number === 0 ? '' : '0')
     }
   }
 
   const handleNumberClick = (e) => {
-    dispatch(updateFlashcardsNumber(Number(e.target.name)))
+    dispatch(setFlashcardsNumber(Number(e.target.name)))
   }
 
   return (

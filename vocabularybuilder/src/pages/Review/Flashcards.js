@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import EndSessionPopup from '../../components/Features/Review/EndSessionPopup'
 import BackPopup from '../../components/Features/Review/BackPopup'
 import {
-  updateFlashcardsShowQuit,
+  setShowQuit as setFlashcardsShowQuit,
   resetFlashcards,
 } from '../../reducers/flashcardsReducer'
 import { useEffect } from 'react'
@@ -22,7 +22,7 @@ const Flashcards = () => {
 
   const handleBack = () => {
     if (inSession) {
-      dispatch(updateFlashcardsShowQuit(true))
+      dispatch(setFlashcardsShowQuit(true))
     } else {
       navigate('..')
     }

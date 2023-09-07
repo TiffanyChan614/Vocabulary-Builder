@@ -90,48 +90,17 @@ const quizSlice = createSlice({
   },
 })
 
-export const updateQuizWordArray = (wordArray) => {
-  return { type: 'quiz/setWordArray', payload: wordArray }
-}
-
-export const updateQuizQuestionArray = (questionArray) => {
-  return { type: 'quiz/setQuestionArray', payload: questionArray }
-}
-
-export const updateQuizMode = (mode) => {
-  return { type: 'quiz/setMode', payload: mode }
-}
-
-export const updateQuizNumber = (number) => {
-  return { type: 'quiz/setNumber', payload: number }
-}
-
-export const updateQuizWordArrayById = (id, word) => {
-  return { type: 'quiz/setWordArrayById', payload: { id, word } }
-}
-
-export const updateQuizShowNotFinished = (showNotFinished) => {
-  return { type: 'quiz/setShowNotFinished', payload: showNotFinished }
-}
-
-export const updateQuizShowQuit = (showQuit) => {
-  return { type: 'quiz/setShowQuit', payload: showQuit }
-}
-
-export const updateQuizInSession = (inSession) => {
-  return { type: 'quiz/setInSession', payload: inSession }
-}
-
-export const resetQuiz = () => {
-  return { type: 'quiz/resetQuiz' }
-}
-
-export const updateQuizError = (error) => {
-  return { type: 'quiz/setError', payload: error }
-}
-
-export const updateQuizIsLoading = (isLoading) => {
-  return { type: 'quiz/setIsLoading', payload: isLoading }
-}
-
+export const {
+  setWordArray,
+  setQuestionArray,
+  setMode,
+  setNumber,
+  setWordArrayById,
+  setShowNotFinished,
+  setShowQuit,
+  setInSession,
+  resetQuiz,
+  setError,
+  setIsLoading,
+} = quizSlice.actions
 export default quizSlice.reducer

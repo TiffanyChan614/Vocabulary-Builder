@@ -6,15 +6,15 @@ import Filter from '../components/Common/Filter'
 import WordForm from '../components/Features/WordForm/WordForm'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  updateWords,
-  updateJournalSearchValue,
-  updateSortValue,
-  toggleJournalShowDetails,
-  toggleShowGoToTopButton,
+  setWords as setJournalWords,
+  setSearchValue as setJournalSearchValue,
+  setSortValue as setJournalSortValue,
+  setShowAllDetails as setJournalShowAllDetails,
+  setGoToTopButton as toggleJournalShowGoToTopButton,
 } from '../reducers/journalReducer'
 import {
-  updateSearchSearchValue,
-  updateSearchCurrentPage,
+  setSearchValue as setSearchSearchValue,
+  setCurrentPage as setsSearchCurrentPage,
 } from '../reducers/searchReducer'
 import { IoIosArrowUp } from 'react-icons/io'
 
@@ -45,23 +45,23 @@ const Journal = () => {
 
   useEffect(() => {
     try {
-      dispatch(updateWords(JSON.parse(localStorage.getItem('journal'))))
+      dispatch(setJournalWords(JSON.parse(localStorage.getItem('journal'))))
     } catch {
-      dispatch(updateWords([]))
+      dispatch(setJournalWords([]))
     }
   }, [])
 
   useEffect(() => {
     if (window.scrollY > 100) {
-      dispatch(toggleShowGoToTopButton(true))
+      dispatch(toggleJournalShowGoToTopButton(true))
     } else {
-      dispatch(toggleShowGoToTopButton(false))
+      dispatch(toggleJournalShowGoToTopButton(false))
     }
     const handleScroll = () => {
       if (window.scrollY > 100) {
-        dispatch(toggleShowGoToTopButton(true))
+        dispatch(toggleJournalShowGoToTopButton(true))
       } else {
-        dispatch(toggleShowGoToTopButton(false))
+        dispatch(toggleJournalShowGoToTopButton(false))
       }
     }
     window.addEventListener('scroll', handleScroll)
@@ -107,13 +107,13 @@ const Journal = () => {
   }
 
   const clearSearchValue = () => {
-    dispatch(updateJournalSearchValue(''))
+    dispatch(setJournalSearchValue(''))
   }
 
   const handleDetailsClick = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    dispatch(toggleJournalShowDetails(!showAllDetails))
+    dispatch(setJournalShowAllDetails(!showAllDetails))
   }
 
   const displayedWords = getFilteredAndSortedWords()
@@ -127,8 +127,8 @@ const Journal = () => {
           className='text-indigo-800 hover:underline'
           to='../search'
           onClick={() => {
-            dispatch(updateSearchSearchValue(''))
-            dispatch(updateSearchCurrentPage('search'))
+            dispatch(setSearchSearchValue(''))
+            dispatch(setsSearchCurrentPage('search'))
           }}>
           explore new words
         </Link>
@@ -146,7 +146,7 @@ const Journal = () => {
             clearSearchValue={clearSearchValue}
             placeholder='Search journal'
             handleInputChange={(e) =>
-              dispatch(updateJournalSearchValue(e.target.value))
+              dispatch(setJournalSearchValue(e.target.value))
             }
           />
         </div>
@@ -162,7 +162,7 @@ const Journal = () => {
             </button>
             <select
               className='journal--sort border-indigo-100 border-2 rounded-lg py-1 px-3 text-sm font-semibold'
-              onChange={(e) => dispatch(updateSortValue(e.target.value))}
+              onChange={(e) => dispatch(setJournalSortValue(e.target.value))}
               value={sortValue}>
               <option disabled>Sort by</option>
               <option value='updated'>Recently updated</option>

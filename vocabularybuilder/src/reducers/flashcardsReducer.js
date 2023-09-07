@@ -66,36 +66,14 @@ const flashcardsSlice = createSlice({
   },
 })
 
-export const updateFlashcardsMode = (mode) => {
-  return { type: 'flashcards/setMode', payload: mode }
-}
-
-export const updateFlashcardsWordArray = (wordArray) => {
-  return { type: 'flashcards/setWordArray', payload: wordArray }
-}
-
-export const updateFlashcardsWordArrayByIndex = (index, word) => {
-  return { type: 'flashcards/setWordArrayByIndex', payload: { index, word } }
-}
-
-export const updateFlashcardsNumber = (number) => {
-  return { type: 'flashcards/setNumber', payload: number }
-}
-
-export const updateFlashcardsShowNotFinished = (show) => {
-  return { type: 'flashcards/setShowNotFinished', payload: show }
-}
-
-export const updateFlashcardsShowQuit = (show) => {
-  return { type: 'flashcards/setShowQuit', payload: show }
-}
-
-export const updateFlashcardsInSession = (ended) => {
-  return { type: 'flashcards/setInSession', payload: ended }
-}
-
-export const resetFlashcards = () => {
-  return { type: 'flashcards/resetFlashcards' }
-}
-
+export const {
+  setMode,
+  setWordArray,
+  setNumber,
+  setWordArrayByIndex,
+  setShowNotFinished,
+  setShowQuit,
+  setInSession,
+  resetFlashcards,
+} = flashcardsSlice.actions
 export default flashcardsSlice.reducer

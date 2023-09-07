@@ -1,8 +1,8 @@
 import Popup from '../../Common/Popup'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { updateFlashcardsShowQuit } from '../../../reducers/flashcardsReducer'
-import { updateQuizShowQuit } from '../../../reducers/quizReducer'
+import { setShowQuit as setFlashcardsShowQuit } from '../../../reducers/flashcardsReducer'
+import { setShowQuit as setQuizShowQuit } from '../../../reducers/quizReducer'
 
 const BackPopup = ({ page }) => {
   const dispatch = useDispatch()
@@ -14,9 +14,9 @@ const BackPopup = ({ page }) => {
 
   const handleNo = () => {
     if (page === 'quiz') {
-      dispatch(updateQuizShowQuit(false))
+      dispatch(setQuizShowQuit(false))
     } else {
-      dispatch(updateFlashcardsShowQuit(false))
+      dispatch(setFlashcardsShowQuit(false))
     }
   }
 

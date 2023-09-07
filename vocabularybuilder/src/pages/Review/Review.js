@@ -1,8 +1,8 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import {
-  updateSearchSearchValue,
-  updateSearchCurrentPage,
+  setSearchValue as setSearchSearchValue,
+  setCurrentPage as setSearchCurrentPage,
 } from '../../reducers/searchReducer'
 
 const Review = () => {
@@ -34,8 +34,8 @@ const Review = () => {
                 className='text-indigo-800 hover:underline'
                 to='../search'
                 onClick={() => {
-                  dispatch(updateSearchSearchValue(''))
-                  dispatch(updateSearchCurrentPage('search'))
+                  dispatch(setSearchSearchValue(''))
+                  dispatch(setSearchCurrentPage('search'))
                 }}>
                 Explore new words here!
               </Link>

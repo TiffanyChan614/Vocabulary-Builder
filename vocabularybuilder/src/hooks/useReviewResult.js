@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {
-  updateQuizWordArray,
-  updateQuizInSession,
+  setWordArray as setQuizWordArray,
+  setInSession as setQuizInSession,
 } from '../reducers/quizReducer'
 import {
-  updateFlashcardsWordArray,
-  updateFlashcardsInSession,
+  setWordArray as setFlashcardsWordArray,
+  setInSession as setFlashcardsInSession,
 } from '../reducers/flashcardsReducer'
-import { updateWords } from '../reducers/journalReducer'
+import { setWords as setJournalWords } from '../reducers/journalReducer'
 
 const useReviewResult = (wordArray, words, page) => {
   const dispatch = useDispatch()
@@ -35,13 +35,13 @@ const useReviewResult = (wordArray, words, page) => {
           : new Date().toISOString(),
     }))
     const updateWordArray =
-      page === 'quiz' ? updateQuizWordArray : updateFlashcardsWordArray
+      page === 'quiz' ? setQuizWordArray : setFlashcardsWordArray
     const updateInSession =
-      page === 'quiz' ? updateQuizInSession : updateFlashcardsInSession
+      page === 'quiz' ? setQuizInSession : setFlashcardsInSession
     dispatch(updateWordArray(newWordArray))
     dispatch(updateInSession(false))
     localStorage.setItem('journal', JSON.stringify(newJournalWords))
-    dispatch(updateWords(newJournalWords))
+    dispatch(setJournalWords(newJournalWords))
   }, [])
 }
 

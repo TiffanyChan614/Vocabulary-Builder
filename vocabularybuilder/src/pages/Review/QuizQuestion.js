@@ -1,12 +1,12 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import MCQuestion from '../../components/Features/Review/MCQuestion'
-import { updateQuizWordArrayById } from '../../reducers/quizReducer'
+import { setWordArrayById as setQuizWordArrayById } from '../../reducers/quizReducer'
 import { useState, useEffect } from 'react'
 import Button from '../../components/Common/Button'
 import BlanksQuestion from '../../components/Features/Review/BlanksQuestion'
 import { checkBlanksCorrect, hasBlank } from '../../utils/reviewHelper'
-import { updateQuizShowNotFinished } from '../../reducers/quizReducer'
+import { setShowNotFinished as setQuizShowNotFinished } from '../../reducers/quizReducer'
 
 const QuizQuestion = () => {
   const { index } = useParams()
@@ -66,7 +66,7 @@ const QuizQuestion = () => {
           ...wordData,
           pointsEarned: wordData.pointsEarned + newPointsEarned,
         }
-        dispatch(updateQuizWordArrayById(wordData.id, updatedWordData))
+        dispatch(setQuizWordArrayById(wordData.id, updatedWordData))
       }
     } else {
       if (hasBlank(blanksAns)) {
@@ -85,7 +85,7 @@ const QuizQuestion = () => {
         ...wordData,
         pointsEarned: wordData.pointsEarned + newPointsEarned,
       }
-      dispatch(updateQuizWordArrayById(wordData.id, updatedWordData))
+      dispatch(setQuizWordArrayById(wordData.id, updatedWordData))
     }
     setChecked(true)
   }
@@ -197,7 +197,7 @@ const QuizQuestion = () => {
             bgColor='gray'
             size='md'
             className='mt-4'
-            onClick={() => dispatch(updateQuizShowNotFinished(true))}>
+            onClick={() => dispatch(setQuizShowNotFinished(true))}>
             End Session
           </Button>
         )}

@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
 import NumberChoice from '../../components/Features/Review/NumberChoice'
 import {
-  updateQuizNumber,
-  updateQuizQuestionArray,
-  updateQuizInSession,
-  updateQuizWordArray,
-  updateQuizMode,
-  updateQuizError,
-  updateQuizIsLoading,
+  setNumber as setQuizNumber,
+  setQuestionArray as setQuizQuestionArray,
+  setInSession as setQuizInSession,
+  setWordArray as setQuizWordArray,
+  setMode as setQuizMode,
+  setError as setQuizError,
+  setIsLoading as setQuizIsLoading,
 } from '../../reducers/quizReducer'
 import Button from '../../components/Common/Button'
 import {
@@ -39,12 +39,12 @@ const QuizMode = () => {
   ]
 
   const handleModeClick = (e) => {
-    dispatch(updateQuizMode(modesArray.find((b) => b.name === e.target.name)))
+    dispatch(setQuizMode(modesArray.find((b) => b.name === e.target.name)))
   }
 
   const handleNumberClick = (e) => {
     e.stopPropagation()
-    dispatch(updateQuizNumber(Number(e.target.name)))
+    dispatch(setQuizNumber(Number(e.target.name)))
   }
 
   const handleStart = async (e) => {
@@ -58,19 +58,19 @@ const QuizMode = () => {
     } else {
       try {
         const initWordArray = getQuizInitWordArray(words, number)
-        dispatch(updateQuizWordArray(initWordArray))
-        dispatch(updateQuizIsLoading(true))
+        dispatch(setQuizWordArray(initWordArray))
+        dispatch(setQuizIsLoading(true))
         const initQuestionArray = await getQuizInitQuestionArray(
           initWordArray,
           mode
         )
-        dispatch(updateQuizQuestionArray(initQuestionArray))
-        dispatch(updateQuizInSession(true))
-        dispatch(updateQuizError(null))
+        dispatch(setQuizQuestionArray(initQuestionArray))
+        dispatch(setQuizInSession(true))
+        dispatch(setQuizError(null))
         navigate('0')
       } catch (error) {
         dispatch(
-          updateQuizError({
+          setQuizError({
             ...error,
             message:
               'Oops, something went wrong when initializing the quiz. Please try again.',

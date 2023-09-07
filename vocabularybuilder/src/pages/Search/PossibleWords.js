@@ -3,11 +3,11 @@ import { Link, Outlet } from 'react-router-dom'
 import { getMatchedWords } from '../../services/wordAPI'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  updatePossibleWordsMatchedWords,
-  updatePossibleWordsIsLoading,
-  updatePossibleWordsError,
+  setMatchedWords as setPossibleWordsMatchedWords,
+  setIsLoading as setPossibleWordsIsLoading,
+  setError as setPossibleWordsError,
 } from '../../reducers/possibleWordsReducer'
-import { updateSearchCurrentPage } from '../../reducers/searchReducer'
+import { setCurrentPage as setSearchCurrentPage } from '../../reducers/searchReducer'
 
 const PossibleWords = () => {
   const dispatch = useDispatch()
@@ -44,24 +44,24 @@ const PossibleWords = () => {
       try {
         cleanupExpiredCache()
         if (cache[searchValue] && !isCacheExpired(cache[searchValue])) {
-          dispatch(updatePossibleWordsMatchedWords(cache[searchValue]))
+          dispatch(setPossibleWordsMatchedWords(cache[searchValue]))
         } else {
-          dispatch(updatePossibleWordsIsLoading(true))
+          dispatch(setPossibleWordsIsLoading(true))
           const returnedWords = await getMatchedWords(searchValue.toLowerCase())
           cache[searchValue.toLowerCase()] = returnedWords.results.data
-          dispatch(updatePossibleWordsMatchedWords(returnedWords.results.data))
+          dispatch(setPossibleWordsMatchedWords(returnedWords.results.data))
         }
-        dispatch(updatePossibleWordsError(null))
+        dispatch(setPossibleWordsError(null))
       } catch (error) {
         dispatch(
-          updatePossibleWordsError({
+          setPossibleWordsError({
             ...error,
             message:
               'Sorry, we could not fetch possible words. Please try again later.',
           })
         )
       } finally {
-        dispatch(updatePossibleWordsIsLoading(false))
+        dispatch(setPossibleWordsIsLoading(false))
       }
     }
     const newTimeoutId = setTimeout(() => {
@@ -87,7 +87,7 @@ const PossibleWords = () => {
           to={`${word}`}
           className='matched-word'
           key={word + i}
-          onClick={() => dispatch(updateSearchCurrentPage(`search/${word}`))}>
+          onClick={() => dispatch(setSearchCurrentPage(`search/${word}`))}>
           <div className={wordStyleClassName}>{word}</div>
         </Link>
       ))

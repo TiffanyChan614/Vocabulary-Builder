@@ -2,16 +2,16 @@ import { AiFillSound, AiOutlinePlus, AiOutlineEdit } from 'react-icons/ai'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import {
-  updateJournalShowForm,
-  updateJournalFormWord,
-  updateWords,
-  updateJournalShowDetails,
+  setShowForm as setJournalShowForm,
+  setFormWord as setJournalFormWord,
+  setWords as setJournalWords,
+  setShowDetailsById as setJournalShowDetailsById,
 } from '../../../reducers/journalReducer'
 import {
-  updateSearchShowForm,
-  updateSearchFormWord,
+  setShowForm as setSearchShowForm,
+  setFormWord as setSearchFormWord,
 } from '../../../reducers/searchReducer'
-import { updateMeaningsShowDetails } from '../../../reducers/wordMeaningsReducer'
+import { setShowDetailsById as setMeaningsShowDetailsById } from '../../../reducers/wordMeaningsReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
@@ -29,21 +29,21 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
   const dispatch = useDispatch()
   const { words } = useSelector((state) => state.journal)
   const updateShowDetails =
-    page === 'journal' ? updateJournalShowDetails : updateMeaningsShowDetails
+    page === 'journal' ? setJournalShowDetailsById : setMeaningsShowDetailsById
   const updateFormWord =
-    page === 'journal' ? updateJournalFormWord : updateSearchFormWord
+    page === 'journal' ? setJournalFormWord : setSearchFormWord
 
   const handleDelete = (id) => {
     const newWords = words.filter((word) => word.id !== id)
-    dispatch(updateWords(newWords))
+    dispatch(setJournalWords(newWords))
     localStorage.setItem('journal', JSON.stringify(newWords))
   }
 
   const toggleShowForm = (show) => {
     if (page === 'search') {
-      dispatch(updateSearchShowForm(show))
+      dispatch(setSearchShowForm(show))
     } else if (page === 'journal') {
-      dispatch(updateJournalShowForm(show))
+      dispatch(setJournalShowForm(show))
     }
   }
 
@@ -55,7 +55,12 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
   const handleShowDetails = () => {
     console.log('wordData', wordData)
     console.log('wordData?.id', wordData?.id)
-    dispatch(updateShowDetails(wordData?.id, !currentShowDetails))
+    dispatch(
+      updateShowDetails({
+        wordId: wordData?.id,
+        showDetails: !currentShowDetails,
+      })
+    )
   }
 
   return (

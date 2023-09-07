@@ -2,7 +2,10 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import EndSessionPopup from '../../components/Features/Review/EndSessionPopup'
 import BackPopup from '../../components/Features/Review/BackPopup'
-import { updateQuizShowQuit, resetQuiz } from '../../reducers/quizReducer'
+import {
+  setShowQuit as setQuizShowQuit,
+  resetQuiz,
+} from '../../reducers/quizReducer'
 import { useEffect } from 'react'
 
 const Quiz = () => {
@@ -18,7 +21,7 @@ const Quiz = () => {
 
   const handleBack = () => {
     if (inSession) {
-      dispatch(updateQuizShowQuit(true))
+      dispatch(setQuizShowQuit(true))
     } else {
       navigate('..')
     }

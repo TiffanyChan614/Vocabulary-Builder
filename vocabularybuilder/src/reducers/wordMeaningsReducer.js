@@ -112,7 +112,7 @@ const wordMeaningsSlice = createSlice({
         showAllDetails: allDetailsShown,
       }
     },
-    setShowDetails: (state, action) => {
+    setShowDetailsArray: (state, action) => {
       const newShowDetails = action.payload
 
       let allDetailsShown = true
@@ -129,7 +129,7 @@ const wordMeaningsSlice = createSlice({
         showAllDetails: allDetailsShown,
       }
     },
-    toggleShowDetails: (state, action) => {
+    setShowAllDetails: (state, action) => {
       const value = action.payload
       const newShowDetails = {}
       for (const wordId in state.showDetails) {
@@ -150,46 +150,13 @@ const wordMeaningsSlice = createSlice({
   },
 })
 
-export const updateMeaningsWordData = (wordData) => {
-  return { type: 'wordMeanings/setWordData', payload: wordData }
-}
-
-export const updateMeaningsIsLoading = (isLoading) => {
-  return { type: 'wordMeanings/setIsLoading', payload: isLoading }
-}
-
-export const updateMeaningsPartOfSpeechFilter = (filter) => {
-  return { type: 'wordMeanings/setPartOfSpeechFilter', payload: filter }
-}
-
-export const updateMeaningsShowDetails = (wordId, showDetails) => {
-  // console.log('new showDetails', { ...showDetails, [wordId]: showDetails })
-  return {
-    type: 'wordMeanings/setShowDetailsById',
-    payload: { wordId, showDetails },
-  }
-}
-
-export const resetMeaningsShowDetails = () => {
-  console.log('clearing showDetails')
-  return {
-    type: 'wordMeanings/setShowDetails',
-    payload: {},
-  }
-}
-
-export const toggleMeaningsShowDetails = (newValue) => {
-  return {
-    type: 'wordMeanings/toggleShowDetails',
-    payload: newValue,
-  }
-}
-
-export const updateMeaningsError = (error) => {
-  return {
-    type: 'wordMeanings/setError',
-    payload: error,
-  }
-}
-
+export const {
+  setWordData,
+  setIsLoading,
+  setPartOfSpeechFilter,
+  setShowDetailsById,
+  setShowDetailsArray,
+  setShowAllDetails,
+  setError,
+} = wordMeaningsSlice.actions
 export default wordMeaningsSlice.reducer
