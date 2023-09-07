@@ -81,6 +81,10 @@ const WordMeanings = () => {
     fetchData()
   }, [word])
 
+  useEffect(() => {
+    dispatch(setSearchCurrentPage(`search/${word}`))
+  }, [])
+
   const wordDataElement = (() => {
     if (isLoading || !wordData) {
       return <div>Loading...</div>

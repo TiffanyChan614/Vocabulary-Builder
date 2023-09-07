@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { useNavigate, Outlet } from 'react-router-dom'
 import { getMatchedWords } from '../../services/wordAPI'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -7,10 +7,10 @@ import {
   setIsLoading as setPossibleWordsIsLoading,
   setError as setPossibleWordsError,
 } from '../../reducers/possibleWordsReducer'
-import { setCurrentPage as setSearchCurrentPage } from '../../reducers/searchReducer'
 
 const PossibleWords = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { searchValue } = useSelector((state) => state.search)
   const { matchedWords, isLoading, error } = useSelector(
     (state) => state.possibleWords
@@ -22,7 +22,7 @@ const PossibleWords = () => {
   const CACHE_EXPIRATION_MS = 5 * 60 * 1000 // 5 min
 
   const wordStyleClassName =
-    'border-2 border-gray-100 p-3 rounded-xl text-lg font-medium text-indigo-900 hover:border-indigo-100 hover:bg-indigo-100 hover:text-indigo-900 select-none'
+    'cursor-pointer border-2 border-gray-100 p-3 rounded-xl text-lg font-medium text-indigo-900 hover:border-indigo-100 hover:bg-indigo-100 hover:text-indigo-900 select-none'
 
   console.log('searchValue in possibleWords', searchValue)
 
@@ -83,13 +83,12 @@ const PossibleWords = () => {
 
     if (matchedWords.length > 0) {
       return matchedWords.map((word, i) => (
-        <Link
-          to={`${word}`}
-          className='matched-word'
+        <div
           key={word + i}
-          onClick={() => dispatch(setSearchCurrentPage(`search/${word}`))}>
-          <div className={wordStyleClassName}>{word}</div>
-        </Link>
+          className={wordStyleClassName}
+          onClick={() => navigate(`${word}`)}>
+          {word}
+        </div>
       ))
     }
 
