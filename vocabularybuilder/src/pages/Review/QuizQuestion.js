@@ -42,7 +42,7 @@ const QuizQuestion = () => {
         ...initialBlanksAns.slice(1),
       ])
     }
-  }, [questionData, questionType])
+  }, [questionData, questionType, navigate])
 
   useEffect(() => {
     if (checked) {

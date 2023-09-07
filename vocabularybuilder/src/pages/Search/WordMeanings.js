@@ -27,7 +27,7 @@ const WordMeanings = () => {
   console.log('showAllDetails', showAllDetails)
   console.log('showDetails', showDetails)
 
-  // console.log('word data in WordMeanings', wordData)
+  console.log('word data in WordMeanings', wordData)
 
   let displayedMeanings
 
@@ -62,10 +62,14 @@ const WordMeanings = () => {
     async function fetchData() {
       dispatch(setMeaningsIsLoading(true))
       try {
-        let returnedWordData = await getWordData(word)
-        console.log('returnedWordData', returnedWordData)
-        dispatch(setMeaningsWordData(returnedWordData))
-        dispatch(setMeaningsError(null))
+        if (wordData.every((data) => data.word === word)) {
+          console.log('wordData already exists')
+        } else {
+          let returnedWordData = await getWordData(word)
+          console.log('returnedWordData', returnedWordData)
+          dispatch(setMeaningsWordData(returnedWordData))
+          dispatch(setMeaningsError(null))
+        }
       } catch (error) {
         dispatch(
           setMeaningsError({
@@ -79,11 +83,11 @@ const WordMeanings = () => {
       }
     }
     fetchData()
-  }, [word])
+  }, [word, dispatch, wordData])
 
   useEffect(() => {
     dispatch(setSearchCurrentPage(`search/${word}`))
-  }, [])
+  }, [dispatch, word])
 
   const wordDataElement = (() => {
     if (isLoading || !wordData) {
@@ -113,8 +117,6 @@ const WordMeanings = () => {
         </div>
       )
     }
-
-    return null
   })()
 
   return (

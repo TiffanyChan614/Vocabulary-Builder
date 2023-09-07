@@ -17,7 +17,7 @@ const Quiz = () => {
 
   useEffect(() => {
     dispatch(resetQuiz())
-  }, [])
+  }, [dispatch])
 
   const handleBack = () => {
     if (inSession) {

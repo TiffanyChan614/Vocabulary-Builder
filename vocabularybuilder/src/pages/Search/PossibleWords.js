@@ -70,7 +70,7 @@ const PossibleWords = () => {
     return () => {
       clearTimeout(newTimeoutId)
     }
-  }, [searchValue])
+  }, [searchValue, dispatch, error])
 
   const matchedWordsElement = (() => {
     if (isLoading && searchValue !== '') {

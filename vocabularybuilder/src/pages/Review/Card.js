@@ -19,7 +19,7 @@ const Card = () => {
     if (index < 0 || index > wordArray.length - 1 || !wordArray[index]) {
       navigate('../..')
     }
-  }, [index, wordArray])
+  }, [index, wordArray, navigate])
 
   const wordData = wordArray[index]
 

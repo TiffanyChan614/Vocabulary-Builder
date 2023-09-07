@@ -18,7 +18,7 @@ const Flashcards = () => {
 
   useEffect(() => {
     dispatch(resetFlashcards())
-  }, [])
+  }, [dispatch])
 
   const handleBack = () => {
     if (inSession) {
