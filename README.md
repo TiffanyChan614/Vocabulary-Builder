@@ -5,10 +5,8 @@
 - [Overview](#overview)
   - [Description](#description)
   - [Live Demo](#live-demo)
-  - [Screenshots](#screenshots)
 - [Getting Started](#getting-started)
   - [Built with](#built-with)
-  - [Local Setup](#local-setup)
   - [Dependencies](#dependencies)
 - [Features](#features)
   - [Key Features](#key-features)
@@ -36,7 +34,7 @@ https://github.com/TiffanyChan614/Vocabulary-Builder/assets/68774129/e029515f-b6
 
 ### Live Demo
 
-You can try the page [here](https://vocabularybuilder1.netlify.app).
+Since this app is using the freemium plan of WordsAPI, the number of requests per day is limited. If you are interested in this app, please email me at tiffanychan1999614@gmail.com to get the live demo link.
 
 ## Getting Started
 
