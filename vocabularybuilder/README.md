@@ -1,70 +1,154 @@
-# Getting Started with Create React App
+# Vocabulary Builder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
 
-## Available Scripts
+- [Overview](#overview)
+  - [Description](#description)
+  - [Live Demo](#live-demo)
+  - [Screenshots](#screenshots)
+- [Getting Started](#getting-started)
+  - [Built with](#built-with)
+  - [Local Setup](#local-setup)
+  - [Dependencies](#dependencies)
+- [Features](#features)
+  - [Key Features](#key-features)
+  - [Future Features](#future-features)
+- [Usage](#usage)
+- [API](#api)
+- [Skills Learned](#skills-learned)
 
-In the project directory, you can run:
+## Overview
 
-### `npm start`
+### Description
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This is a Vocabulary Builder app that is built with React, Tailwind CSS, and HTML. It is designed to enhance user vocabulary in a seamless and engaging way. This app is built as a personal project to practice React and Tailwind CSS. It is currently a front-end only app using local storage to store the data but will be updated to a full-stack app that use MongoDB in the future.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Video Demo
 
-### `npm test`
+![Video Demo]()
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Live Demo
 
-### `npm run build`
+You can try the page [here](https://vocabularybuilder1.netlify.app).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Built with
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- HTML 5
+- React JS
+- Figma
+- Tailwind CSS
+- React Router
+- Redux
+- REST API
+- create-react-app
 
-### `npm run eject`
+### Run Locally
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Clone the project
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+  git clone https://github.com/TiffanyChan614/Vocabulary-Builder.git
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Go to the project directory
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+  cd Vocabulary-Builder/vocabularybuilder
+```
 
-## Learn More
+Install dependencies
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+  npm install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Start the server
 
-### Code Splitting
+```bash
+  npm run start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Dependencies
 
-### Analyzing the Bundle Size
+This project depends on the following packages:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- `classnames` (version ^2.3.2): A JavaScript utility for conditionally joining classNames together.
+- `he` (version ^1.2.0): A robust HTML entity encoder/decoder.
+- `react` (version ^18.2.0): A JavaScript library for building user interfaces.
+- `react-dom` (version ^18.2.0): A package for working with the DOM in React applications.
 
-### Making a Progressive Web App
+### Development Dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+This project also has the following development dependencies:
 
-### Advanced Configuration
+- `@types/react` (version ^18.0.37): TypeScript definitions for the React library.
+- `@types/react-dom` (version ^18.0.11): TypeScript definitions for the react-dom package.
+- `@vitejs/plugin-react` (version ^4.0.0): A Vite plugin for React development.
+- `eslint` (version ^8.38.0): A tool for identifying and reporting on patterns found in ECMAScript/JavaScript code.
+- `eslint-plugin-react` (version ^7.32.2): An ESLint plugin for React-specific linting rules.
+- `eslint-plugin-react-hooks` (version ^4.6.0): An ESLint plugin for enforcing rules of Hooks in React applications.
+- `eslint-plugin-react-refresh` (version ^0.3.4): An ESLint plugin for react-refresh.
+- `vite` (version ^4.4.2): A frontend tooling platform that provides faster and leaner development for modern web projects.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Features
 
-### Deployment
+### Key Features
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **Built-in Dictionary**: Users can search for words directly within the application, providing quick access to definitions and information.
 
-### `npm run build` fails to minify
+- **Dynamic Word Form**: Customize word information and add it to a personal journal for future review. This feature enables users to tailor the content to their learning preferences.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Image API Integration**: Utilizes a built-in image API to retrieve related images for visual association with words. Users can also upload their own images to associate with specific words.
+
+- **Voice Pronunciation**: Provides voice pronunciation for words, allowing users to learn the correct pronunciation.
+
+- **Word of the Day**: Displays a new word each day, allowing users to learn new words every day.
+
+- **Part of Speech Filters**: Filter words based on their part of speech, allowing users to focus on specific categories for targeted learning.
+
+- **Show Details**: Users can choose to show or hide word details, providing a clean and simple interface for learning.
+
+- **Sort Journal Words**: Users have the ability to sort their journal words, providing an organized and efficient way to review and manage their vocabulary.
+
+- **Persistent Filter, Show Details and Sort Settings**: Filter, show details, and sort settings persist across pages, ensuring that user preferences are maintained throughout their learning journey.
+
+- **Review Modes**:
+
+  - **Flashcards**: Engage in a flashcard-based review mode for efficient and effective learning.
+  - **Quiz Mode**: Test your knowledge with a dynamic quiz mode that includes various question types.
+
+- **Smart Review Algorithm**: Utilizes an algorithm that intelligently selects words for review. It prioritizes words with the lowest scores (indicating greater difficulty) and those with the earliest review dates.
+
+- **Diverse Question Types**: Offers a variety of question types to keep the review process engaging and effective, including multiple choice that asks about the definition, synonym, antonym of a word, and fill-in-the-blank questions that show either the definition or one of the images associated with the word and user has to type in the word.
+
+- **Fully Responsive**: The app is fully responsive and can be used on mobile devices.
+
+### Future Features
+
+- **User Authentication**: Users can create an account and log in to access their data from any device.
+- **MongoDB Integration**: Store user data in a database to allow for data persistence across devices.
+- **User Profile**: Users can view their profile and see their progress.
+- **Performance Tracking**: Users can view their performance and progress over time.
+
+## API
+
+- [WordsAPI](https://www.wordsapi.com/)
+- [pexels](https://www.pexels.com/api/)
+- Browser Speech Synthesis API
+
+## Skills Learned
+
+- React Routers
+- Redux for state management
+- REST API
+- Tailwind CSS
+- Responsive Design
+- UI/UX design
+- Components design
+- AHA principle: Avoid Hasty Abstractions
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
