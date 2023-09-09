@@ -150,7 +150,7 @@ const Journal = () => {
             }
           />
         </div>
-        <div className='journal--control flex flex-col gap-3 md:flex-row md:justify-between'>
+        <div className='journal--control flex flex-row justify-between'>
           <nav>
             <Filter page='journal' />
           </nav>

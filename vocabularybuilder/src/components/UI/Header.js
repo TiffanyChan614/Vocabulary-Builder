@@ -13,7 +13,7 @@ const Header = () => {
     'hover:border-b-2 hover:pb-1 border-gray-700 text-gray-700 select-none'
   const activeIconStyleClassName =
     'border-b-2 border-gray-800 text-gray-800 pb-1 select-none'
-  const { isMobile }  = useIsMobile()
+  const { isMobile } = useIsMobile(500)
 
   const navigationItems = [
     {

@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { setPartOfSpeechFilter as setJournalPartOfSpeechFilter } from '../../reducers/journalReducer'
 import { setPartOfSpeechFilter as setMeaningsPartOfSpeechFilter } from '../../reducers/wordMeaningsReducer'
 import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
+import useIsMobile from '../../hooks/useIsMobile'
 
 const Filter = ({ page }) => {
   const filterStyleClassName =
@@ -11,6 +13,9 @@ const Filter = ({ page }) => {
     'text-sm text-indigo-800 font-bold bg-indigo-100 border-2 border-indigo-100 py-1 px-3 rounded-full'
 
   const dispatch = useDispatch()
+  const { isMobile } = useIsMobile(1070)
+  const [filterOpen, setFilterOpen] = useState(false)
+
   const partOfSpeechFilter = useSelector((state) => {
     if (page === 'journal') {
       return state.journal.partOfSpeechFilter
@@ -29,68 +34,81 @@ const Filter = ({ page }) => {
 
   return (
     <div className='flex gap-3 flex-wrap'>
-      <Link to='?partOfSpeech=noun'>
-        <div
-          onClick={() => handleFilterClick('noun')}
-          className={
-            partOfSpeechFilter === 'noun'
-              ? filterActiveStyleClassName
-              : filterStyleClassName
-          }>
-          Nouns
-        </div>
-      </Link>
-      <Link to='?partOfSpeech=verb'>
-        <div
-          onClick={() => handleFilterClick('verb')}
-          className={
-            partOfSpeechFilter === 'verb'
-              ? filterActiveStyleClassName
-              : filterStyleClassName
-          }>
-          Verbs
-        </div>
-      </Link>
-      <Link to='?partOfSpeech=adjective'>
-        <div
-          onClick={() => handleFilterClick('adjective')}
-          className={
-            partOfSpeechFilter === 'adjective'
-              ? filterActiveStyleClassName
-              : filterStyleClassName
-          }>
-          Adjectives
-        </div>
-      </Link>
-      <Link to='?partOfSpeech=adverb'>
-        <div
-          onClick={() => handleFilterClick('adverb')}
-          className={
-            partOfSpeechFilter === 'adverb'
-              ? filterActiveStyleClassName
-              : filterStyleClassName
-          }>
-          Adverbs
-        </div>
-      </Link>
-      <Link to='?partOfSpeech=other'>
-        <div
-          onClick={() => handleFilterClick('other')}
-          className={
-            partOfSpeechFilter === 'other'
-              ? filterActiveStyleClassName
-              : filterStyleClassName
-          }>
-          Other
-        </div>
-      </Link>
-      <Link to='.'>
-        <div
-          onClick={() => handleFilterClick('')}
-          className='text-sm text-gray-700 font-semibold border-2 border-white hover:text-indigo-800 hover:underline py-1 px-3'>
-          Clear Filter
-        </div>
-      </Link>
+      {isMobile && (
+        <button
+          className={`text-sm text-gray-700 font-semibold border-2 border-indigo-100 hover:text-indigo-800 hover:bg-indigo-100 py-1 px-3 rounded-lg
+            ${filterOpen ? 'bg-indigo-100' : ''}
+          `}
+          onClick={() => setFilterOpen((prevFilterOpen) => !prevFilterOpen)}>
+          {filterOpen ? 'Hide' : 'Show'} filter
+        </button>
+      )}
+      {(filterOpen || !isMobile) && (
+        <>
+          <Link to='?partOfSpeech=noun'>
+            <div
+              onClick={() => handleFilterClick('noun')}
+              className={
+                partOfSpeechFilter === 'noun'
+                  ? filterActiveStyleClassName
+                  : filterStyleClassName
+              }>
+              Nouns
+            </div>
+          </Link>
+          <Link to='?partOfSpeech=verb'>
+            <div
+              onClick={() => handleFilterClick('verb')}
+              className={
+                partOfSpeechFilter === 'verb'
+                  ? filterActiveStyleClassName
+                  : filterStyleClassName
+              }>
+              Verbs
+            </div>
+          </Link>
+          <Link to='?partOfSpeech=adjective'>
+            <div
+              onClick={() => handleFilterClick('adjective')}
+              className={
+                partOfSpeechFilter === 'adjective'
+                  ? filterActiveStyleClassName
+                  : filterStyleClassName
+              }>
+              Adjectives
+            </div>
+          </Link>
+          <Link to='?partOfSpeech=adverb'>
+            <div
+              onClick={() => handleFilterClick('adverb')}
+              className={
+                partOfSpeechFilter === 'adverb'
+                  ? filterActiveStyleClassName
+                  : filterStyleClassName
+              }>
+              Adverbs
+            </div>
+          </Link>
+          <Link to='?partOfSpeech=other'>
+            <div
+              onClick={() => handleFilterClick('other')}
+              className={
+                partOfSpeechFilter === 'other'
+                  ? filterActiveStyleClassName
+                  : filterStyleClassName
+              }>
+              Other
+            </div>
+          </Link>
+          <Link to='.'>
+            <div
+              onClick={() => handleFilterClick('')}
+              className='text-sm text-gray-700 font-semibold border-2 border-white hover:text-indigo-800 hover:underline py-1 px-3'>
+              Clear Filter
+            </div>
+          </Link>
+        </>
+      )}
     </div>
   )
 }
