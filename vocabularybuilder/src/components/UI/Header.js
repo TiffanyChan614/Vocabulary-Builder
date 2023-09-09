@@ -2,8 +2,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { AiOutlineHome, AiOutlineSearch } from 'react-icons/ai'
 import { BiBookBookmark } from 'react-icons/bi'
-import { useState, useEffect } from 'react'
 import { MdOutlineQuiz } from 'react-icons/md'
+import useIsMobile from '../../hooks/useIsMobile'
 
 const Header = () => {
   const activeTextStyleClassName =
@@ -13,17 +13,7 @@ const Header = () => {
     'hover:border-b-2 hover:pb-1 border-gray-700 text-gray-700 select-none'
   const activeIconStyleClassName =
     'border-b-2 border-gray-800 text-gray-800 pb-1 select-none'
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 500)
-    }
-
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  const { isMobile }  = useIsMobile()
 
   const navigationItems = [
     {

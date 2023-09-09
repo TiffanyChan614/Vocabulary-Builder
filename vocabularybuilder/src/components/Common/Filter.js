@@ -11,7 +11,6 @@ const Filter = ({ page }) => {
     'text-sm text-indigo-800 font-bold bg-indigo-100 border-2 border-indigo-100 py-1 px-3 rounded-full'
 
   const dispatch = useDispatch()
-
   const partOfSpeechFilter = useSelector((state) => {
     if (page === 'journal') {
       return state.journal.partOfSpeechFilter
