@@ -64,9 +64,9 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
   }
 
   return (
-    <div className='word--header flex justify-between gap-2'>
+    <div className='word--header flex justify-between gap-2 flex-wrap'>
       <div className='flex gap-2 flex-row flex-wrap items-center'>
-        <div className='flex flex-row gap-1 items-center'>
+        <div className='flex flex-row gap-1 items-center flex-wrap'>
           <h2 className='text-lg md:text-xl font-bold text-indigo-800'>
             {word}
           </h2>
