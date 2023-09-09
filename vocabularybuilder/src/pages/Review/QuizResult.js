@@ -14,9 +14,9 @@ const QuizResult = () => {
       <h2 className='font-bold text-xl text-center text-indigo-800'>Result</h2>
       <ResultTable wordArray={wordArray} />
       <button
-        onClick={() => navigate('../..')}
+        onClick={() => navigate('../../../journal')}
         className='mt-4 bg-indigo-500 hover:bg-indigo-600 text-lg font-semibold text-white rounded-lg px-5 py-2'>
-        Return
+        Return to Journal
       </button>
     </div>
   )
