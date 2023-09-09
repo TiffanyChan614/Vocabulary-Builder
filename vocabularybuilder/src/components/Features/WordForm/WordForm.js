@@ -20,12 +20,12 @@ const WordForm = ({ page }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState({text:'', type:''})
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (message !== '') {
-        setMessage('')
+      if (message.text !== '') {
+        setMessage({text:'', type:''})
       }
     }, 2000)
 
@@ -103,7 +103,7 @@ const WordForm = ({ page }) => {
         [name]: newArr,
       }
     })
-    setMessage('Image deleted!')
+    setMessage({text: 'Image deleted!', type: 'success'})
   }
 
   const handleAdd = (e) => {

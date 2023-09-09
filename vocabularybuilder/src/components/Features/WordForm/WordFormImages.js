@@ -51,7 +51,7 @@ const WordFormImages = ({
         [name]: newArr,
       }
     })
-    setMessage('Image added!')
+    setMessage({text: 'Image added!', type: 'success'})
   }
 
   const handleShow = (e) => {

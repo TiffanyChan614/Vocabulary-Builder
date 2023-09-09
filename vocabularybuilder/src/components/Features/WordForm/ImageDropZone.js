@@ -55,10 +55,10 @@ const ImageDropZone = ({ formData, setFormData, setMessage }) => {
       const imageObjects = await loadImageObjects(files)
       const newImages = [...formData.images, ...imageObjects]
       setFormData((prevFormData) => ({...prevFormData, images: newImages}))
-      setMessage('Images added!')
+      setMessage({text: 'Images added!', type: 'success'})
     }
     catch (err) {
-      setMessage('Error adding images')
+      setMessage({text: 'Error adding images', type: 'error'})
     }
   }
 

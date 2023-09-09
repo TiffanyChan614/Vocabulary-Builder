@@ -11,8 +11,8 @@ const WordFormHeader = ({ word, pronunciation, partOfSpeech, message }) => {
         )}
       </div>
       <div>
-        {message && (
-          <p className='text-md font-semibold text-emerald-700'>{message}</p>
+        {message.text && (
+          <p className={`text-md font-semibold ${message.type === 'success' ? 'text-emerald-700' : 'text-rose-700'}`}>{message.text}</p>
         )}
       </div>
     </header>
