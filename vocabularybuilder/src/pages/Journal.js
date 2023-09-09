@@ -155,7 +155,7 @@ const Journal = () => {
           />
         </div>
         <div className='journal--control flex flex-row justify-between gap-2'>
-          {isMobile && (
+          {isMobile ? (
             <button
               className={`text-sm text-gray-700 font-semibold border-2 border-indigo-100 hover:text-indigo-800 hover:bg-indigo-100 py-1 px-3 rounded-lg
             ${filterOpen ? 'bg-indigo-100' : ''}
@@ -163,6 +163,8 @@ const Journal = () => {
               onClick={() => dispatch(setJournalFilterOpen(!filterOpen))}>
               {filterOpen ? 'Hide' : 'Show'} filter
             </button>
+          ) : (
+            <Filter page='journal' />
           )}
           <div className='flex justify-between gap-2'>
             <button
@@ -185,9 +187,9 @@ const Journal = () => {
             </select>
           </div>
         </div>
-        {(!isMobile || filterOpen) && (
+        {filterOpen && isMobile && (
           <div>
-            <Filter page='search' />
+            <Filter page='journal' />
           </div>
         )}
         <div className='journal--words flex flex-col gap-3'>

@@ -1,12 +1,6 @@
 import { Link } from 'react-router-dom'
-import {
-  setPartOfSpeechFilter as setJournalPartOfSpeechFilter,
-  setFilterOpen as setJournalFilterOpen,
-} from '../../reducers/journalReducer'
-import {
-  setPartOfSpeechFilter as setMeaningsPartOfSpeechFilter,
-  setFilterOpen as setMeaningsFilterOpen,
-} from '../../reducers/wordMeaningsReducer'
+import { setPartOfSpeechFilter as setJournalPartOfSpeechFilter } from '../../reducers/journalReducer'
+import { setPartOfSpeechFilter as setMeaningsPartOfSpeechFilter } from '../../reducers/wordMeaningsReducer'
 import { useSelector, useDispatch } from 'react-redux'
 
 const Filter = ({ page }) => {
@@ -27,6 +21,7 @@ const Filter = ({ page }) => {
   })
 
   const handleFilterClick = (filterValue) => {
+    console.log('set filter to: ', filterValue)
     if (page === 'journal') {
       dispatch(setJournalPartOfSpeechFilter(filterValue))
     } else if (page === 'search') {

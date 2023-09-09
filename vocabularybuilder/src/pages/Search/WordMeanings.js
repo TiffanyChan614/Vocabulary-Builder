@@ -128,15 +128,15 @@ const WordMeanings = () => {
 
   return (
     <div className='search--word-meanings flex flex-col gap-5 px-2'>
-      <nav className='flex flex-row items-center flex-wrap md:justify-between gap-3'>
-        <div className='flex items-center gap-5'>
+      <nav className='flex flex-row items-center flex-wrap gap-3 justify-between'>
+        <div className='flex flex-row items-center gap-3'>
           <Link
             to='..'
             className='ml-2 underline text-sm hover:text-indigo-800 md:text-md'
             onClick={() => dispatch(setSearchCurrentPage('search'))}>
             Back
           </Link>
-          {isMobile && (
+          {isMobile ? (
             <button
               className={`text-sm text-gray-700 font-semibold border-2 border-indigo-100 hover:text-indigo-800 hover:bg-indigo-100 py-1 px-3 rounded-lg
             ${filterOpen ? 'bg-indigo-100' : ''}
@@ -144,6 +144,8 @@ const WordMeanings = () => {
               onClick={() => dispatch(setMeaningsFilterOpen(!filterOpen))}>
               {filterOpen ? 'Hide' : 'Show'} filter
             </button>
+          ) : (
+            <Filter page='search' />
           )}
         </div>
         <button
@@ -152,7 +154,7 @@ const WordMeanings = () => {
           {showAllDetails ? 'Hide all details' : 'Show all details'}
         </button>
       </nav>
-      {(!isMobile || filterOpen) && (
+      {filterOpen && isMobile && (
         <div>
           <Filter page='search' />
         </div>
