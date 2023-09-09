@@ -10,6 +10,7 @@ const initialState = {
   showDetails: {},
   showAllDetails: false,
   showGoToTopButton: false,
+  filterOpen: false,
 }
 
 const journalSlice = createSlice({
@@ -101,6 +102,12 @@ const journalSlice = createSlice({
         showGoToTopButton: action.payload,
       }
     },
+    setFilterOpen: (state, action) => {
+      return {
+        ...state,
+        filterOpen: action.payload,
+      }
+    },
   },
 })
 
@@ -114,5 +121,6 @@ export const {
   setShowDetailsById,
   setShowAllDetails,
   setGoToTopButton,
+  setFilterOpen,
 } = journalSlice.actions
 export default journalSlice.reducer

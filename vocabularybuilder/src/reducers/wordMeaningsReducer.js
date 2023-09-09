@@ -8,6 +8,7 @@ const initialState = {
   showDetails: {},
   showAllDetails: false,
   error: null,
+  filterOpen: false,
 }
 
 const wordMeaningsSlice = createSlice({
@@ -147,6 +148,12 @@ const wordMeaningsSlice = createSlice({
         error: action.payload,
       }
     },
+    setFilterOpen: (state, action) => {
+      return {
+        ...state,
+        filterOpen: action.payload,
+      }
+    },
   },
 })
 
@@ -158,5 +165,6 @@ export const {
   setShowDetailsArray,
   setShowAllDetails,
   setError,
+  setFilterOpen,
 } = wordMeaningsSlice.actions
 export default wordMeaningsSlice.reducer

@@ -11,12 +11,14 @@ import {
   setSortValue as setJournalSortValue,
   setShowAllDetails as setJournalShowAllDetails,
   setGoToTopButton as toggleJournalShowGoToTopButton,
+  setFilterOpen as setJournalFilterOpen,
 } from '../reducers/journalReducer'
 import {
   setSearchValue as setSearchSearchValue,
   setCurrentPage as setsSearchCurrentPage,
 } from '../reducers/searchReducer'
 import { IoIosArrowUp } from 'react-icons/io'
+import useIsMobile from '../hooks/useIsMobile'
 
 const Journal = () => {
   const dispatch = useDispatch()
@@ -28,10 +30,12 @@ const Journal = () => {
     showForm,
     showAllDetails,
     showGoToTopButton,
+    filterOpen,
   } = useSelector((state) => state.journal)
 
   // console.log('showAllDetails', showAllDetails)
   // console.log('sortValue', sortValue)
+  const { isMobile } = useIsMobile(1070)
 
   const sortOptions = {
     updated: (a, b) => b.lastUpdated.localeCompare(a.lastUpdated),
@@ -150,10 +154,16 @@ const Journal = () => {
             }
           />
         </div>
-        <div className='journal--control flex flex-row justify-between'>
-          <nav>
-            <Filter page='journal' />
-          </nav>
+        <div className='journal--control flex flex-row justify-between gap-2'>
+          {isMobile && (
+            <button
+              className={`text-sm text-gray-700 font-semibold border-2 border-indigo-100 hover:text-indigo-800 hover:bg-indigo-100 py-1 px-3 rounded-lg
+            ${filterOpen ? 'bg-indigo-100' : ''}
+          `}
+              onClick={() => dispatch(setJournalFilterOpen(!filterOpen))}>
+              {filterOpen ? 'Hide' : 'Show'} filter
+            </button>
+          )}
           <div className='flex justify-between gap-2'>
             <button
               onClick={handleDetailsClick}
@@ -175,6 +185,11 @@ const Journal = () => {
             </select>
           </div>
         </div>
+        {(!isMobile || filterOpen) && (
+          <div>
+            <Filter page='search' />
+          </div>
+        )}
         <div className='journal--words flex flex-col gap-3'>
           {displayedWords?.length > 0 ? (
             displayedWords.map((word) => (

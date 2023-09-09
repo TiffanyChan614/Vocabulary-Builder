@@ -9,12 +9,15 @@ import {
   setIsLoading as setMeaningsIsLoading,
   setShowAllDetails as setMeaningsShowAllDetails,
   setError as setMeaningsError,
+  setFilterOpen as setMeaningsFilterOpen,
 } from '../../reducers/wordMeaningsReducer'
 import { setCurrentPage as setSearchCurrentPage } from '../../reducers/searchReducer'
+import useIsMobile from '../../hooks/useIsMobile'
 
 const WordMeanings = () => {
   const { word } = useParams()
   const dispatch = useDispatch()
+  const { isMobile } = useIsMobile(1070)
   const {
     wordData,
     isLoading,
@@ -22,6 +25,7 @@ const WordMeanings = () => {
     showAllDetails,
     showDetails,
     error,
+    filterOpen,
   } = useSelector((state) => state.wordMeanings)
 
   console.log('showAllDetails', showAllDetails)
@@ -124,22 +128,35 @@ const WordMeanings = () => {
 
   return (
     <div className='search--word-meanings flex flex-col gap-5 px-2'>
-      <nav className='flex items-center flex-wrap md:justify-between gap-3'>
-        <Filter page='search' />
-        <div className='flex justify-between w-full items-center'>
+      <nav className='flex flex-row items-center flex-wrap md:justify-between gap-3'>
+        <div className='flex items-center gap-5'>
           <Link
             to='..'
             className='ml-2 underline text-sm hover:text-indigo-800 md:text-md'
             onClick={() => dispatch(setSearchCurrentPage('search'))}>
             Back
           </Link>
-          <button
-            onClick={handleDetailsClick}
-            className='py-1 px-3 border-2 border-indigo-100 rounded-lg text-sm font-semibold hover:bg-indigo-100 hover:text-indigo-800'>
-            {showAllDetails ? 'Hide all details' : 'Show all details'}
-          </button>
+          {isMobile && (
+            <button
+              className={`text-sm text-gray-700 font-semibold border-2 border-indigo-100 hover:text-indigo-800 hover:bg-indigo-100 py-1 px-3 rounded-lg
+            ${filterOpen ? 'bg-indigo-100' : ''}
+          `}
+              onClick={() => dispatch(setMeaningsFilterOpen(!filterOpen))}>
+              {filterOpen ? 'Hide' : 'Show'} filter
+            </button>
+          )}
         </div>
+        <button
+          onClick={handleDetailsClick}
+          className='py-1 px-3 border-2 border-indigo-100 rounded-lg text-sm font-semibold hover:bg-indigo-100 hover:text-indigo-800'>
+          {showAllDetails ? 'Hide all details' : 'Show all details'}
+        </button>
       </nav>
+      {(!isMobile || filterOpen) && (
+        <div>
+          <Filter page='search' />
+        </div>
+      )}
       {error ? <div>Error: {error.message}</div> : wordDataElement}
     </div>
   )
