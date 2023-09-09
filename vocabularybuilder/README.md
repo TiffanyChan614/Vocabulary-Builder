@@ -25,7 +25,15 @@ This is a Vocabulary Builder app that is built with React, Tailwind CSS, and HTM
 
 ### Video Demo
 
-![Video Demo]()
+![Video Demo](https://www.kapwing.com/w/VaD5t3sfkD)
+
+### Mobile Demo
+
+![Home](https://ibb.co/k0HjYqk)
+![Search](https://ibb.co/Vg2hj32)
+![Journal](https://ibb.co/hFKnyxq)
+![Flashcards](https://ibb.co/hs7qxR7)
+![Quiz](https://ibb.co/qypNLTT)
 
 ### Live Demo
 
