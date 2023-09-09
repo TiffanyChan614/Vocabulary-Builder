@@ -119,7 +119,7 @@ const QuizQuestion = () => {
     const index = name.split('-')[1]
     setBlanksAns((prev) => {
       const newAns = [...prev]
-      newAns[index] = value
+      newAns[index] = value.toLowerCase()
       console.log('blanks ans', newAns)
       return newAns
     })
