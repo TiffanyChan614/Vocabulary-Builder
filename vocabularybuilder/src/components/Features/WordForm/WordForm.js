@@ -103,6 +103,7 @@ const WordForm = ({ page }) => {
         [name]: newArr,
       }
     })
+    setMessage('Image deleted!')
   }
 
   const handleAdd = (e) => {
