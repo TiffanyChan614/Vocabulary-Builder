@@ -1,3 +1,5 @@
+
+https://github.com/TiffanyChan614/Vocabulary-Builder/assets/68774129/e029515f-b6e4-48aa-a5c2-5ad8f9eed987
 # Vocabulary Builder
 
 ## Table of Contents
@@ -25,15 +27,15 @@ This is a Vocabulary Builder app that is built with React, Tailwind CSS, and HTM
 
 ### Video Demo
 
-![Video Demo](https://www.kapwing.com/w/VaD5t3sfkD)
+![Video Demo]([https://www.kapwing.com/w/VaD5t3sfkD](https://github.com/TiffanyChan614/Vocabulary-Builder/assets/68774129/8e381f4b-1ac0-41b7-8f0b-4be6bbcf4238))
 
 ### Mobile Demo
 
-![Home](https://ibb.co/k0HjYqk)
-![Search](https://ibb.co/Vg2hj32)
-![Journal](https://ibb.co/hFKnyxq)
-![Flashcards](https://ibb.co/hs7qxR7)
-![Quiz](https://ibb.co/qypNLTT)
+<img width="307" alt="home" src="https://github.com/TiffanyChan614/Vocabulary-Builder/assets/68774129/74efd71c-5622-445e-87b2-77beafbda129">
+<img width="312" alt="search" src="https://github.com/TiffanyChan614/Vocabulary-Builder/assets/68774129/836cff49-fd2d-4338-8aad-b18d334a2b26">
+<img width="311" alt="journal" src="https://github.com/TiffanyChan614/Vocabulary-Builder/assets/68774129/0e797a7d-3549-41e6-a556-1d9faaba35af">
+<img width="312" alt="quiz" src="https://github.com/TiffanyChan614/Vocabulary-Builder/assets/68774129/19243ce3-79b5-41b8-87d6-4f284224454d">
+<img width="310" alt="flashcards" src="https://github.com/TiffanyChan614/Vocabulary-Builder/assets/68774129/448c9da0-378b-4953-bdb0-eb30fc8c12ac">
 
 ### Live Demo
 
