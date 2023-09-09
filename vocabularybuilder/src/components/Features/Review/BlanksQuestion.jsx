@@ -1,6 +1,6 @@
 import { checkBlanksCorrect } from '../../../utils/reviewHelper'
 
-const BlanksQuestion = ({ checked, blanksAns, questionData, handleChange }) => {
+const BlanksQuestion = ({ checked, blanksAns, questionData, handleChange, handleNext, handleCheck }) => {
   const { questionType, question, correctAnswer } = questionData
 
   const questionElement =
@@ -23,6 +23,24 @@ const BlanksQuestion = ({ checked, blanksAns, questionData, handleChange }) => {
         blanksAns[prevIndex] = ''
         prevInput.focus()
         e.preventDefault()
+      }
+    } else if (e.key === 'Enter') {
+      if (checked) {
+        handleNext()
+      } else {
+        handleCheck()
+      }
+    } else if (e.key === 'ArrowLeft' && index > 1) {
+      const prevIndex = index - 1
+      const prevInput = document.querySelector(`[name=blank-${prevIndex}]`)
+      if (prevInput) {
+        prevInput.focus()
+      }
+    } else if (e.key === 'ArrowRight' && index < blanksAns.length - 1) {
+      const nextIndex = index + 1
+      const nextInput = document.querySelector(`[name=blank-${nextIndex}]`)
+      if (nextInput) {
+        nextInput.focus()
       }
     }
   }

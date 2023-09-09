@@ -195,6 +195,8 @@ const QuizQuestion = () => {
           blanksAns={blanksAns}
           questionData={questionData}
           handleChange={handleChange}
+          handleNext={handleNextClick}
+          handleCheck={handleCheckClick}
         />
       )}
       {showCorrectSpelling && (
