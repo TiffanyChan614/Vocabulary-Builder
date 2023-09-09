@@ -17,65 +17,88 @@ const ImageDropZone = ({ formData, setFormData, setMessage }) => {
     e.preventDefault()
   }
 
+  const loadImageObjects = async (files) => {
+    const promises = []
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i]
+      const reader = new FileReader()
+      const promise = new Promise((resolve, reject) => {
+        reader.onload = function (e) {
+          const imageObject = {
+            src: e.target.result,
+            alt: file.name,
+          }
+          resolve(imageObject)
+        }
+        reader.onerror = function (err) {
+          reject(err)
+        }
+        reader.readAsDataURL(file)
+      })
+      promises.push(promise)
+    }
+    try {
+      const imageObjects = await Promise.all(promises)
+      return imageObjects
+    } catch (err) {
+      console.err(err)
+    }
+  }
+
+  const handleImageUpdate = async (files, formData, setFormData, setMessage) => {
+    const currentImagesLength = formData.images.length
+    if (files.length + currentImagesLength > 3) {
+      alert('Only 3 images allowed')
+      return
+    }
+    try {
+      const imageObjects = await loadImageObjects(files)
+      const newImages = [...formData.images, ...imageObjects]
+      setFormData((prevFormData) => ({...prevFormData, images: newImages}))
+      setMessage('Images added!')
+    }
+    catch (err) {
+      setMessage('Error adding images')
+    }
+  }
+
   const handleDrop = async (e) => {
     e.preventDefault()
     setIsDragging(false)
     const files = e.dataTransfer.files
     if (files && files.length > 0) {
-      const currentImagesLength = formData.images.length
-      if (files.length + currentImagesLength > 3) {
-        alert('Only 3 images allowed')
-        return
-      }
-      const promises = []
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i]
-        const reader = new FileReader()
-        const promise = new Promise((resolve, reject) => {
-          reader.onload = function (e) {
-            const imageObject = {
-              src: e.target.result,
-              alt: file.name,
-            }
-            resolve(imageObject)
-          }
-          reader.onerror = function (err) {
-            reject(err)
-          }
-          reader.readAsDataURL(file)
-        })
-        promises.push(promise)
-      }
-      try {
-        const imageObjects = await Promise.all(promises)
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          images: [...prevFormData.images, ...imageObjects],
-        }))
-        setMessage('Image added!')
-      } catch (err) {
-        console.err(err)
-      }
+      await handleImageUpdate(files, formData, setFormData, setMessage)
     }
   }
 
-  const styleClassName =
-    'border-2 border-dashed border-gray-300 w-full md:w-[200px] h-[200px] flex items-center justify-center text-gray-600 text-md rounded-lg'
+  const handleFileChange = async (e) => {
+    const files = e.target.files
+    if (files && files.length > 0) {
+      await handleImageUpdate(files, formData, setFormData, setMessage)
+    }
+  }
 
-  const draggingStyleClassName =
-    'border-2 border-dashed border-indigo-300 w-full md:w-[200px] h-[200px] flex items-center justify-center text-gray-600 text-md rounded-lg'
+  const baseStyle = ' border-2 border-dashed w-full md:w-[300px] h-[200px] flex flex-col items-center justify-center text-gray-600 text-md rounded-lg'
+  const inactiveStyle = 'border-gray-300'
+  const activeStyle = 'border-indigo-300'
 
   return (
+    <>
     <div
       className={`image-drop-zone ${
-        isDragging ? draggingStyleClassName : styleClassName
-      }`}
+        isDragging ? activeStyle : inactiveStyle
+      } ${baseStyle}`}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
       onDrop={handleDrop}>
       <p className='pointer-events-none'>Drop images here</p>
+      <p>Or, <label className='underline hover:text-indigo-700 cursor-pointer'>
+      browse to upload
+      <input type='file' onChange={handleFileChange} className='hidden'/>
+    </label></p>
     </div>
+    </>
   )
 }
 
