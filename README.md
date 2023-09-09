@@ -13,7 +13,6 @@
 - [Features](#features)
   - [Key Features](#key-features)
   - [Future Features](#future-features)
-- [Usage](#usage)
 - [API](#api)
 - [Skills Learned](#skills-learned)
 
