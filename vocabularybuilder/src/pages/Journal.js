@@ -53,7 +53,7 @@ const Journal = () => {
     } catch {
       dispatch(setJournalWords([]))
     }
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (window.scrollY > 100) {
@@ -72,7 +72,7 @@ const Journal = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [dispatch])
 
   const getFilteredAndSortedWords = () => {
     if (!words) {

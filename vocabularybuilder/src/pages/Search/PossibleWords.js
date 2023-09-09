@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom'
 import { getMatchedWords } from '../../services/wordAPI'
 import { useSelector, useDispatch } from 'react-redux'
@@ -7,6 +7,8 @@ import {
   setIsLoading as setPossibleWordsIsLoading,
   setError as setPossibleWordsError,
 } from '../../reducers/possibleWordsReducer'
+
+const CACHE_EXPIRATION_MS = 5 * 60 * 1000 // 5 min
 
 const PossibleWords = () => {
   const dispatch = useDispatch()
@@ -17,9 +19,7 @@ const PossibleWords = () => {
   )
   const isFirstRender = useRef(true)
 
-  const cache = {}
-
-  const CACHE_EXPIRATION_MS = 5 * 60 * 1000 // 5 min
+  const cache = useMemo(() => ({}), [])
 
   const wordStyleClassName =
     'cursor-pointer border-2 border-gray-100 p-3 rounded-xl text-lg font-medium text-indigo-900 hover:border-indigo-100 hover:bg-indigo-100 hover:text-indigo-900 select-none'
@@ -70,7 +70,7 @@ const PossibleWords = () => {
     return () => {
       clearTimeout(newTimeoutId)
     }
-  }, [searchValue, dispatch, error])
+  }, [searchValue, dispatch, error, cache])
 
   const matchedWordsElement = (() => {
     if (isLoading && searchValue !== '') {
