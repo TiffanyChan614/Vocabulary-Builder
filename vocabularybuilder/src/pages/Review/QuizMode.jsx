@@ -93,7 +93,7 @@ const QuizMode = () => {
             handleModeClick={handleModeClick}
           />
           <NumberChoice
-            choiceArray={[minNum, 10]}
+            choiceArray={[minNum, 10, 15, 20]}
             wordsLength={words?.length}
             number={number}
             prompt='Please select the number of words you want to review:'
