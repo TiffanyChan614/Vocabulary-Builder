@@ -5,9 +5,8 @@ import useReviewResult from '../../hooks/useReviewResult'
 
 const FlashcardsResult = () => {
   const { wordArray } = useSelector((state) => state.flashcards)
-  const { words } = useSelector((state) => state.journal)
   const navigate = useNavigate()
-  useReviewResult(wordArray, words, 'flashcards')
+  useReviewResult('flashcards', wordArray)
 
   return (
     <div className='flex flex-col gap-3 items-center w-full'>

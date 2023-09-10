@@ -5,9 +5,8 @@ import useReviewResult from '../../hooks/useReviewResult'
 
 const QuizResult = () => {
   const { wordArray } = useSelector((state) => state.quiz)
-  const { words } = useSelector((state) => state.journal)
   const navigate = useNavigate()
-  useReviewResult(wordArray, words, 'quiz')
+  useReviewResult('quiz', wordArray)
 
   return (
     <div className='flex flex-col gap-3 items-center w-full'>
