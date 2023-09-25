@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import ResultTable from '../../components/Features/Review/ResultTable'
 import useReviewResult from '../../hooks/useReviewResult'
+import React from 'react'
 
 const FlashcardsResult = () => {
   const { wordArray } = useSelector((state) => state.flashcards)

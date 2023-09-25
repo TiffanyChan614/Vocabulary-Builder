@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import Word from '../../components/Features/Word/Word'
 import { getWordData } from '../../services/wordAPI'
@@ -9,7 +9,7 @@ import {
   setIsLoading as setMeaningsIsLoading,
   setShowAllDetails as setMeaningsShowAllDetails,
   setError as setMeaningsError,
-  setFilterOpen as setMeaningsFilterOpen,
+  setFilterOpen as setMeaningsFilterOpen
 } from '../../reducers/wordMeaningsReducer'
 import { setCurrentPage as setSearchCurrentPage } from '../../reducers/searchReducer'
 import useIsMobile from '../../hooks/useIsMobile'
@@ -25,7 +25,7 @@ const WordMeanings = () => {
     showAllDetails,
     showDetails,
     error,
-    filterOpen,
+    filterOpen
   } = useSelector((state) => state.wordMeanings)
 
   console.log('showAllDetails', showAllDetails)
@@ -63,7 +63,7 @@ const WordMeanings = () => {
   }
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       dispatch(setMeaningsIsLoading(true))
       try {
         if (
@@ -72,7 +72,7 @@ const WordMeanings = () => {
         ) {
           console.log('wordData already exists')
         } else {
-          let returnedWordData = await getWordData(word)
+          const returnedWordData = await getWordData(word)
           console.log('returnedWordData', returnedWordData)
           dispatch(setMeaningsWordData(returnedWordData))
           dispatch(setMeaningsError(null))
@@ -82,7 +82,7 @@ const WordMeanings = () => {
           setMeaningsError({
             ...error,
             message:
-              'Sorry, we are having trouble fetching the data. Please try again later.',
+              'Sorry, we are having trouble fetching the data. Please try again later.'
           })
         )
       } finally {
@@ -136,17 +136,19 @@ const WordMeanings = () => {
             onClick={() => dispatch(setSearchCurrentPage('search'))}>
             Back
           </Link>
-          {isMobile ? (
-            <button
-              className={`text-sm text-gray-700 font-semibold border-2 border-indigo-100 hover:text-indigo-800 hover:bg-indigo-100 py-1 px-3 rounded-lg
-            ${filterOpen ? 'bg-indigo-100' : ''}
-          `}
-              onClick={() => dispatch(setMeaningsFilterOpen(!filterOpen))}>
-              {filterOpen ? 'Hide' : 'Show'} filter
-            </button>
-          ) : (
-            <Filter page='search' />
-          )}
+          {isMobile
+            ? (
+                <button
+                  className={`text-sm text-gray-700 font-semibold border-2 border-indigo-100 hover:text-indigo-800 hover:bg-indigo-100 py-1 px-3 rounded-lg
+                ${filterOpen ? 'bg-indigo-100' : ''}
+              `}
+                  onClick={() => dispatch(setMeaningsFilterOpen(!filterOpen))}>
+                  {filterOpen ? 'Hide' : 'Show'} filter
+                </button>
+              )
+            : (
+                <Filter page='search' />
+              )}
         </div>
         <button
           onClick={handleDetailsClick}

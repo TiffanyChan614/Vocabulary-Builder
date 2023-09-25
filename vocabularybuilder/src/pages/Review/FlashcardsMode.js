@@ -3,13 +3,14 @@ import {
   setInSession as setFlashcardsInSession,
   setMode as setFlashcardsMode,
   setNumber as setFlashcardsNumber,
-  setWordArray as setFlashcardsWordArray,
+  setWordArray as setFlashcardsWordArray
 } from '../../reducers/flashcardsReducer'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Common/Button'
 import { getFlashcardsInitWordArray } from '../../utils/reviewHelper'
 import NumberChoice from '../../components/Features/Review/NumberChoice'
 import ModeChoice from '../../components/Features/Review/ModeChoice'
+import React from 'react'
 
 const FlashcardsMode = () => {
   const { mode, number } = useSelector((state) => state.flashcards)
@@ -29,7 +30,7 @@ const FlashcardsMode = () => {
   const modesArray = [
     { name: 'wordToMeaning', text: 'Show Word, Guess Meaning' },
     { name: 'meaningToWord', text: 'Show Meaning, Guess Word' },
-    { name: 'mixed', text: 'Mixed Mode' },
+    { name: 'mixed', text: 'Mixed Mode' }
   ]
 
   const handleModeClick = (e) => {

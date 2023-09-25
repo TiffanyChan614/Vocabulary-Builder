@@ -1,11 +1,11 @@
-import { useEffect, useRef, useMemo } from 'react'
+import React, { useEffect, useRef, useMemo } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom'
 import { getMatchedWords } from '../../services/wordAPI'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   setMatchedWords as setPossibleWordsMatchedWords,
   setIsLoading as setPossibleWordsIsLoading,
-  setError as setPossibleWordsError,
+  setError as setPossibleWordsError
 } from '../../reducers/possibleWordsReducer'
 
 const CACHE_EXPIRATION_MS = 5 * 60 * 1000 // 5 min
@@ -37,7 +37,7 @@ const PossibleWords = () => {
         }
       })
     }
-    async function fetchData() {
+    async function fetchData () {
       if (searchValue === '' || error) {
         return
       }
@@ -57,7 +57,7 @@ const PossibleWords = () => {
           setPossibleWordsError({
             ...error,
             message:
-              'Sorry, we could not fetch possible words. Please try again later.',
+              'Sorry, we could not fetch possible words. Please try again later.'
           })
         )
       } finally {

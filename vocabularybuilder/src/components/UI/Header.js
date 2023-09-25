@@ -4,6 +4,7 @@ import { AiOutlineHome, AiOutlineSearch } from 'react-icons/ai'
 import { BiBookBookmark } from 'react-icons/bi'
 import { MdOutlineQuiz } from 'react-icons/md'
 import useIsMobile from '../../hooks/useIsMobile'
+import PropType from 'prop-types'
 
 const Header = () => {
   const activeTextStyleClassName =
@@ -19,23 +20,23 @@ const Header = () => {
     {
       text: 'Home',
       icon: <AiOutlineHome size={25} />,
-      link: '/',
+      link: '/'
     },
     {
       text: 'Search',
       icon: <AiOutlineSearch size={25} />,
-      link: '/search',
+      link: '/search'
     },
     {
       text: 'Journal',
       icon: <BiBookBookmark size={25} />,
-      link: '/journal',
+      link: '/journal'
     },
     {
       text: 'Review',
       icon: <MdOutlineQuiz size={25} />,
-      link: '/review',
-    },
+      link: '/review'
+    }
   ]
 
   return (
@@ -50,19 +51,21 @@ const Header = () => {
               }
               to={item.link}>
               {({ isActive }) =>
-                isMobile ? (
-                  <div
-                    className={
-                      isActive
-                        ? activeIconStyleClassName
-                        : iconLinkStyleClassName
-                    }
-                    aria-label={item.text}>
-                    {item.icon}
-                  </div>
-                ) : (
-                  item.text
-                )
+                isMobile
+                  ? (
+                    <div
+                      className={
+                        isActive
+                          ? activeIconStyleClassName
+                          : iconLinkStyleClassName
+                      }
+                      aria-label={item.text}>
+                      {item.icon}
+                    </div>
+                    )
+                  : (
+                      item.text
+                    )
               }
             </NavLink>
           ))}
@@ -73,3 +76,7 @@ const Header = () => {
 }
 
 export default Header
+
+Header.propTypes = {
+  isMobile: PropType.bool
+}

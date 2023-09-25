@@ -1,18 +1,22 @@
 import { checkBlanksCorrect } from '../../../utils/reviewHelper'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const BlanksQuestion = ({ checked, blanksAns, questionData, handleChange, handleNext, handleCheck }) => {
   const { questionType, question, correctAnswer } = questionData
 
   const questionElement =
-    questionType === 'blank-images' ? (
-      <img
-        src={question.src}
-        alt={question.alt}
-        className='w-full max-w-screen-sm h-auto object-cover rounded-lg shadow-md'
-      />
-    ) : (
-      <p className='font-semibold'>{question}</p>
-    )
+    questionType === 'blank-images'
+      ? (
+        <img
+          src={question.src}
+          alt={question.alt}
+          className='w-full max-w-screen-sm h-auto object-cover rounded-lg shadow-md'
+        />
+        )
+      : (
+          <p className='font-semibold'>{question}</p>
+        )
 
   const handleKeyDown = (e, index) => {
     if (e.key === 'Backspace' && index > 1 && blanksAns[index] === '') {
@@ -101,3 +105,12 @@ const BlanksQuestion = ({ checked, blanksAns, questionData, handleChange, handle
 }
 
 export default BlanksQuestion
+
+BlanksQuestion.propTypes = {
+  checked: PropTypes.bool.isRequired,
+  blanksAns: PropTypes.array.isRequired,
+  questionData: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleNext: PropTypes.func.isRequired,
+  handleCheck: PropTypes.func.isRequired
+}

@@ -1,15 +1,15 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom'
 import SearchField from '../../components/Common/SearchField'
 import WordForm from '../../components/Features/WordForm/WordForm'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setSearchValue as setSearchSearchValue,
-  setCurrentPage as setSearchCurrentPage,
+  setCurrentPage as setSearchCurrentPage
 } from '../../reducers/searchReducer'
 import {
   setShowAllDetails as setMeaningsShowDetails,
-  setPartOfSpeechFilter as setMeaningsPartOfSpeechFilter,
+  setPartOfSpeechFilter as setMeaningsPartOfSpeechFilter
 } from '../../reducers/wordMeaningsReducer'
 
 const Search = () => {

@@ -1,3 +1,6 @@
+import React from 'react'
+import PropType from 'prop-types'
+
 const ModeChoice = ({ mode, modesArray, handleModeClick }) => {
   const modeButtonStyleClassName = (buttonName) => {
     const baseStyle =
@@ -48,3 +51,9 @@ const ModeChoice = ({ mode, modesArray, handleModeClick }) => {
 }
 
 export default ModeChoice
+
+ModeChoice.propTypes = {
+  mode: PropType.object.isRequired,
+  modesArray: PropType.array.isRequired,
+  handleModeClick: PropType.func.isRequired
+}

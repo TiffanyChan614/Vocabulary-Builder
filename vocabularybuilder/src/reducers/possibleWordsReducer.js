@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   matchedWords: [],
   isLoading: false,
-  error: null,
+  error: null
 }
 
 const possibleWordsSlice = createSlice({
@@ -18,8 +18,8 @@ const possibleWordsSlice = createSlice({
     },
     setError: (state, action) => {
       state.error = action.payload
-    },
-  },
+    }
+  }
 })
 
 export const { setMatchedWords, setIsLoading, setError } =

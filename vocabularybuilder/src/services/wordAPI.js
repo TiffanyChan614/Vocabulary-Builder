@@ -6,8 +6,8 @@ const getWordData = async (word) => {
     url: `https://wordsapiv1.p.rapidapi.com/words/${word}`,
     headers: {
       'X-RapidAPI-Key': process.env.REACT_APP_WORD_API_KEY,
-      'X-RapidAPI-Host': process.env.REACT_APP_WORD_API_HOST,
-    },
+      'X-RapidAPI-Host': process.env.REACT_APP_WORD_API_HOST
+    }
   }
 
   try {
@@ -30,12 +30,12 @@ const getMatchedWords = async (word) => {
     url: 'https://wordsapiv1.p.rapidapi.com/words/',
     params: {
       letterPattern: `^${word}\\w*$`,
-      limit: 10,
+      limit: 10
     },
     headers: {
       'X-RapidAPI-Key': process.env.REACT_APP_WORD_API_KEY,
-      'X-RapidAPI-Host': process.env.REACT_APP_WORD_API_HOST,
-    },
+      'X-RapidAPI-Host': process.env.REACT_APP_WORD_API_HOST
+    }
   }
 
   try {
@@ -57,12 +57,12 @@ const getRandomWord = async () => {
     method: 'GET',
     url: 'https://wordsapiv1.p.rapidapi.com/words/',
     params: {
-      random: 'true',
+      random: 'true'
     },
     headers: {
       'X-RapidAPI-Key': process.env.REACT_APP_WORD_API_KEY,
-      'X-RapidAPI-Host': process.env.REACT_APP_WORD_API_HOST,
-    },
+      'X-RapidAPI-Host': process.env.REACT_APP_WORD_API_HOST
+    }
   }
 
   try {

@@ -10,7 +10,7 @@ const initialState = {
   showDetails: {},
   showAllDetails: false,
   showGoToTopButton: false,
-  filterOpen: false,
+  filterOpen: false
 }
 
 const journalSlice = createSlice({
@@ -39,25 +39,25 @@ const journalSlice = createSlice({
         ...state,
         words: newWords,
         showDetails: newShowDetails,
-        showAllDetails: allDetailsShown,
+        showAllDetails: allDetailsShown
       }
     },
     setSearchValue: (state, action) => {
       return {
         ...state,
-        searchValue: action.payload,
+        searchValue: action.payload
       }
     },
     setSortValue: (state, action) => {
       return {
         ...state,
-        sortValue: action.payload,
+        sortValue: action.payload
       }
     },
     setPartOfSpeechFilter: (state, action) => {
       return {
         ...state,
-        partOfSpeechFilter: action.payload,
+        partOfSpeechFilter: action.payload
       }
     },
     setShowForm: (state, action) => {
@@ -81,7 +81,7 @@ const journalSlice = createSlice({
       return {
         ...state,
         showDetails: newShowDetails,
-        showAllDetails: allDetailsShown,
+        showAllDetails: allDetailsShown
       }
     },
     setShowAllDetails: (state, action) => {
@@ -93,22 +93,22 @@ const journalSlice = createSlice({
       return {
         ...state,
         showDetails: newShowDetails,
-        showAllDetails: value,
+        showAllDetails: value
       }
     },
     setGoToTopButton: (state, action) => {
       return {
         ...state,
-        showGoToTopButton: action.payload,
+        showGoToTopButton: action.payload
       }
     },
     setFilterOpen: (state, action) => {
       return {
         ...state,
-        filterOpen: action.payload,
+        filterOpen: action.payload
       }
-    },
-  },
+    }
+  }
 })
 
 export const {
@@ -121,6 +121,6 @@ export const {
   setShowDetailsById,
   setShowAllDetails,
   setGoToTopButton,
-  setFilterOpen,
+  setFilterOpen
 } = journalSlice.actions
 export default journalSlice.reducer

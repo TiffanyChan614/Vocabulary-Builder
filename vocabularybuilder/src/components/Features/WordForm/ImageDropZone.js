@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const ImageDropZone = ({ formData, setFormData, setMessage }) => {
   const [isDragging, setIsDragging] = useState(false)
@@ -26,7 +27,7 @@ const ImageDropZone = ({ formData, setFormData, setMessage }) => {
         reader.onload = function (e) {
           const imageObject = {
             src: e.target.result,
-            alt: file.name,
+            alt: file.name
           }
           resolve(imageObject)
         }
@@ -114,3 +115,9 @@ const ImageDropZone = ({ formData, setFormData, setMessage }) => {
 }
 
 export default ImageDropZone
+
+ImageDropZone.propTypes = {
+  formData: PropTypes.object.isRequired,
+  setFormData: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired
+}

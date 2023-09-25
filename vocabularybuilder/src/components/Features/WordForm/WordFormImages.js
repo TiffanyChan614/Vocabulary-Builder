@@ -1,12 +1,13 @@
-import { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { getImage } from '../../../services/pexelAPI'
 import ImageDropZone from './ImageDropZone'
+import PropType from 'prop-types'
 
 const WordFormImages = ({
   formData,
   setFormData,
   handleDelete,
-  setMessage,
+  setMessage
 }) => {
   const [images, setImages] = useState(formData.images)
   const [searchValue, setSearchValue] = useState(formData.word)
@@ -43,15 +44,15 @@ const WordFormImages = ({
       const imageObject = {
         src: images[index].src.medium,
         alt: images[index].alt,
-        id: images[index].id,
+        id: images[index].id
       }
       newArr.push(imageObject)
       return {
         ...prevFormData,
-        [name]: newArr,
+        [name]: newArr
       }
     })
-    setMessage({text: 'Image added!', type: 'success'})
+    setMessage({ text: 'Image added!', type: 'success' })
   }
 
   const handleShow = (e) => {
@@ -146,28 +147,30 @@ const WordFormImages = ({
       <div className='word-form--details-content'>
         <p>Your images:</p>
         <div className='flex justify-center lg:justify-start gap-2'>
-          {formData.images?.length > 0 ? (
-            formData.images?.map((image, index) => (
-              <div
-                key={image.src + index}
-                className='flex flex-col'>
-                <img
-                  className='rounded-t-lg w-[150px] md:w-[200px] lg:w-[250px] object-cover'
-                  src={image.src}
-                  alt={image.alt}
-                />
-                <button
-                  type='button'
-                  className='delete w-full border-b-2 border-x-2 border-indigo-100 rounded-b-lg px-2 py-1 hover:bg-indigo-100'
-                  name='images'
-                  onClick={(e) => handleDelete(e, index)}>
-                  Delete
-                </button>
-              </div>
-            ))
-          ) : (
-            <p className={infoTextStyleClassName}>No images added</p>
-          )}
+          {formData.images?.length > 0
+            ? (
+                formData.images?.map((image, index) => (
+                  <div
+                    key={image.src + index}
+                    className='flex flex-col'>
+                    <img
+                      className='rounded-t-lg w-[150px] md:w-[200px] lg:w-[250px] object-cover'
+                      src={image.src}
+                      alt={image.alt}
+                    />
+                    <button
+                      type='button'
+                      className='delete w-full border-b-2 border-x-2 border-indigo-100 rounded-b-lg px-2 py-1 hover:bg-indigo-100'
+                      name='images'
+                      onClick={(e) => handleDelete(e, index)}>
+                      Delete
+                    </button>
+                  </div>
+                ))
+              )
+            : (
+              <p className={infoTextStyleClassName}>No images added</p>
+              )}
         </div>
       </div>
     </div>
@@ -175,3 +178,10 @@ const WordFormImages = ({
 }
 
 export default WordFormImages
+
+WordFormImages.propTypes = {
+  formData: PropType.object.isRequired,
+  setFormData: PropType.func.isRequired,
+  handleDelete: PropType.func.isRequired,
+  setMessage: PropType.func.isRequired
+}

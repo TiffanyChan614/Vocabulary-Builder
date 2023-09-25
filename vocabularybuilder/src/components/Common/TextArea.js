@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+import PropType from 'prop-types'
 
 const TextArea = ({ id, name, index, value, onBlur, height }) => {
   const [text, setText] = useState(value)
@@ -23,3 +24,12 @@ const TextArea = ({ id, name, index, value, onBlur, height }) => {
 }
 
 export default TextArea
+
+TextArea.propTypes = {
+  id: PropType.string.isRequired,
+  name: PropType.string.isRequired,
+  index: PropType.number.isRequired,
+  value: PropType.string.isRequired,
+  onBlur: PropType.func.isRequired,
+  height: PropType.string.isRequired
+}

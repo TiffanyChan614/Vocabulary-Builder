@@ -1,3 +1,6 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
 const ResultTable = ({ wordArray }) => {
   const bgColor = (pointsEarned) => {
     if (pointsEarned > 0) {
@@ -72,3 +75,7 @@ const ResultTable = ({ wordArray }) => {
 }
 
 export default ResultTable
+
+ResultTable.propTypes = {
+  wordArray: PropTypes.array.isRequired
+}

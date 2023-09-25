@@ -1,3 +1,6 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
 const WordFormHeader = ({ word, pronunciation, partOfSpeech, message }) => {
   return (
     <header className='word-form--header pt-5 pb-2 md:pt-6 md:pb-4 px-6 border-b-2 flex flex-col sm:flex-row items-center sm:justify-between gap-2'>
@@ -20,3 +23,10 @@ const WordFormHeader = ({ word, pronunciation, partOfSpeech, message }) => {
 }
 
 export default WordFormHeader
+
+WordFormHeader.propTypes = {
+  word: PropTypes.string.isRequired,
+  pronunciation: PropTypes.string,
+  partOfSpeech: PropTypes.string,
+  message: PropTypes.object.isRequired
+}

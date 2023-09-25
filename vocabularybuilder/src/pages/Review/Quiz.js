@@ -4,9 +4,9 @@ import EndSessionPopup from '../../components/Features/Review/EndSessionPopup'
 import BackPopup from '../../components/Features/Review/BackPopup'
 import {
   setShowQuit as setQuizShowQuit,
-  resetQuiz,
+  resetQuiz
 } from '../../reducers/quizReducer'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 const Quiz = () => {
   const { showNotFinished, inSession, showQuit } = useSelector(

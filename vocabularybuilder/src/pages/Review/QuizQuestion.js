@@ -1,12 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import MCQuestion from '../../components/Features/Review/MCQuestion'
-import { setWordArrayById as setQuizWordArrayById } from '../../reducers/quizReducer'
-import { useState, useEffect } from 'react'
+import { setWordArrayById as setQuizWordArrayById, setShowNotFinished as setQuizShowNotFinished } from '../../reducers/quizReducer'
+import React, { useState, useEffect } from 'react'
 import Button from '../../components/Common/Button'
 import BlanksQuestion from '../../components/Features/Review/BlanksQuestion'
 import { checkBlanksCorrect, hasBlank } from '../../utils/reviewHelper'
-import { setShowNotFinished as setQuizShowNotFinished } from '../../reducers/quizReducer'
 
 const QuizQuestion = () => {
   const { index } = useParams()
@@ -33,13 +32,13 @@ const QuizQuestion = () => {
       const initialBlanksAns =
         questionType === 'blank'
           ? Array.from(
-              { length: questionData?.correctAnswer.length },
-              (_, index) => ''
-            )
+            { length: questionData?.correctAnswer.length },
+            (_, index) => ''
+          )
           : []
       setBlanksAns([
         questionData.correctAnswer[0],
-        ...initialBlanksAns.slice(1),
+        ...initialBlanksAns.slice(1)
       ])
     }
   }, [questionData, questionType, navigate])
@@ -67,9 +66,9 @@ const QuizQuestion = () => {
         return
       } else {
         const newPointsEarned = chosen === questionData.correctAnswer ? 1 : -1
-        let updatedWordData = {
+        const updatedWordData = {
           ...wordData,
-          pointsEarned: wordData.pointsEarned + newPointsEarned,
+          pointsEarned: wordData.pointsEarned + newPointsEarned
         }
         console.log('correct? ', chosen === questionData.correctAnswer)
         console.log(
@@ -93,9 +92,9 @@ const QuizQuestion = () => {
         ? 2
         : -1
       setShowCorrectSpelling(true)
-      let updatedWordData = {
+      const updatedWordData = {
         ...wordData,
-        pointsEarned: wordData.pointsEarned + newPointsEarned,
+        pointsEarned: wordData.pointsEarned + newPointsEarned
       }
       console.log(
         'pointsEarned',

@@ -9,8 +9,10 @@ import quizReducer, {
   setInSession,
   resetQuiz,
   setError,
-  setIsLoading,
+  setIsLoading
 } from './quizReducer'
+
+import { describe, it, expect } from 'vitest'
 
 describe('quiz reducer', () => {
   const initialState = {
@@ -22,7 +24,7 @@ describe('quiz reducer', () => {
     showQuit: false,
     inSession: false,
     isLoading: false,
-    error: null,
+    error: null
   }
 
   it('should handle setWordArray', () => {
@@ -55,8 +57,8 @@ describe('quiz reducer', () => {
       ...initialState,
       wordArray: [
         { id: 1, word: 'word1' },
-        { id: 2, word: 'word2' },
-      ],
+        { id: 2, word: 'word2' }
+      ]
     }
     const nextState = quizReducer(
       initialStateWithWords,
@@ -90,7 +92,7 @@ describe('quiz reducer', () => {
       showQuit: true,
       inSession: true,
       isLoading: true,
-      error: 'Test Error',
+      error: 'Test Error'
     }
     const nextState = quizReducer(currentState, resetQuiz())
     expect(nextState).toEqual(initialState)

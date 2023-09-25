@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Word from '../components/Features/Word/Word'
 import SearchField from '../components/Common/SearchField'
@@ -11,11 +11,11 @@ import {
   setSortValue as setJournalSortValue,
   setShowAllDetails as setJournalShowAllDetails,
   setGoToTopButton as toggleJournalShowGoToTopButton,
-  setFilterOpen as setJournalFilterOpen,
+  setFilterOpen as setJournalFilterOpen
 } from '../reducers/journalReducer'
 import {
   setSearchValue as setSearchSearchValue,
-  setCurrentPage as setsSearchCurrentPage,
+  setCurrentPage as setsSearchCurrentPage
 } from '../reducers/searchReducer'
 import { IoIosArrowUp } from 'react-icons/io'
 import useIsMobile from '../hooks/useIsMobile'
@@ -30,7 +30,7 @@ const Journal = () => {
     showForm,
     showAllDetails,
     showGoToTopButton,
-    filterOpen,
+    filterOpen
   } = useSelector((state) => state.journal)
 
   // console.log('showAllDetails', showAllDetails)
@@ -44,7 +44,7 @@ const Journal = () => {
     length: (a, b) => a.word.length - b.word.length,
     partOfSpeech: (a, b) => a.partOfSpeech.localeCompare(b.partOfSpeech),
     pointsAsc: (a, b) => a.points - b.points,
-    pointsDesc: (a, b) => b.points - a.points,
+    pointsDesc: (a, b) => b.points - a.points
   }
 
   useEffect(() => {
@@ -155,17 +155,19 @@ const Journal = () => {
           />
         </div>
         <div className='journal--control flex flex-row justify-between gap-2'>
-          {isMobile ? (
-            <button
-              className={`text-sm text-gray-700 font-semibold border-2 border-indigo-100 hover:text-indigo-800 hover:bg-indigo-100 py-1 px-3 rounded-lg
-            ${filterOpen ? 'bg-indigo-100' : ''}
-          `}
-              onClick={() => dispatch(setJournalFilterOpen(!filterOpen))}>
-              {filterOpen ? 'Hide' : 'Show'} filter
+          {isMobile
+            ? (
+              <button
+                className={`text-sm text-gray-700 font-semibold border-2 border-indigo-100 hover:text-indigo-800 hover:bg-indigo-100 py-1 px-3 rounded-lg
+                  ${filterOpen ? 'bg-indigo-100' : ''}
+                  `}
+                onClick={() => dispatch(setJournalFilterOpen(!filterOpen))}>
+                {filterOpen ? 'Hide' : 'Show'} filter
             </button>
-          ) : (
-            <Filter page='journal' />
-          )}
+              )
+            : (
+              <Filter page='journal' />
+              )}
           <div className='flex justify-between gap-2'>
             <button
               onClick={handleDetailsClick}
@@ -193,17 +195,19 @@ const Journal = () => {
           </div>
         )}
         <div className='journal--words flex flex-col gap-3'>
-          {displayedWords?.length > 0 ? (
-            displayedWords.map((word) => (
-              <Word
-                key={word.id}
-                wordData={word}
-                page='journal'
-              />
-            ))
-          ) : (
-            <NoWordsFoundMessage />
-          )}
+          {displayedWords?.length > 0
+            ? (
+                displayedWords.map((word) => (
+                  <Word
+                    key={word.id}
+                    wordData={word}
+                    page='journal'
+                  />
+                ))
+              )
+            : (
+              <NoWordsFoundMessage />
+              )}
         </div>
       </div>
       {showForm && <WordForm page='journal' />}

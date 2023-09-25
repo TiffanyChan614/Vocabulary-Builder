@@ -1,14 +1,16 @@
 import possibleWordsReducer, {
   setMatchedWords,
   setIsLoading,
-  setError,
+  setError
 } from './possibleWordsReducer'
+
+import { describe, it, expect } from 'vitest'
 
 describe('possibleWords reducer', () => {
   const initialState = {
     matchedWords: [],
     isLoading: false,
-    error: null,
+    error: null
   }
 
   it('should handle setMatchedWords', () => {

@@ -3,6 +3,8 @@ import { setShowNotFinished as setFlashcardsShowNotFinished } from '../../../red
 import { setShowNotFinished as setQuizShowNotFinished } from '../../../reducers/quizReducer'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import React from 'react'
+import PropType from 'prop-types'
 
 const EndSessionPopup = ({ page }) => {
   const dispatch = useDispatch()
@@ -45,3 +47,7 @@ const EndSessionPopup = ({ page }) => {
 }
 
 export default EndSessionPopup
+
+EndSessionPopup.propTypes = {
+  page: PropType.string.isRequired
+}

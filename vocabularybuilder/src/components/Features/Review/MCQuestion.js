@@ -1,3 +1,6 @@
+import React from 'react'
+import PropType from 'prop-types'
+
 const MCQuestion = ({ checked, chosen, questionData, handleSelect }) => {
   const { questionType, question, correctAnswer, choices } = questionData
 
@@ -52,7 +55,7 @@ const MCQuestion = ({ checked, chosen, questionData, handleSelect }) => {
         Choose the word that is an{' '}
         <span className='font-semibold'>antonym</span> of the following words:
       </p>
-    ),
+    )
   }
   return (
     <div className='flex flex-col gap-3 text-center items-center'>
@@ -74,3 +77,10 @@ const MCQuestion = ({ checked, chosen, questionData, handleSelect }) => {
 }
 
 export default MCQuestion
+
+MCQuestion.propTypes = {
+  checked: PropType.bool.isRequired,
+  chosen: PropType.string.isRequired,
+  questionData: PropType.object.isRequired,
+  handleSelect: PropType.func.isRequired
+}

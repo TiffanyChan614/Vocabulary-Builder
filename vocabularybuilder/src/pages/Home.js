@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getRandomWord } from '../services/wordAPI'
 import {
   setCurrentPage as setSearchCurrentPage,
-  setSearchValue as setSearchSearchValue,
+  setSearchValue as setSearchSearchValue
 } from '../reducers/searchReducer'
 import { useDispatch } from 'react-redux'
 import Button from '../components/Common/Button'
@@ -69,7 +69,7 @@ const Home = () => {
         setError({
           ...error,
           message:
-            'Sorry, we could not fetch the word of the day. Please try refreshing the page.',
+            'Sorry, we could not fetch the word of the day. Please try refreshing the page.'
         })
       )
   }, [])
@@ -85,23 +85,25 @@ const Home = () => {
         Welcome to Vocabulary Builder!
       </p>
       <div className={`home--word-of-the-day ${divClassName} mt-2 md:mt-3`}>
-        {error ? (
-          <div>Error: {error.message}</div>
-        ) : (
-          <>
-            <h3 className='text-lg font-bold'>Word of the day</h3>
-            <p className='text-xl font-bold text-indigo-800 my-4'>{word}</p>
-            <Link
-              to={`search/${word}`}
-              className='text-md hover:text-indigo-800 hover:underline select-none'
-              onClick={handleLearnWord}>
-              Learn this word
-            </Link>
-          </>
-        )}
+        {error
+          ? (
+              <div>Error: {error.message}</div>
+            )
+          : (
+            <>
+              <h3 className='text-lg font-bold'>Word of the day</h3>
+              <p className='text-xl font-bold text-indigo-800 my-4'>{word}</p>
+              <Link
+                to={`search/${word}`}
+                className='text-md hover:text-indigo-800 hover:underline select-none'
+                onClick={handleLearnWord}>
+                Learn this word
+              </Link>
+            </>
+            )}
       </div>
       <div className={`home--search ${divClassName}`}>
-        <h3 className='text-lg font-bold'>Don't know the meaning of a word?</h3>
+        <h3 className='text-lg font-bold'>Don&apost know the meaning of a word?</h3>
         <Button
           bgColor='indigo'
           size='md'

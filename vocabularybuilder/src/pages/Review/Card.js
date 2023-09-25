@@ -1,10 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { GrPrevious, GrNext } from 'react-icons/gr'
 import {
   setShowNotFinished as setFlashcardsShowNotFinished,
-  setWordArrayByIndex as setFlashcardsWordArrayByIndex,
+  setWordArrayByIndex as setFlashcardsWordArrayByIndex
 } from '../../reducers/flashcardsReducer'
 import Button from '../../components/Common/Button'
 
@@ -34,9 +34,9 @@ const Card = () => {
       name: 'somewhatFamiliar',
       text: 'Somewhat familiar',
       score: 1,
-      color: 'yellow',
+      color: 'yellow'
     },
-    { name: 'veryFamiliar', text: 'Very Familiar', score: 2, color: 'green' },
+    { name: 'veryFamiliar', text: 'Very Familiar', score: 2, color: 'green' }
   ]
 
   const selectedFamiliarity =
@@ -121,7 +121,7 @@ const Card = () => {
       ).score
       const updatedWordData = {
         ...wordData,
-        pointsEarned: newScore,
+        pointsEarned: newScore
       }
       dispatch(
         setFlashcardsWordArrayByIndex({ index: idx, word: updatedWordData })
@@ -134,20 +134,20 @@ const Card = () => {
       ? familiarity.color === 'red'
         ? 'bg-red-200 border-red-200'
         : familiarity.color === 'yellow'
-        ? 'bg-yellow-200 border-yellow-200'
-        : familiarity.color === 'green'
-        ? 'bg-green-200 border-green-200'
-        : ''
+          ? 'bg-yellow-200 border-yellow-200'
+          : familiarity.color === 'green'
+            ? 'bg-green-200 border-green-200'
+            : ''
       : ''
 
     const borderClass =
       familiarity.color === 'red'
         ? 'border-red-200 hover:bg-red-200'
         : familiarity.color === 'yellow'
-        ? 'border-yellow-200 hover:bg-yellow-200'
-        : familiarity.color === 'green'
-        ? 'border-green-200 hover:bg-green-200'
-        : ''
+          ? 'border-yellow-200 hover:bg-yellow-200'
+          : familiarity.color === 'green'
+            ? 'border-green-200 hover:bg-green-200'
+            : ''
 
     return `font-semibold px-4 py-2 rounded-full cursor-pointer border-2 select-none ${borderClass} ${bgClass}`
   }

@@ -8,8 +8,10 @@ import journalReducer, {
   setShowDetailsById,
   setShowAllDetails,
   setGoToTopButton,
-  setFilterOpen,
+  setFilterOpen
 } from './journalReducer'
+
+import { describe, it, expect } from 'vitest'
 
 describe('journalReducer', () => {
   const initialState = {
@@ -22,7 +24,7 @@ describe('journalReducer', () => {
     showDetails: {},
     showAllDetails: false,
     showGoToTopButton: false,
-    filterOpen: false,
+    filterOpen: false
   }
 
   it('should handle setWords', () => {
@@ -62,7 +64,7 @@ describe('journalReducer', () => {
   it('should handle setShowDetailsById', () => {
     const initialStateWithShowDetails = {
       ...initialState,
-      showDetails: { 1: false, 2: false },
+      showDetails: { 1: false, 2: false }
     }
     const nextState = journalReducer(
       initialStateWithShowDetails,

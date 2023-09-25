@@ -6,7 +6,7 @@ const initialState = {
   number: 0,
   showNotFinished: false,
   showQuit: false,
-  inSession: false,
+  inSession: false
 }
 
 const flashcardsSlice = createSlice({
@@ -16,19 +16,19 @@ const flashcardsSlice = createSlice({
     setMode: (state, action) => {
       return {
         ...state,
-        mode: action.payload,
+        mode: action.payload
       }
     },
     setWordArray: (state, action) => {
       return {
         ...state,
-        wordArray: action.payload,
+        wordArray: action.payload
       }
     },
     setNumber: (state, action) => {
       return {
         ...state,
-        number: action.payload,
+        number: action.payload
       }
     },
     setWordArrayByIndex: (state, action) => {
@@ -37,33 +37,33 @@ const flashcardsSlice = createSlice({
       newWordArray[index] = word
       return {
         ...state,
-        wordArray: newWordArray,
+        wordArray: newWordArray
       }
     },
     setShowNotFinished: (state, action) => {
       return {
         ...state,
-        showNotFinished: action.payload,
+        showNotFinished: action.payload
       }
     },
     setShowQuit: (state, action) => {
       return {
         ...state,
-        showQuit: action.payload,
+        showQuit: action.payload
       }
     },
     setInSession: (state, action) => {
       return {
         ...state,
-        inSession: action.payload,
+        inSession: action.payload
       }
     },
     resetFlashcards: () => {
       return {
-        ...initialState,
+        ...initialState
       }
-    },
-  },
+    }
+  }
 })
 
 export const {
@@ -74,6 +74,6 @@ export const {
   setShowNotFinished,
   setShowQuit,
   setInSession,
-  resetFlashcards,
+  resetFlashcards
 } = flashcardsSlice.actions
 export default flashcardsSlice.reducer

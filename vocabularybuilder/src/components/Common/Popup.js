@@ -1,5 +1,7 @@
 import Overlay from './Overlay'
 import Button from './Button'
+import React from 'react'
+import PropType from 'prop-types'
 
 const Popup = ({ title, handleYes, handleNo, children }) => {
   return (
@@ -28,3 +30,10 @@ const Popup = ({ title, handleYes, handleNo, children }) => {
 }
 
 export default Popup
+
+Popup.propTypes = {
+  title: PropType.string.isRequired,
+  handleYes: PropType.func.isRequired,
+  handleNo: PropType.func.isRequired,
+  children: PropType.node.isRequired
+}

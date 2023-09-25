@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setWordArray as setQuizWordArray,
-  setInSession as setQuizInSession,
+  setInSession as setQuizInSession
 } from '../reducers/quizReducer'
 import {
   setWordArray as setFlashcardsWordArray,
-  setInSession as setFlashcardsInSession,
+  setInSession as setFlashcardsInSession
 } from '../reducers/flashcardsReducer'
 import { setWords as setJournalWords } from '../reducers/journalReducer'
 
@@ -23,7 +23,7 @@ const useReviewResult = (page, wordArray) => {
       return {
         ...word,
         newPoints: newPoints < 0 ? 0 : newPoints,
-        pointsEarned: newPointsEarned || 0,
+        pointsEarned: newPointsEarned || 0
       }
     })
 
@@ -35,7 +35,7 @@ const useReviewResult = (page, wordArray) => {
       lastReviewed:
         newWordArray.find((w) => w.id === word.id)?.pointsEarned === 0
           ? word.lastReviewed
-          : new Date().toISOString(),
+          : new Date().toISOString()
     }))
 
     console.log('newJournalWords', newJournalWords)
@@ -47,7 +47,6 @@ const useReviewResult = (page, wordArray) => {
     dispatch(updateInSession(false))
     localStorage.setItem('journal', JSON.stringify(newJournalWords))
     dispatch(setJournalWords(newJournalWords))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }
 

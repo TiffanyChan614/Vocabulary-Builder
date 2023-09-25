@@ -9,7 +9,7 @@ const initialState = {
   showQuit: false,
   inSession: false,
   isLoading: false,
-  error: null,
+  error: null
 }
 
 const quizSlice = createSlice({
@@ -19,25 +19,25 @@ const quizSlice = createSlice({
     setWordArray: (state, action) => {
       return {
         ...state,
-        wordArray: action.payload,
+        wordArray: action.payload
       }
     },
     setQuestionArray: (state, action) => {
       return {
         ...state,
-        questionArray: action.payload,
+        questionArray: action.payload
       }
     },
     setMode: (state, action) => {
       return {
         ...state,
-        mode: action.payload,
+        mode: action.payload
       }
     },
     setNumber: (state, action) => {
       return {
         ...state,
-        number: action.payload,
+        number: action.payload
       }
     },
     setWordArrayById: (state, action) => {
@@ -51,25 +51,25 @@ const quizSlice = createSlice({
       })
       return {
         ...state,
-        wordArray: newWordArray,
+        wordArray: newWordArray
       }
     },
     setShowNotFinished: (state, action) => {
       return {
         ...state,
-        showNotFinished: action.payload,
+        showNotFinished: action.payload
       }
     },
     setShowQuit: (state, action) => {
       return {
         ...state,
-        showQuit: action.payload,
+        showQuit: action.payload
       }
     },
     setInSession: (state, action) => {
       return {
         ...state,
-        inSession: action.payload,
+        inSession: action.payload
       }
     },
     resetQuiz: () => {
@@ -78,16 +78,16 @@ const quizSlice = createSlice({
     setError: (state, action) => {
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       }
     },
     setIsLoading: (state, action) => {
       return {
         ...state,
-        isLoading: action.payload,
+        isLoading: action.payload
       }
-    },
-  },
+    }
+  }
 })
 
 export const {
@@ -101,6 +101,6 @@ export const {
   setInSession,
   resetQuiz,
   setError,
-  setIsLoading,
+  setIsLoading
 } = quizSlice.actions
 export default quizSlice.reducer

@@ -1,9 +1,12 @@
+import React from 'react'
+import PropType from 'prop-types'
+
 const NumberChoice = ({
   choiceArray,
   wordsLength,
   number,
   prompt,
-  handleNumberClick,
+  handleNumberClick
 }) => {
   const numberButtonStyleClassName = (buttonName) => {
     const baseStyle =
@@ -34,3 +37,11 @@ const NumberChoice = ({
 }
 
 export default NumberChoice
+
+NumberChoice.propTypes = {
+  choiceArray: PropType.array.isRequired,
+  wordsLength: PropType.number.isRequired,
+  number: PropType.number.isRequired,
+  prompt: PropType.string.isRequired,
+  handleNumberClick: PropType.func.isRequired
+}

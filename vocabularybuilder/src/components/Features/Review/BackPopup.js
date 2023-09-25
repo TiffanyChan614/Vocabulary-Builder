@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setShowQuit as setFlashcardsShowQuit } from '../../../reducers/flashcardsReducer'
 import { setShowQuit as setQuizShowQuit } from '../../../reducers/quizReducer'
+import React from 'react'
+import PropType from 'prop-types'
 
 const BackPopup = ({ page }) => {
   const dispatch = useDispatch()
@@ -32,3 +34,7 @@ const BackPopup = ({ page }) => {
 }
 
 export default BackPopup
+
+BackPopup.propTypes = {
+  page: PropType.string.isRequired
+}

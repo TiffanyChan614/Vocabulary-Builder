@@ -13,8 +13,8 @@ const store = configureStore({
     possibleWords: possibleWordsReducer,
     wordMeanings: wordMeaningsReducer,
     flashcards: flashcardsReducer,
-    quiz: quizReducer,
-  },
+    quiz: quizReducer
+  }
 })
 
 export default store

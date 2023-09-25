@@ -2,8 +2,9 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import {
   setSearchValue as setSearchSearchValue,
-  setCurrentPage as setSearchCurrentPage,
+  setCurrentPage as setSearchCurrentPage
 } from '../../reducers/searchReducer'
+import React from 'react'
 
 const Review = () => {
   const location = useLocation()
@@ -27,29 +28,31 @@ const Review = () => {
       {isReviewPage && (
         <div className='flex flex-col gap-2 md:gap-5 w-full max-w-screen-md'>
           <h1 className='text-xl md:text-2xl font-bold text-center'>Review</h1>
-          {isJournalEmpty ? (
-            <div className='text-center w-full'>
-              There is no word in your journal to review.{' '}
-              <Link
-                className='text-indigo-800 hover:underline'
-                to='../search'
-                onClick={() => {
-                  dispatch(setSearchSearchValue(''))
-                  dispatch(setSearchCurrentPage('search'))
-                }}>
-                Explore new words here!
-              </Link>
-            </div>
-          ) : (
-            <>
-              <Link to='flashcards'>
-                <div className={divStyleClassName}>Flashcards</div>
-              </Link>
-              <Link to='quiz'>
-                <div className={divStyleClassName}>Quiz</div>
-              </Link>
-            </>
-          )}
+          {isJournalEmpty
+            ? (
+                <div className='text-center w-full'>
+                  There is no word in your journal to review.{' '}
+                  <Link
+                    className='text-indigo-800 hover:underline'
+                    to='../search'
+                    onClick={() => {
+                      dispatch(setSearchSearchValue(''))
+                      dispatch(setSearchCurrentPage('search'))
+                    }}>
+                    Explore new words here!
+                  </Link>
+                </div>
+              )
+            : (
+                <>
+                  <Link to='flashcards'>
+                    <div className={divStyleClassName}>Flashcards</div>
+                  </Link>
+                  <Link to='quiz'>
+                    <div className={divStyleClassName}>Quiz</div>
+                  </Link>
+                </>
+              )}
         </div>
       )}
       <Outlet />

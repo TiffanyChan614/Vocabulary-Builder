@@ -4,7 +4,7 @@ const shuffleArray = (array) => {
   let currentIndex = array.length
   let temporaryValue
   let randomIndex
-  let arrayCopy = [...array]
+  const arrayCopy = [...array]
 
   while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex)
@@ -64,9 +64,9 @@ const createCardData = (word, mode, image) => {
         : {
             type: 'definitionWithImages',
             definition: word.definition,
-            image: image,
+            image
           },
-    back: frontCardType === 'word' ? word.definition : word.word,
+    back: frontCardType === 'word' ? word.definition : word.word
   }
 }
 
@@ -133,7 +133,7 @@ const getQuizChoices = async (words) => {
         quizChoices.push({
           word: word.word,
           definition: randomDefinition.definition,
-          source: 'api',
+          source: 'api'
         })
       }
     } catch (error) {
@@ -179,7 +179,7 @@ const getWordDefinitionQuestions = (quizChoices) => {
         questionType,
         question: isWordToDefinition ? choice.word : choice.definition,
         correctAnswer,
-        choices,
+        choices
       })
     }
   }
@@ -220,7 +220,7 @@ const getSynonymAntonymQuestions = (quizChoices) => {
         questionType,
         question,
         correctAnswer: choice.word,
-        choices,
+        choices
       })
     }
   }
@@ -251,7 +251,7 @@ const getBlankQuestions = (quizChoices) => {
         id: choice.id,
         questionType,
         question,
-        correctAnswer: choice.word,
+        correctAnswer: choice.word
       })
     }
   }
@@ -264,7 +264,7 @@ export const getQuizInitWordArray = (words, number) => {
     ...word,
     pointsEarned: null,
     originalPoints: word.points,
-    newPoints: word.points,
+    newPoints: word.points
   }))
 }
 
@@ -319,7 +319,7 @@ export const getQuizInitQuestionArray = async (selectedWordData, mode) => {
   const result = [
     ...wordDefinitionQuestions,
     ...synonymAntonymQuestions,
-    ...blanksQuestions,
+    ...blanksQuestions
   ]
 
   return result

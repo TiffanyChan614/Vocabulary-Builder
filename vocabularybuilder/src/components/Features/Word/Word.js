@@ -1,6 +1,8 @@
 import WordDetails from './WordDetails'
 import WordHeader from './WordHeader'
 import { useSelector } from 'react-redux'
+import React from 'react'
+import PropType from 'prop-types'
 
 const Word = ({ wordData, page }) => {
   const { showDetails } = useSelector((state) =>
@@ -91,3 +93,8 @@ const Word = ({ wordData, page }) => {
 }
 
 export default Word
+
+Word.propTypes = {
+  wordData: PropType.object.isRequired,
+  page: PropType.string.isRequired
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TextArea from '../../Common/TextArea'
 import WordFormImages from './WordFormImages'
@@ -8,24 +8,25 @@ import {
   setPartOfSpeechFilter as setJournalPartOfSpeechFilter,
   setShowForm as setJournalShowForm,
   setWords as setJournalWords,
-  setSortValue as setJournalSortValue,
+  setSortValue as setJournalSortValue
 } from '../../../reducers/journalReducer'
 import { setShowForm as setSearchShowForm } from '../../../reducers/searchReducer'
 import WordFormField from './WordFormField'
 import Overlay from '../../Common/Overlay'
 import WordFormHeader from './WordFormHeader'
 import Button from '../../Common/Button'
+import PropType from 'prop-types'
 
 const WordForm = ({ page }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [message, setMessage] = useState({text:'', type:''})
+  const [message, setMessage] = useState({ text: '', type: '' })
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (message.text !== '') {
-        setMessage({text:'', type:''})
+        setMessage({ text: '', type: '' })
       }
     }, 2000)
 
@@ -57,7 +58,7 @@ const WordForm = ({ page }) => {
     lastUpdated: now,
     created: page === 'search' ? now : formWord.created,
     points: formWord.points || 0,
-    lastReviewed: formWord.lastReviewed || null,
+    lastReviewed: formWord.lastReviewed || null
   })
 
   console.log('formWord in WordForm', formWord)
@@ -80,12 +81,12 @@ const WordForm = ({ page }) => {
         newArr[index] = value
         return {
           ...prevFormData,
-          [name]: newArr,
+          [name]: newArr
         }
       } else {
         return {
           ...prevFormData,
-          [name]: value,
+          [name]: value
         }
       }
     })
@@ -100,10 +101,10 @@ const WordForm = ({ page }) => {
       newArr.splice(index, 1)
       return {
         ...prevFormData,
-        [name]: newArr,
+        [name]: newArr
       }
     })
-    setMessage({text: 'Image deleted!', type: 'success'})
+    setMessage({ text: 'Image deleted!', type: 'success' })
   }
 
   const handleAdd = (e) => {
@@ -113,7 +114,7 @@ const WordForm = ({ page }) => {
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [name]: [...prevFormData[name], ''],
+        [name]: [...prevFormData[name], '']
       }
     })
   }
@@ -197,22 +198,22 @@ const WordForm = ({ page }) => {
     definition,
     synonyms,
     antonyms,
-    examples,
+    examples
   } = formData
 
   const fieldList = [
     {
       name: 'synonyms',
-      data: synonyms,
+      data: synonyms
     },
     {
       name: 'antonyms',
-      data: antonyms,
+      data: antonyms
     },
     {
       name: 'examples',
-      data: examples,
-    },
+      data: examples
+    }
   ]
 
   return (
@@ -284,3 +285,7 @@ const WordForm = ({ page }) => {
 }
 
 export default WordForm
+
+WordForm.propTypes = {
+  page: PropType.string.isRequired
+}

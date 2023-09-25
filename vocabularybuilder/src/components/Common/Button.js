@@ -1,3 +1,6 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
 const Button = ({ bgColor, size, children, onClick, className = '' }) => {
   const bgColorClassName =
     bgColor === 'indigo' ? 'bg-indigo-500' : 'bg-gray-200'
@@ -33,3 +36,11 @@ const Button = ({ bgColor, size, children, onClick, className = '' }) => {
 }
 
 export default Button
+
+Button.propTypes = {
+  bgColor: PropTypes.string,
+  size: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func,
+  className: PropTypes.string
+}

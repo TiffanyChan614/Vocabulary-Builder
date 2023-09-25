@@ -5,14 +5,16 @@ import {
   setShowForm as setJournalShowForm,
   setFormWord as setJournalFormWord,
   setWords as setJournalWords,
-  setShowDetailsById as setJournalShowDetailsById,
+  setShowDetailsById as setJournalShowDetailsById
 } from '../../../reducers/journalReducer'
 import {
   setShowForm as setSearchShowForm,
-  setFormWord as setSearchFormWord,
+  setFormWord as setSearchFormWord
 } from '../../../reducers/searchReducer'
 import { setShowDetailsById as setMeaningsShowDetailsById } from '../../../reducers/wordMeaningsReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
   const {
@@ -23,7 +25,7 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
     antonyms,
     examples,
     images,
-    points,
+    points
   } = wordData
 
   const dispatch = useDispatch()
@@ -58,7 +60,7 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
     dispatch(
       updateShowDetails({
         wordId: wordData?.id,
-        showDetails: !currentShowDetails,
+        showDetails: !currentShowDetails
       })
     )
   }
@@ -135,3 +137,10 @@ const WordHeader = ({ wordData, page, speak, currentShowDetails }) => {
 }
 
 export default WordHeader
+
+WordHeader.propTypes = {
+  wordData: PropTypes.object.isRequired,
+  page: PropTypes.string.isRequired,
+  speak: PropTypes.func.isRequired,
+  currentShowDetails: PropTypes.bool.isRequired
+}

@@ -4,7 +4,7 @@ const initialState = {
   searchValue: '',
   showForm: false,
   formWord: '',
-  currentPage: 'search',
+  currentPage: 'search'
 }
 
 const searchSlice = createSlice({
@@ -22,8 +22,8 @@ const searchSlice = createSlice({
     },
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload
-    },
-  },
+    }
+  }
 })
 
 export const { setSearchValue, setShowForm, setFormWord, setCurrentPage } =

@@ -1,13 +1,15 @@
 import TextArea from '../../Common/TextArea'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 import { AiOutlinePlus } from 'react-icons/ai'
+import React from 'react'
+import PropType from 'prop-types'
 
 const WordFormField = ({
   fieldName,
   fieldData,
   handleChange,
   handleDelete,
-  handleAdd,
+  handleAdd
 }) => {
   return (
     <div className='word-form--fields flex flex-col gap-2'>
@@ -55,3 +57,11 @@ const WordFormField = ({
 }
 
 export default WordFormField
+
+WordFormField.propTypes = {
+  fieldName: PropType.string.isRequired,
+  fieldData: PropType.array.isRequired,
+  handleChange: PropType.func.isRequired,
+  handleDelete: PropType.func.isRequired,
+  handleAdd: PropType.func.isRequired
+}

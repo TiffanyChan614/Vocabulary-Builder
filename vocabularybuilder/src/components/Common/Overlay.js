@@ -1,3 +1,6 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
 const Overlay = ({ children }) => {
   return (
     <>
@@ -10,3 +13,7 @@ const Overlay = ({ children }) => {
 }
 
 export default Overlay
+
+Overlay.propTypes = {
+  children: PropTypes.node.isRequired
+}

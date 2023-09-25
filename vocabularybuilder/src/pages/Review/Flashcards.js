@@ -4,9 +4,9 @@ import EndSessionPopup from '../../components/Features/Review/EndSessionPopup'
 import BackPopup from '../../components/Features/Review/BackPopup'
 import {
   setShowQuit as setFlashcardsShowQuit,
-  resetFlashcards,
+  resetFlashcards
 } from '../../reducers/flashcardsReducer'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 const Flashcards = () => {
   const { showNotFinished, inSession, showQuit } = useSelector(

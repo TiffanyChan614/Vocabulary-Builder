@@ -2,15 +2,17 @@ import searchReducer, {
   setSearchValue,
   setShowForm,
   setFormWord,
-  setCurrentPage,
+  setCurrentPage
 } from './searchReducer'
+
+import { describe, it, expect } from 'vitest'
 
 describe('search reducer', () => {
   const initialState = {
     searchValue: '',
     showForm: false,
     formWord: '',
-    currentPage: 'search',
+    currentPage: 'search'
   }
 
   it('should handle setSearchValue', () => {

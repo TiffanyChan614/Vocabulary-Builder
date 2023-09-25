@@ -1,12 +1,14 @@
 import {
-    AiOutlineLinkedin,
-    AiOutlineGithub,
-    AiOutlineMail,
-    AiOutlineTwitter,
-  } from 'react-icons/ai'
+  AiOutlineLinkedin,
+  AiOutlineGithub,
+  AiOutlineMail,
+  AiOutlineTwitter
+} from 'react-icons/ai'
+import React from 'react'
+import PropType from 'prop-types'
 
-  const Footer = () => {
-    return (
+const Footer = () => {
+  return (
       <footer className='mt-7 w-full text-center flex items-center justify-center py-4 bg-indigo-50 text-gray-700'>
         <div className='px-2 border-r-2 border-gray-600 text-sm'>Developed by Tiffany Chan</div>
         <div className='flex px-2 gap-1'>
@@ -36,7 +38,11 @@ import {
           </a>
         </div>
       </footer>
-    )
-  }
+  )
+}
 
-  export default Footer
+export default Footer
+
+Footer.propTypes = {
+  children: PropType.node
+}

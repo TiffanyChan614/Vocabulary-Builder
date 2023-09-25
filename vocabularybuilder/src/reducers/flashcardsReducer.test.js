@@ -6,8 +6,10 @@ import flashcardsReducer, {
   setShowNotFinished,
   setShowQuit,
   setInSession,
-  resetFlashcards,
+  resetFlashcards
 } from './flashcardsReducer'
+
+import { describe, expect, it } from 'vitest'
 
 describe('flashcards reducer', () => {
   const initialState = {
@@ -16,7 +18,7 @@ describe('flashcards reducer', () => {
     number: 0,
     showNotFinished: false,
     showQuit: false,
-    inSession: false,
+    inSession: false
   }
 
   it('should handle setMode', () => {
@@ -41,7 +43,7 @@ describe('flashcards reducer', () => {
   it('should handle setWordArrayByIndex', () => {
     const initialStateWithWords = {
       ...initialState,
-      wordArray: ['word1', 'word2', 'word3'],
+      wordArray: ['word1', 'word2', 'word3']
     }
     const nextState = flashcardsReducer(
       initialStateWithWords,
@@ -72,7 +74,7 @@ describe('flashcards reducer', () => {
       number: 5,
       showNotFinished: true,
       showQuit: true,
-      inSession: true,
+      inSession: true
     }
     const nextState = flashcardsReducer(currentState, resetFlashcards())
     expect(nextState).toEqual(initialState)

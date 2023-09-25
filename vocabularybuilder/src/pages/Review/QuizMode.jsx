@@ -7,15 +7,16 @@ import {
   setWordArray as setQuizWordArray,
   setMode as setQuizMode,
   setError as setQuizError,
-  setIsLoading as setQuizIsLoading,
+  setIsLoading as setQuizIsLoading
 } from '../../reducers/quizReducer'
 import Button from '../../components/Common/Button'
 import {
   getQuizInitQuestionArray,
-  getQuizInitWordArray,
+  getQuizInitWordArray
 } from '../../utils/reviewHelper'
 import { useNavigate } from 'react-router-dom'
 import ModeChoice from '../../components/Features/Review/ModeChoice'
+import React from 'react'
 
 const QuizMode = () => {
   const { mode, number, error, isLoading } = useSelector((state) => state.quiz)
@@ -35,7 +36,7 @@ const QuizMode = () => {
   const modesArray = [
     { name: 'MC', text: 'Multiple Choice' },
     { name: 'blank', text: 'Fill in the Blanks' },
-    { name: 'mixed', text: 'Mixed' },
+    { name: 'mixed', text: 'Mixed' }
   ]
 
   const handleModeClick = (e) => {
@@ -73,10 +74,9 @@ const QuizMode = () => {
           setQuizError({
             ...error,
             message:
-              'Oops, something went wrong when initializing the quiz. Please try again.',
+              'Oops, something went wrong when initializing the quiz. Please try again.'
           })
         )
-      } finally {
       }
     }
   }

@@ -6,8 +6,10 @@ import wordMeaningsReducer, {
   setShowDetailsArray,
   setShowAllDetails,
   setError,
-  setFilterOpen,
+  setFilterOpen
 } from './wordMeaningsReducer'
+
+import { describe, expect, it } from 'vitest'
 
 describe('wordMeanings reducer', () => {
   const initialState = {
@@ -17,7 +19,7 @@ describe('wordMeanings reducer', () => {
     showDetails: {},
     showAllDetails: false,
     error: null,
-    filterOpen: false,
+    filterOpen: false
   }
 
   it('should handle setWordData', () => {
@@ -27,19 +29,19 @@ describe('wordMeanings reducer', () => {
           id: 1,
           definition: 'Definition 1',
           partOfSpeech: 'noun',
-          synonyms: ['synonym1', 'synonym2'],
+          synonyms: ['synonym1', 'synonym2']
         },
         {
           id: 2,
           definition: 'Definition 2',
           partOfSpeech: 'verb',
-          synonyms: ['synonym3', 'synonym4'],
-        },
+          synonyms: ['synonym3', 'synonym4']
+        }
       ],
       word: 'testWord',
       pronunciation: {
-        all: 'testPronunciation',
-      },
+        all: 'testPronunciation'
+      }
     }
     const nextState = wordMeaningsReducer(
       initialState,

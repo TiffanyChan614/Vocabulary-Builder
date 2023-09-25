@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { setPartOfSpeechFilter as setJournalPartOfSpeechFilter } from '../../reducers/journalReducer'
 import { setPartOfSpeechFilter as setMeaningsPartOfSpeechFilter } from '../../reducers/wordMeaningsReducer'
 import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
+import PropType from 'prop-types'
 
 const Filter = ({ page }) => {
   const filterStyleClassName =
@@ -98,3 +100,7 @@ const Filter = ({ page }) => {
 }
 
 export default Filter
+
+Filter.propTypes = {
+  page: PropType.string.isRequired
+}

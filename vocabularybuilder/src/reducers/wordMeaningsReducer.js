@@ -8,7 +8,7 @@ const initialState = {
   showDetails: {},
   showAllDetails: false,
   error: null,
-  filterOpen: false,
+  filterOpen: false
 }
 
 const wordMeaningsSlice = createSlice({
@@ -34,7 +34,7 @@ const wordMeaningsSlice = createSlice({
             examples: result.examples || null,
             images: [],
             points: null,
-            lastReviewed: null,
+            lastReviewed: null
           }
         })
       } else {
@@ -50,8 +50,8 @@ const wordMeaningsSlice = createSlice({
             examples: null,
             images: [],
             points: null,
-            lastReviewed: null,
-          },
+            lastReviewed: null
+          }
         ]
       }
 
@@ -77,26 +77,26 @@ const wordMeaningsSlice = createSlice({
         ...state,
         wordData: newWordData,
         showDetails: newShowDetails,
-        showAllDetails: allDetailsShown,
+        showAllDetails: allDetailsShown
       }
     },
     setIsLoading: (state, action) => {
       return {
         ...state,
-        isLoading: action.payload,
+        isLoading: action.payload
       }
     },
     setPartOfSpeechFilter: (state, action) => {
       return {
         ...state,
-        partOfSpeechFilter: action.payload,
+        partOfSpeechFilter: action.payload
       }
     },
     setShowDetailsById: (state, action) => {
       const { wordId, showDetails } = action.payload
       const newShowDetails = {
         ...state.showDetails,
-        [wordId]: showDetails,
+        [wordId]: showDetails
       }
 
       let allDetailsShown = true
@@ -110,7 +110,7 @@ const wordMeaningsSlice = createSlice({
       return {
         ...state,
         showDetails: newShowDetails,
-        showAllDetails: allDetailsShown,
+        showAllDetails: allDetailsShown
       }
     },
     setShowDetailsArray: (state, action) => {
@@ -127,7 +127,7 @@ const wordMeaningsSlice = createSlice({
       return {
         ...state,
         showDetails: newShowDetails,
-        showAllDetails: allDetailsShown,
+        showAllDetails: allDetailsShown
       }
     },
     setShowAllDetails: (state, action) => {
@@ -139,22 +139,22 @@ const wordMeaningsSlice = createSlice({
       return {
         ...state,
         showDetails: newShowDetails,
-        showAllDetails: value,
+        showAllDetails: value
       }
     },
     setError: (state, action) => {
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       }
     },
     setFilterOpen: (state, action) => {
       return {
         ...state,
-        filterOpen: action.payload,
+        filterOpen: action.payload
       }
-    },
-  },
+    }
+  }
 })
 
 export const {
@@ -165,6 +165,6 @@ export const {
   setShowDetailsArray,
   setShowAllDetails,
   setError,
-  setFilterOpen,
+  setFilterOpen
 } = wordMeaningsSlice.actions
 export default wordMeaningsSlice.reducer

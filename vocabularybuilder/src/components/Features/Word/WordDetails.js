@@ -1,4 +1,6 @@
 import { AiFillSound } from 'react-icons/ai'
+import React from 'react'
+import PropType from 'prop-types'
 
 const WordDetail = ({ fieldName, fieldData, transformSentence, speak }) => {
   if (!fieldData) return null
@@ -63,3 +65,14 @@ const WordDetail = ({ fieldName, fieldData, transformSentence, speak }) => {
 }
 
 export default WordDetail
+
+WordDetail.propTypes = {
+  fieldName: PropType.string.isRequired,
+  fieldData: PropType.oneOfType([
+    PropType.string,
+    PropType.array,
+    PropType.object
+  ]),
+  transformSentence: PropType.func,
+  speak: PropType.func
+}
