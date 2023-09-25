@@ -38,14 +38,18 @@ const ImageDropZone = ({ formData, setFormData, setMessage }) => {
       promises.push(promise)
     }
     try {
-      const imageObjects = await Promise.all(promises)
-      return imageObjects
+      return await Promise.all(promises)
     } catch (err) {
       console.err(err)
     }
   }
 
-  const handleImageUpdate = async (files, formData, setFormData, setMessage) => {
+  const handleImageUpdate = async (
+    files,
+    formData,
+    setFormData,
+    setMessage
+  ) => {
     const currentImagesLength = formData.images.length
     if (files.length + currentImagesLength > 3) {
       alert('Only 3 images allowed')
@@ -54,11 +58,10 @@ const ImageDropZone = ({ formData, setFormData, setMessage }) => {
     try {
       const imageObjects = await loadImageObjects(files)
       const newImages = [...formData.images, ...imageObjects]
-      setFormData((prevFormData) => ({...prevFormData, images: newImages}))
-      setMessage({text: 'Images added!', type: 'success'})
-    }
-    catch (err) {
-      setMessage({text: 'Error adding images', type: 'error'})
+      setFormData((prevFormData) => ({ ...prevFormData, images: newImages }))
+      setMessage({ text: 'Images added!', type: 'success' })
+    } catch (err) {
+      setMessage({ text: 'Error adding images', type: 'error' })
     }
   }
 
@@ -78,26 +81,34 @@ const ImageDropZone = ({ formData, setFormData, setMessage }) => {
     }
   }
 
-  const baseStyle = ' border-2 border-dashed w-full md:w-[300px] h-[200px] flex flex-col items-center justify-center text-gray-600 text-md rounded-lg'
+  const baseStyle =
+    ' border-2 border-dashed w-full md:w-[300px] h-[200px] flex flex-col items-center justify-center text-gray-600 text-md rounded-lg'
   const inactiveStyle = 'border-gray-300'
   const activeStyle = 'border-indigo-300'
 
   return (
     <>
-    <div
-      className={`image-drop-zone ${
-        isDragging ? activeStyle : inactiveStyle
-      } ${baseStyle}`}
-      onDragEnter={handleDragEnter}
-      onDragLeave={handleDragLeave}
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}>
-      <p className='pointer-events-none'>Drop images here</p>
-      <p>Or, <label className='underline hover:text-indigo-700 cursor-pointer'>
-      browse to upload
-      <input type='file' onChange={handleFileChange} className='hidden'/>
-    </label></p>
-    </div>
+      <div
+        className={`image-drop-zone ${
+          isDragging ? activeStyle : inactiveStyle
+        } ${baseStyle}`}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}>
+        <p className='pointer-events-none'>Drop images here</p>
+        <p>
+          Or,{' '}
+          <label className='underline hover:text-indigo-700 cursor-pointer'>
+            browse to upload
+            <input
+              type='file'
+              onChange={handleFileChange}
+              className='hidden'
+            />
+          </label>
+        </p>
+      </div>
     </>
   )
 }

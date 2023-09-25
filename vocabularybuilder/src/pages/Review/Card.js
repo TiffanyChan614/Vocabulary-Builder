@@ -11,17 +11,18 @@ import Button from '../../components/Common/Button'
 const Card = () => {
   const navigate = useNavigate()
   const { index } = useParams()
+  const idx = Number(index)
   const { mode, wordArray } = useSelector((state) => state.flashcards)
   const [face, setFace] = useState('front')
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (index < 0 || index > wordArray.length - 1 || !wordArray[index]) {
+    if (idx < 0 || idx > wordArray.length - 1 || !wordArray[idx]) {
       navigate('../..')
     }
-  }, [index, wordArray, navigate])
+  }, [idx, wordArray, navigate])
 
-  const wordData = wordArray[index]
+  const wordData = wordArray[idx]
 
   if (!wordData) {
     return null
@@ -44,9 +45,9 @@ const Card = () => {
     )?.name || null
 
   const color = (() => {
-    if (index === 0 || index % 3 === 0) {
+    if (idx === 0 || idx % 3 === 0) {
       return 'bg-rose-50'
-    } else if (index % 2 === 0) {
+    } else if (idx % 2 === 0) {
       return 'bg-amber-50'
     } else {
       return 'bg-sky-50'
@@ -54,19 +55,19 @@ const Card = () => {
   })()
 
   const front = (() => {
-    const cardFront = wordArray[index].front
+    const cardFront = wordArray[idx].front
     if (cardFront.type === 'word') {
       return (
         <div>
           <h2 className='text-2xl text-indigo-800 font-bold'>
-            {wordArray[index].front.word}
+            {wordArray[idx].front.word}
           </h2>
           <p className='mt-2 text-sm text-gray-600'>Guess its meaning</p>
         </div>
       )
     } else if (cardFront.type === 'definitionWithImages') {
-      const definition = wordArray[index].front.definition
-      const image = wordArray[index].front.image
+      const definition = wordArray[idx].front.definition
+      const image = wordArray[idx].front.image
       if (image) {
         return (
           <div className='flex flex-col items-center gap-5'>
@@ -90,7 +91,7 @@ const Card = () => {
     }
   })()
 
-  const back = <div>{wordArray[index].back}</div>
+  const back = <div>{wordArray[idx].back}</div>
 
   const handleCardClick = (e) => {
     e.stopPropagation()
@@ -98,16 +99,16 @@ const Card = () => {
   }
 
   const handlePreviousClick = () => {
-    if (Number(index) > 0) {
-      const newIndex = Number(index) - 1
+    if (Number(idx) > 0) {
+      const newIndex = Number(idx) - 1
       navigate(`../${newIndex}`)
       setFace('front')
     }
   }
 
   const handleNextClick = () => {
-    if (Number(index) < wordArray.length - 1) {
-      const newIndex = Number(index) + 1
+    if (Number(idx) < wordArray.length - 1) {
+      const newIndex = Number(idx) + 1
       navigate(`../${newIndex}`)
       setFace('front')
     }
@@ -122,7 +123,9 @@ const Card = () => {
         ...wordData,
         pointsEarned: newScore,
       }
-      dispatch(setFlashcardsWordArrayByIndex({ index, word: updatedWordData }))
+      dispatch(
+        setFlashcardsWordArrayByIndex({ index: idx, word: updatedWordData })
+      )
     }
   }
 
@@ -164,7 +167,7 @@ const Card = () => {
         <div className='card-control w-full flex justify-center items-center flex-grow gap-2'>
           <button
             onClick={handlePreviousClick}
-            className={Number(index) <= 0 ? 'cursor-auto opacity-20' : ''}>
+            className={Number(idx) <= 0 ? 'cursor-auto opacity-20' : ''}>
             <GrPrevious
               size={25}
               color='#808080'
@@ -182,7 +185,7 @@ const Card = () => {
           <button
             onClick={handleNextClick}
             className={
-              Number(index) >= wordArray.length - 1
+              Number(idx) >= wordArray.length - 1
                 ? 'cursor-auto opacity-20'
                 : ''
             }>
@@ -193,7 +196,7 @@ const Card = () => {
           </button>
         </div>
         <div>
-          {Number(index) + 1} / {wordArray.length}
+          {Number(idx) + 1} / {wordArray.length}
         </div>
       </div>
       <div className='text-center flex flex-col gap-3 items-center'>

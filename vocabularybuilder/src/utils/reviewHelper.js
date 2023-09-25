@@ -154,8 +154,7 @@ const getWordDefinitionQuestions = (quizChoices) => {
       questionType = null
     }
     if (questionType) {
-      const isWordToDefinition =
-        questionType === 'mc-wordToDefinition' ? true : false
+      const isWordToDefinition = questionType === 'mc-wordToDefinition'
       const correctAnswer =
         questionType === 'mc-wordToDefinition' ? choice.definition : choice.word
 
