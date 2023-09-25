@@ -16,7 +16,7 @@
   - [Key Features](#key-features)
   - [Future Features](#future-features)
 - [API](#api)
-- [Skills Learned](#skills-learned)
+- [License](#license)
 
 ## Overview
 
@@ -25,9 +25,11 @@
 This is a Vocabulary Builder app that is built with React, Tailwind CSS, and HTML. It is designed to enhance user vocabulary in a seamless and engaging way. This app is built as a personal project to practice React and Tailwind CSS. It is currently a front-end only app using local storage to store the data but will be updated to a full-stack app that use MongoDB in the future.
 
 ### Motivation
+
 The inspiration behind this project came from my own experiences as someone whose first language is not English and also my husband, who is currently learning English. We both experienced the difficulty in expanding our English vocabulary due to the lack of engaging and customizable tools available. Hence, I felt compelled to create an vocabulary app that offers a built-in dictionary but also grants user the ability to customize their learning journey.
 
 ### Problem Statement
+
 Existing vocabulary-building tools often follow a rigid, one-size-fits-all approach, offering a predefined list of words that may not suit learners of various proficiency levels. Additionally, these tools typically lack dynamic features for customization, particularly the ability for users to associate images with words. This feature is especially valuable for individuals with dyslexia, for whom visual aids play a crucial role in learning.
 
 Furthermore, conventional tools struggle to deliver engaging learning experiences like flashcards or quizzes tailored to vocabulary acquisition. While there are plenty of flashcard apps available, they often lack a dedicated built-in dictionary for seamless learning.
@@ -154,17 +156,6 @@ This project also has the following development dependencies:
 - [WordsAPI](https://www.wordsapi.com/)
 - [pexels](https://www.pexels.com/api/)
 - Browser Speech Synthesis API
-
-## Skills Learned
-
-- React Routers
-- Redux for state management
-- REST API
-- Tailwind CSS
-- Responsive Design
-- UI/UX design
-- Components design
-- AHA principle: Avoid Hasty Abstractions
 
 ## License
 
