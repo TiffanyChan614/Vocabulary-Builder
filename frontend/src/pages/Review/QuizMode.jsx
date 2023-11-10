@@ -52,9 +52,6 @@ const QuizMode = () => {
     e.stopPropagation()
     if (number === 0) {
       e.preventDefault()
-      window.alert('Please select the number of words you want to review.')
-    } else if (number === 0) {
-      e.preventDefault()
       alert('Please select the number of words you want to review.')
     } else {
       try {
