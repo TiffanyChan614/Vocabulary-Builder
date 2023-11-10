@@ -23,7 +23,6 @@ const NumberChoice = ({
       <div className='flex flex-col gap-4 w-full'>
         {numberButtons.map((button) => (
           <button
-            type='button'
             key={button}
             name={button}
             onClick={handleNumberClick}

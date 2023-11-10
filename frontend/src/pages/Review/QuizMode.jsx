@@ -50,7 +50,10 @@ const QuizMode = () => {
 
   const handleStart = async (e) => {
     e.stopPropagation()
-    if (number === 0) {
+    if (mode === '') {
+      e.preventDefault()
+      alert('Please select a mode')
+    } else if (number === 0) {
       e.preventDefault()
       alert('Please select the number of words you want to review.')
     } else {
