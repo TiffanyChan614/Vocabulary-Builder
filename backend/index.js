@@ -2,8 +2,9 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
+require('dotenv').config()
 
-const password = process.argv[2]
+const password = process.env.MONGODB_PASSWORD
 
 const url = `mongodb+srv://tiffanychan1999614:${password}@cluster0.thdh6b0.mongodb.net/vocabularyBuilder?retryWrites=true&w=majority`
 
