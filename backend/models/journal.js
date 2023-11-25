@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const journalSchema = new mongoose.Schema({
+const journalEntrySchema = new mongoose.Schema({
     word: { type: String, required: true},
     definition: { type: String, required: true },
     partOfSpeech: String,
@@ -15,7 +15,7 @@ const journalSchema = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 })
 
-journalSchema.set('toJSON', {
+journalEntrySchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()
         delete returnedObject._id,
@@ -23,4 +23,4 @@ journalSchema.set('toJSON', {
     }
 })
 
-module.exports = mongoose.model('Journal', journalSchema)
+module.exports = mongoose.model('JournalEntry', journalEntrySchema)
