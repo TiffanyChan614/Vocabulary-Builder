@@ -1,47 +1,7 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
-const mongoose = require('mongoose')
-require('dotenv').config()
+const app = require('./app')
+const config = require('./utils/config')
+const logger = require('./utils/logger')
 
-const password = process.env.MONGODB_PASSWORD
-
-const url = `mongodb+srv://tiffanychan1999614:${password}@cluster0.thdh6b0.mongodb.net/vocabularyBuilder?retryWrites=true&w=majority`
-
-mongoose.set('strictQuery', false)
-mongoose.connect(url)
-
-app.use(cors())
-
-let journal = []
-
-app.get('/', (request, response) => {
-    response.send('<h1>Hello World</h1>')
+app.listen(config.PORT, () => {
+    logger.info(`Server running on port ${config.PORT}`)
 })
-
-app.get('/api/journal', (request, response) => {
-    response.json(journal)
-})
-
-app.get('/api/journal/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const word = journal.find((word) => word.id === id)
-    response.json(word)
-})
-
-const requestLogger = (request, response, next) => {
-    console.log('Method:', request.method)
-    console.log('Path:  ', request.path)
-    console.log('Body:  ', request.body)
-    console.log('---')
-    next()
-}
-
-app.use(requestLogger)
-
-const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: 'unknown endpoint' })
-}
-
-const PORT = 3001
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))

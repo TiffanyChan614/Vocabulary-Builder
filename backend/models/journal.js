@@ -1,6 +1,6 @@
-const moogoose = require('mongoose')
+const mongoose = require('mongoose')
 
-const journalSchema = new moogoose.Schema({
+const journalSchema = new mongoose.Schema({
     word: { type: String, required: true},
     definition: { type: String, required: true },
     partOfSpeech: String,
@@ -12,7 +12,7 @@ const journalSchema = new moogoose.Schema({
     lastReviewed: Date,
     lastUpdated: { type: Date, default: Date.now},
     dateCreated: { type: Date, default: Date.now},
-    user: {type: moogoose.Schema.Types.ObjectId, ref: 'User'}
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 })
 
 journalSchema.set('toJSON', {
@@ -23,4 +23,4 @@ journalSchema.set('toJSON', {
     }
 })
 
-module.exports = moogoose.model('Journal', journalSchema)
+module.exports = mongoose.model('Journal', journalSchema)
