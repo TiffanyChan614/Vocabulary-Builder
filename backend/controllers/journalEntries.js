@@ -1,6 +1,7 @@
 const journalEntriesRouter = require('express').Router()
 const JournalEntry = require('../models/journalEntry')
 const User = require('../models/user')
+const { getSelectedWordData } = require('../helpers/reviewHelpers')
 
 const jwt = require('jsonwebtoken')
 
@@ -22,6 +23,13 @@ journalEntriesRouter.get('/', async (request, response) => {
     response.json(journalEntries)
 })
 
+journalEntriesRouter.get('/review', async (request, response) => {
+    const count = Number(request.query.count) || 10
+    const journalEntries = await JournalEntry.find({}).populate('user', {username: 1, name: 1})
+    const selectedWords = getSelectedWordData(journalEntries, count)
+    response.json(selectedWords)
+})
+
 journalEntriesRouter.post('/', async (request, response) => {
     const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
     if (!decodedToken.id) {
@@ -31,6 +39,11 @@ journalEntriesRouter.post('/', async (request, response) => {
     const body = request.body
     if (!body.word || !body.definition) {
         return response.status(400).send({ error: 'word and definition are required' })
+    }
+
+    const duplicateEntry = await JournalEntry.findOne({ word: body.word, definition: body.definition })
+    if (duplicateEntry) {
+        return response.status(400).send({ error: 'An entry with this word and definition already exists' })
     }
 
     const user = await User.findById(decodedToken.id)
@@ -81,7 +94,7 @@ journalEntriesRouter.delete('/:id', async (request, response) => {
     response.status(204).end()
 })
 
-journalEntriesRouter.put('/:id', (request, response, next) => {
+journalEntriesRouter.put('/:id', async (request, response, next) => {
     const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
     if (!decodedToken.id) {
         return response.status(401).json( {error: 'token invalid'} )
@@ -92,18 +105,24 @@ journalEntriesRouter.put('/:id', (request, response, next) => {
         return response.status(400).send({ error: 'word and definition are required' })
     }
 
+    const duplicateEntry = await JournalEntry.findOne({ word: body.word, definition: body.definition })
+    console.log('duplicateEntry', duplicateEntry)
+    if (duplicateEntry && duplicateEntry._id.toString() !== request.params.id) {
+        return response.status(400).send({ error: 'An entry with this word and definition already exists' })
+    }
+
     const journalEntry = {
         word: body.word,
         definition: body.definition,
-        partOfSpeech: body.partOfSpeech,
-        synonyms: body.synonyms,
-        antonyms: body.antonyms,
-        examples: body.examples,
-        images: body.images,
-        points: body.points,
-        lastReviewed: body.lastReviewed,
-        lastUpdated: body.lastUpdated,
-        dateCreated: body.dateCreated,
+        partOfSpeech: body.partOfSpeech || '',
+        synonyms: body.synonyms || [],
+        antonyms: body.antonyms || [],
+        examples: body.examples || [],
+        images: body.images || [],
+        points: body.points || 0,
+        lastReviewed: body.lastReviewed || null,
+        lastUpdated: Date.now(),
+        dateCreated: body.dateCreated || Date.now(),
     }
 
     JournalEntry.findByIdAndUpdate(request.params.id, journalEntry, { new: true })
