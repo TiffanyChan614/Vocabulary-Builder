@@ -3,26 +3,23 @@ import Button from './Button'
 import React from 'react'
 import PropType from 'prop-types'
 
-const Popup = ({ title, handleChoice1, handleChoice2, children }) => {
+const Popup = ({ title, choices = [], children, className }) => {
   return (
     <Overlay>
-      <div className='review-not-finished-popup text-center w-3/4 sm:w-2/3 bg-white rounded-xl px-5 py-5 flex flex-col items-center gap-3'>
+      <div className={`${className} text-center w-3/4 sm:w-2/3 bg-white rounded-xl px-6 py-5 flex flex-col items-center gap-3`}>
         <h1 className='text-indigo-800 font-bold text-2xl'>{title}</h1>
         {children}
         <div className='flex justify-around items-center gap-3'>
-          <Button
-            bgColor='gray'
-            size='md'
-            onClick={handleChoice1}>
-            Yes
-          </Button>
-          <Button
-            bgColor='indigo'
-            size='md'
-            className='font-semibold'
-            onClick={handleChoice2}>
-            No
-          </Button>
+          {choices.map((choice, index) => (
+            <Button
+              key={index}
+              bgColor={choice.bgColor}
+              size='md'
+              className={choice.className}
+              onClick={choice.handleClick}>
+              {choice.text}
+            </Button>
+          ))}
         </div>
       </div>
     </Overlay>
@@ -33,7 +30,14 @@ export default Popup
 
 Popup.propTypes = {
   title: PropType.string.isRequired,
-  handleChoice1: PropType.func.isRequired,
-  handleChoice2: PropType.func.isRequired,
-  children: PropType.node.isRequired
+  choices: PropType.arrayOf(
+    PropType.shape({
+      bgColor: PropType.string.isRequired,
+      className: PropType.string,
+      text: PropType.string.isRequired,
+      handleClick: PropType.func.isRequired
+    })
+  ).isRequired,
+  children: PropType.node.isRequired,
+  className: PropType.string
 }

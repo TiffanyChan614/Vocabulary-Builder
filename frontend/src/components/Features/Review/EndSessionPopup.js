@@ -32,11 +32,13 @@ const EndSessionPopup = ({ page }) => {
       ? "You haven't answered all the questions."
       : "You haven't rated all the flashcards."
 
+  const choices = [{ bgColor: 'indigo', text: 'Yes', handleClick: handleYes },
+    { bgColor: 'gray', text: 'No', handleClick: handleNo }]
+
   return (
     <Popup
       title='End Review'
-      handleChoice1={handleYes}
-      handleChoice2={handleNo}>
+      choices={choices}>
       <p>
         {message} If you end now, points will only be counted towards the cards
         that you have reviewed.

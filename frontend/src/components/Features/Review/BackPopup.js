@@ -22,11 +22,14 @@ const BackPopup = ({ page }) => {
     }
   }
 
+  const choices = [{ bgColor: 'indigo', text: 'Yes', handleClick: handleYes },
+    { bgColor: 'gray', text: 'No', handleClick: handleNo }]
+
   return (
     <Popup
       title='Quit session'
-      handleChoice1={handleYes}
-      handleChoice2={handleNo}>
+      choices={choices}
+      >
       <p>If you return to Review, your current review progress will be lost.</p>
       <p className='font-semibold'>Are you sure to quit the session?</p>
     </Popup>
