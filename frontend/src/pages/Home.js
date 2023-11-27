@@ -103,7 +103,7 @@ const Home = () => {
             )}
       </div>
       <div className={`home--search ${divClassName}`}>
-        <h3 className='text-lg font-bold'>Don&apost know the meaning of a word?</h3>
+        <h3 className='text-lg font-bold'>{"Don't know the meaning of a word?"}</h3>
         <Button
           bgColor='indigo'
           size='md'
