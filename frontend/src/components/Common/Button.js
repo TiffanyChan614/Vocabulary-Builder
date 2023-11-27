@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Button = ({ bgColor, size, children, onClick, className = '' }) => {
+const Button = ({ bgColor, size = 'md', children, onClick = null, type = 'button', className = '' }) => {
   const bgColorClassName =
     bgColor === 'indigo' ? 'bg-indigo-500' : 'bg-gray-200'
   const textColorClassName =
@@ -28,6 +28,7 @@ const Button = ({ bgColor, size, children, onClick, className = '' }) => {
 
   return (
     <button
+      type={type}
       onClick={onClick}
       className={`${className} ${bgColorClassName} ${textColorClassName} ${fontSizeClassName} ${paddingClassName} rounded-lg ${hoverColorClassName}`}>
       {children}
@@ -42,5 +43,6 @@ Button.propTypes = {
   size: PropTypes.string,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
+  type: PropTypes.string,
   className: PropTypes.string
 }

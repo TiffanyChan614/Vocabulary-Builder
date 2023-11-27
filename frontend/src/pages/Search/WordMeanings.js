@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import Word from '../../components/Features/Word/Word'
-import { getWordData } from '../../services/wordAPI'
+import { getWordData } from '../../services/words'
 import Filter from '../../components/Common/Filter'
 import { useDispatch, useSelector } from 'react-redux'
 import {

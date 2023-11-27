@@ -35,8 +35,8 @@ const EndSessionPopup = ({ page }) => {
   return (
     <Popup
       title='End Review'
-      handleYes={handleYes}
-      handleNo={handleNo}>
+      handleChoice1={handleYes}
+      handleChoice2={handleNo}>
       <p>
         {message} If you end now, points will only be counted towards the cards
         that you have reviewed.

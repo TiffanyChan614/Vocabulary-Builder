@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { getImage } from '../../../services/pexelAPI'
+import { getImage } from '../../../services/pexel'
 import ImageDropZone from './ImageDropZone'
 import PropType from 'prop-types'
 

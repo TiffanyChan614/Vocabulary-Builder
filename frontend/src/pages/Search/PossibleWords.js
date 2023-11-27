@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useMemo } from 'react'
 import { useNavigate, Outlet } from 'react-router-dom'
-import { getMatchedWords } from '../../services/wordAPI'
+import { getMatchedWords } from '../../services/words'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   setMatchedWords as setPossibleWordsMatchedWords,

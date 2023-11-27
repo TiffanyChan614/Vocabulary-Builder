@@ -1,4 +1,4 @@
-import { getRandomWord } from '../services/wordAPI'
+import { getRandomWord } from '../services/words'
 
 const shuffleArray = (array) => {
   let currentIndex = array.length

@@ -16,6 +16,7 @@ import QuizMode from './pages/Review/QuizMode'
 import QuizQuestion from './pages/Review/QuizQuestion'
 import QuizResult from './pages/Review/QuizResult'
 import NotFound from './pages/NotFound'
+import Login from './pages/Login'
 
 const App = () => {
   return (
@@ -80,6 +81,10 @@ const App = () => {
               />
             </Route>
           </Route>
+          <Route
+              path='login'
+              element={<Login />}
+            />
         </Route>
         <Route
           path='*'

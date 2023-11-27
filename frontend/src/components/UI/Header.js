@@ -39,10 +39,23 @@ const Header = () => {
     }
   ]
 
+  const userAuthItems = [
+    {
+      text: 'Sign Up',
+      className: 'px-3 py-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600',
+      link: '/signup'
+    },
+    {
+      text: 'Login',
+      className: textLinkStyleClassName,
+      link: '/login'
+    }
+  ]
+
   return (
     <div className='header-wrapper px-3 py-2'>
-      <header>
-        <nav className='flex flex-row items-center px-3 py-2 sm:py-3 border-b-2 border-indigo-100 gap-6 font-medium text-gray-700'>
+      <header className='flex flex-row items-center justify-between px-3 py-2 sm:py-3 border-b-2 border-indigo-100 font-medium text-gray-700'>
+        <nav className='flex flex-row items-center gap-6'>
           {navigationItems.map((item) => (
             <NavLink
               key={item.link}
@@ -69,6 +82,16 @@ const Header = () => {
               }
             </NavLink>
           ))}
+        </nav>
+        <nav className='flex flex-row items-center gap-4'>
+        {userAuthItems.map((item) => (
+          <NavLink
+            key={item.link}
+            className={item.className}
+            to={item.link}>
+              {item.text}
+            </NavLink>
+        ))}
         </nav>
       </header>
     </div>
