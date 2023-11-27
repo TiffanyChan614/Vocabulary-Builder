@@ -90,7 +90,14 @@ journalEntriesRouter.delete('/:id', async (request, response) => {
         return response.status(401).json( {error: 'token invalid'} )
     }
 
-    await JournalEntry.findByIdAndRemove(request.params.id)
+    const journalEntry = await JournalEntry.findById(request.params.id)
+    if (journalEntry) {
+        const user = await User.findById(decodedToken.id)
+        user.journalEntries = user.journalEntries.filter(entry => entry.toString() !== journalEntry._id.toString())
+        await user.save()
+        await JournalEntry.findByIdAndRemove(request.params.id)
+    }
+
     response.status(204).end()
 })
 
