@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  words: [],
+  words: JSON.parse(localStorage.getItem('journal')) || [],
   searchValue: '',
   sortValue: 'updated',
   partOfSpeechFilter: null,

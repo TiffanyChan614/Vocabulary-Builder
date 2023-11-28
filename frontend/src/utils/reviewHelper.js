@@ -19,7 +19,7 @@ const shuffleArray = (array) => {
 }
 
 const getWordsWithLowestPoints = (words, number) => {
-  return words.sort((a, b) => a.points - b.points).slice(0, number * 0.7)
+  return [...words].sort((a, b) => a.points - b.points).slice(0, number * 0.7)
 }
 
 const getWordsWithEarliestReview = (words, number, wordsWithLowestPoints) => {
@@ -91,7 +91,6 @@ export const getFlashcardsInitWordArray = (words, number, mode) => {
         images.length > 0
           ? images[Math.floor(Math.random() * images.length)]
           : null
-      console.log('image', image)
       return createCardData(word, mode, image)
     }) || []
 

@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   setSearchValue as setSearchSearchValue,
   setCurrentPage as setSearchCurrentPage
@@ -9,6 +9,7 @@ import React, { useEffect } from 'react'
 const Review = () => {
   const location = useLocation()
   const dispatch = useDispatch()
+  const journalData = useSelector((state) => state.journal.words) || []
 
   useEffect(() => {
     localStorage.setItem('isResultSubmitted', false)
@@ -18,15 +19,7 @@ const Review = () => {
   const divStyleClassName =
     'w-full font-semibold hover:bg-indigo-100 hover:text-indigo-800 text-lg border-2 rounded-xl border-indigo-100 flex items-center justify-center p-6'
 
-  const isJournalEmpty = (() => {
-    try {
-      const journalData = localStorage.getItem('journal')
-      return !journalData || JSON.parse(journalData).length === 0
-    } catch (error) {
-      console.error('Error parsing journal data:', error)
-      return true
-    }
-  })()
+  const isJournalEmpty = !journalData || journalData.length === 0
 
   return (
     <div className='w-full flex flex-col items-center'>

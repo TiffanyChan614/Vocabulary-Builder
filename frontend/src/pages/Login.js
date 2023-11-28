@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Button from '../components/Common/Button'
 import loginService from '../services/login'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Input from '../components/Common/Input'
 import Popup from '../components/Common/Popup'
 import { FaEye } from 'react-icons/fa'
@@ -14,6 +14,7 @@ const Login = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const inputTouched = useRef(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     setEmail(email => ({
@@ -55,9 +56,11 @@ const Login = () => {
         password: password.value
       })
       setUser(user)
+      localStorage.setItem('user', JSON.stringify(user))
       setEmail('')
       setPassword('')
       setMessage('Login successful, user ' + user.name)
+      navigate('/')
     } catch (exception) {
       showMessage('Wrong credentials')
     }
@@ -106,7 +109,7 @@ const Login = () => {
           </div>
           <Button type="submit" bgColor="indigo" size="lg">Login</Button>
         </form>
-        <Link to="/" className="text-gray-500 hover:underline">Continue without logging in</Link>
+        <Link to="/" className="text-gray-500 hover:underline hover:text-indigo-700">Continue without logging in</Link>
         </div>
     </Popup>
   )

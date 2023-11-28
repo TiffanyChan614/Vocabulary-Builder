@@ -17,13 +17,8 @@ const FlashcardsMode = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const words = (() => {
-    try {
-      return JSON.parse(localStorage.getItem('journal'))
-    } catch {
-      return []
-    }
-  })()
+  const words = useSelector((state) => state.journal.words) || []
+  console.log('flashcards words', words)
 
   const minNum = Math.min(5, words.length)
 

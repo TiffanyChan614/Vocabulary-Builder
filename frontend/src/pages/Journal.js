@@ -6,7 +6,6 @@ import Filter from '../components/Common/Filter'
 import WordForm from '../components/Features/WordForm/WordForm'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  setWords as setJournalWords,
   setSearchValue as setJournalSearchValue,
   setSortValue as setJournalSortValue,
   setShowAllDetails as setJournalShowAllDetails,
@@ -46,14 +45,6 @@ const Journal = () => {
     pointsAsc: (a, b) => a.points - b.points,
     pointsDesc: (a, b) => b.points - a.points
   }
-
-  useEffect(() => {
-    try {
-      dispatch(setJournalWords(JSON.parse(localStorage.getItem('journal'))))
-    } catch {
-      dispatch(setJournalWords([]))
-    }
-  }, [dispatch])
 
   useEffect(() => {
     if (window.scrollY > 100) {

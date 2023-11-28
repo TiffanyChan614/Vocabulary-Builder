@@ -28,7 +28,7 @@ export default TextArea
 TextArea.propTypes = {
   id: PropType.string.isRequired,
   name: PropType.string.isRequired,
-  index: PropType.number.isRequired,
+  index: PropType.number,
   value: PropType.string.isRequired,
   onBlur: PropType.func.isRequired,
   height: PropType.string.isRequired

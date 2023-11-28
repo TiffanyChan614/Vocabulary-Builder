@@ -20,6 +20,7 @@ import PropType from 'prop-types'
 const WordForm = ({ page }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const journalData = useSelector((state) => state.journal.words) || []
 
   const [message, setMessage] = useState({ text: '', type: '' })
 
@@ -142,24 +143,11 @@ const WordForm = ({ page }) => {
     }, {})
   }
 
-  const getJournalData = () => {
-    let journalData
-    try {
-      journalData = JSON.parse(localStorage.getItem('journal')) || []
-    } catch {
-      journalData = []
-    }
-    return journalData
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
 
     const filteredFormData = getFilteredFormData()
     console.log('filteredFormData', filteredFormData)
-
-    const journalData = getJournalData()
-    console.log('journalData', journalData)
 
     if (page === 'search') {
       const wordExisted = journalData.some(
@@ -170,11 +158,13 @@ const WordForm = ({ page }) => {
       if (wordExisted) {
         window.alert('Word already exists in journal')
       } else {
-        journalData.push({ ...filteredFormData })
-        localStorage.setItem('journal', JSON.stringify(journalData))
+        const updatedJournalData = [...journalData, filteredFormData]
+        console.log('journalData', updatedJournalData)
+        localStorage.setItem('journal', JSON.stringify(updatedJournalData))
         navigate('../../journal')
         dispatch(setJournalPartOfSpeechFilter(''))
         dispatch(setJournalSortValue('updated'))
+        dispatch(setJournalWords(updatedJournalData))
       }
     } else if (page === 'journal' && setJournalWords) {
       const updatedJournalData = journalData.map((word) => {
