@@ -5,8 +5,6 @@ import searchReducer, {
   setCurrentPage
 } from './searchReducer'
 
-import { describe, it, expect } from 'vitest'
-
 describe('search reducer', () => {
   const initialState = {
     searchValue: '',

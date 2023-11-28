@@ -11,8 +11,6 @@ import journalReducer, {
   setFilterOpen
 } from './journalReducer'
 
-import { describe, it, expect } from 'vitest'
-
 describe('journalReducer', () => {
   const initialState = {
     words: [],

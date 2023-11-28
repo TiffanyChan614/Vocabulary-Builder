@@ -24,6 +24,14 @@ const ResultTable = ({ wordArray }) => {
 
   const headerStyleClassName = 'p-2 font-semibold text-center'
 
+  if (wordArray.length === 0) {
+    return (
+      <div>
+        Result has been submitted
+      </div>
+    )
+  }
+
   return (
     <table>
       <thead>

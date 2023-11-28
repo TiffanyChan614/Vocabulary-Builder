@@ -7,12 +7,14 @@ import React from 'react'
 const QuizResult = () => {
   const { wordArray } = useSelector((state) => state.quiz)
   const navigate = useNavigate()
-  useReviewResult('quiz', wordArray)
+  const isResultSubmitted = localStorage.getItem('isResultSubmitted') === 'true'
+
+  useReviewResult('quiz', wordArray, isResultSubmitted)
 
   return (
     <div className='flex flex-col gap-3 items-center w-full'>
       <h2 className='font-bold text-xl text-center text-indigo-800'>Result</h2>
-      <ResultTable wordArray={wordArray} />
+        <ResultTable wordArray={wordArray} />
       <button
         onClick={() => navigate('../../../journal')}
         className='mt-4 bg-indigo-500 hover:bg-indigo-600 text-lg font-semibold text-white rounded-lg px-5 py-2'>

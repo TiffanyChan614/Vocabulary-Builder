@@ -9,8 +9,6 @@ import wordMeaningsReducer, {
   setFilterOpen
 } from './wordMeaningsReducer'
 
-import { describe, expect, it } from 'vitest'
-
 describe('wordMeanings reducer', () => {
   const initialState = {
     wordData: [],
@@ -19,7 +17,7 @@ describe('wordMeanings reducer', () => {
     showDetails: {},
     showAllDetails: false,
     error: null,
-    filterOpen: false
+    filterOpen: false,
   }
 
   it('should handle setWordData', () => {

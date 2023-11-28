@@ -62,6 +62,12 @@ const flashcardsSlice = createSlice({
       return {
         ...initialState
       }
+    },
+    setIsResultSubmitted: (state, action) => {
+      return {
+        ...state,
+        isResultSubmitted: action.payload
+      }
     }
   }
 })
@@ -74,6 +80,7 @@ export const {
   setShowNotFinished,
   setShowQuit,
   setInSession,
-  resetFlashcards
+  resetFlashcards,
+  setIsResultSubmitted
 } = flashcardsSlice.actions
 export default flashcardsSlice.reducer

@@ -10,12 +10,15 @@ import {
 } from '../reducers/flashcardsReducer'
 import { setWords as setJournalWords } from '../reducers/journalReducer'
 
-const useReviewResult = (page, wordArray) => {
+const useReviewResult = (page, wordArray, isResultSubmitted) => {
   const dispatch = useDispatch()
   const { words } = useSelector((state) => state.journal)
   console.log('wordArray', wordArray)
 
   useEffect(() => {
+    if (isResultSubmitted) {
+      return
+    }
     const newWordArray = wordArray?.map((word) => {
       const { originalPoints, pointsEarned } = word
       const newPointsEarned = pointsEarned || 0
@@ -45,6 +48,7 @@ const useReviewResult = (page, wordArray) => {
       page === 'quiz' ? setQuizInSession : setFlashcardsInSession
     dispatch(updateWordArray(newWordArray))
     dispatch(updateInSession(false))
+    localStorage.setItem('isResultSubmitted', true)
     localStorage.setItem('journal', JSON.stringify(newJournalWords))
     dispatch(setJournalWords(newJournalWords))
   }, [])

@@ -9,8 +9,6 @@ import flashcardsReducer, {
   resetFlashcards
 } from './flashcardsReducer'
 
-import { describe, expect, it } from 'vitest'
-
 describe('flashcards reducer', () => {
   const initialState = {
     mode: '',

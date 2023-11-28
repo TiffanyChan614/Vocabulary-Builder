@@ -4,11 +4,16 @@ import {
   setSearchValue as setSearchSearchValue,
   setCurrentPage as setSearchCurrentPage
 } from '../../reducers/searchReducer'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Review = () => {
   const location = useLocation()
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    localStorage.setItem('isResultSubmitted', false)
+  }, [])
+
   const isReviewPage = location.pathname === '/review'
   const divStyleClassName =
     'w-full font-semibold hover:bg-indigo-100 hover:text-indigo-800 text-lg border-2 rounded-xl border-indigo-100 flex items-center justify-center p-6'

@@ -4,8 +4,6 @@ import possibleWordsReducer, {
   setError
 } from './possibleWordsReducer'
 
-import { describe, it, expect } from 'vitest'
-
 describe('possibleWords reducer', () => {
   const initialState = {
     matchedWords: [],

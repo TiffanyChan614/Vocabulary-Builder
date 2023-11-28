@@ -12,8 +12,6 @@ import quizReducer, {
   setIsLoading
 } from './quizReducer'
 
-import { describe, it, expect } from 'vitest'
-
 describe('quiz reducer', () => {
   const initialState = {
     wordArray: [],
