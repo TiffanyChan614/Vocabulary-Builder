@@ -3,12 +3,18 @@ import { useNavigate } from 'react-router-dom'
 import ResultTable from '../../components/Features/Review/ResultTable'
 import useReviewResult from '../../hooks/useReviewResult'
 import React from 'react'
+import {
+  setWordArray as setFlashcardsWordArray,
+  setInSession as setFlashcardsInSession
+} from '../../reducers/flashcardsReducer'
+import { setWords as setJournalWords } from '../../reducers/journalReducer'
 
 const FlashcardsResult = () => {
   const { wordArray } = useSelector((state) => state.flashcards)
   const navigate = useNavigate()
   const isResultSubmitted = localStorage.getItem('isResultSubmitted') === 'true'
-  useReviewResult('flashcards', wordArray, isResultSubmitted)
+  useReviewResult(wordArray, setFlashcardsWordArray,
+    setFlashcardsInSession, setJournalWords, isResultSubmitted)
 
   return (
     <div className='flex flex-col gap-3 items-center w-full'>

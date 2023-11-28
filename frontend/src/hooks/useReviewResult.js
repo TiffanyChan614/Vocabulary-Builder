@@ -1,16 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  setWordArray as setQuizWordArray,
-  setInSession as setQuizInSession
-} from '../reducers/quizReducer'
-import {
-  setWordArray as setFlashcardsWordArray,
-  setInSession as setFlashcardsInSession
-} from '../reducers/flashcardsReducer'
-import { setWords as setJournalWords } from '../reducers/journalReducer'
 
-const useReviewResult = (page, wordArray, isResultSubmitted) => {
+const useReviewResult = (wordArray, setWordArray, setInSession, setJournalWords, isResultSubmitted) => {
   const dispatch = useDispatch()
   const { words } = useSelector((state) => state.journal)
   console.log('wordArray', wordArray)
@@ -42,12 +33,8 @@ const useReviewResult = (page, wordArray, isResultSubmitted) => {
     }))
 
     console.log('newJournalWords', newJournalWords)
-    const updateWordArray =
-      page === 'quiz' ? setQuizWordArray : setFlashcardsWordArray
-    const updateInSession =
-      page === 'quiz' ? setQuizInSession : setFlashcardsInSession
-    dispatch(updateWordArray(newWordArray))
-    dispatch(updateInSession(false))
+    dispatch(setWordArray(newWordArray))
+    dispatch(setInSession(false))
     localStorage.setItem('isResultSubmitted', true)
     localStorage.setItem('journal', JSON.stringify(newJournalWords))
     dispatch(setJournalWords(newJournalWords))
